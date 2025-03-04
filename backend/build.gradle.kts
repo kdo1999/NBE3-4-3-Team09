@@ -96,6 +96,9 @@ dependencies {
 
     // Mongo
     implementation ("org.springframework.boot:spring-boot-starter-data-mongodb")
+
+    // Kotlin Logging
+    implementation("io.github.oshai:kotlin-logging-jvm:5.1.1")
 }
 
 tasks.test {
