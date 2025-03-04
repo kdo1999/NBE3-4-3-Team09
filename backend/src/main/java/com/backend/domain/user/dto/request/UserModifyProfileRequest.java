@@ -22,6 +22,14 @@ public class UserModifyProfileRequest {
         this.job = siteUser.getJob();
     }
 
+    public String getIntroduction() {
+        return introduction;
+    }
+
+    public String getJob() {
+        return job;
+    }
+
     public void setIntroduction(String introduction) {
         this.introduction = introduction;
     }
