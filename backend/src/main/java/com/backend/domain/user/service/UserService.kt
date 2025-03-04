@@ -1,6 +1,7 @@
 package com.backend.domain.user.service
 
 import com.backend.domain.jobskill.repository.JobSkillRepository
+import com.backend.domain.user.dto.request.JobSkillRequest
 import com.backend.domain.user.dto.request.UserModifyProfileRequest
 import com.backend.domain.user.entity.SiteUser
 import com.backend.domain.user.repository.UserRepository
