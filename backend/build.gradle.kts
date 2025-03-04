@@ -83,10 +83,6 @@ dependencies {
     implementation("org.springframework.retry:spring-retry")
     implementation("org.springframework.boot:spring-boot-starter-aop")
 
-    // MapStruct
-    implementation("org.mapstruct:mapstruct:1.5.3.Final")
-    annotationProcessor("org.mapstruct:mapstruct-processor:1.5.3.Final")
-
     // WebSocket
     implementation("org.springframework.boot:spring-boot-starter-websocket")
 
