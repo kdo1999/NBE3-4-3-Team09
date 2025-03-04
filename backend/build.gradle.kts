@@ -97,6 +97,9 @@ dependencies {
     //Kotlin 관련 설정
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
+
+    // Mongo
+    implementation ("org.springframework.boot:spring-boot-starter-data-mongodb")
 }
 
 tasks.test {
