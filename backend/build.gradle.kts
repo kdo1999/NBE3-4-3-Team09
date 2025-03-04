@@ -1,5 +1,5 @@
 plugins {
-kotlin("jvm") version "1.9.25"
+    kotlin("jvm") version "1.9.25"
     kotlin("plugin.spring") version "1.9.25"
     id("org.springframework.boot") version "3.4.2"
     id("io.spring.dependency-management") version "1.1.7"
@@ -74,7 +74,7 @@ dependencies {
 
     // QueryDSL Kotlin
     implementation("com.querydsl:querydsl-jpa:5.1.0:jakarta")
-    kapt("com.querydsl:querydsl-apt:5.1.0:jakarta")
+//    kapt("com.querydsl:querydsl-apt:5.1.0:jakarta")
     annotationProcessor("com.querydsl:querydsl-apt:5.1.0:jakarta")
     annotationProcessor("jakarta.annotation:jakarta.annotation-api")
     annotationProcessor("jakarta.persistence:jakarta.persistence-api")
@@ -115,6 +115,7 @@ allOpen {
 }
 
 
+
 // QueryDSL 빌드 옵션 (옵션)
 val generated = "src/main/generated"
 
@@ -132,7 +133,9 @@ sourceSets.main {
 tasks.clean {
     delete(generated)
 }
-
 tasks.jar {
     enabled = false
+}
+kapt {
+    keepJavacAnnotationProcessors = true
 }
