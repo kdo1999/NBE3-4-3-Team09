@@ -1,5 +1,16 @@
 package com.backend.global.baseentity;
 
+import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.annotation.Profile;
+import org.springframework.context.event.EventListener;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.backend.domain.category.domain.CategoryName;
 import com.backend.domain.category.entity.Category;
 import com.backend.domain.category.repository.CategoryRepository;
@@ -17,16 +28,8 @@ import com.backend.domain.user.entity.SiteUser;
 import com.backend.domain.user.entity.UserRole;
 import com.backend.domain.user.repository.UserRepository;
 import com.backend.global.redis.repository.RedisRepository;
-import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.List;
+
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.annotation.Profile;
-import org.springframework.context.event.EventListener;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 
 @Profile({"build", "dev"})
@@ -63,14 +66,23 @@ public class BaseInitData {
 //			.password(passwordEncoder.encode("admin"))
 //			.userRole(UserRole.ROLE_ADMIN.toString())
 //			.build();
-		SiteUser admin = new SiteUser(
-				"admin@admin.com",
-				"admin",
-				passwordEncoder.encode("admin"),
+		SiteUser admin1 = new SiteUser(
+				"admin1@admin.com",
+				"admin1",
+				passwordEncoder.encode("admin1"),
 				UserRole.ROLE_ADMIN.toString()
 		);
-		userRepository.save(admin);
-		users.add(admin);
+		userRepository.save(admin1);
+		users.add(admin1);
+
+		SiteUser admin2 = new SiteUser(
+			"admin2@admin.com",
+			"admin2",
+			passwordEncoder.encode("admin2"),
+			UserRole.ROLE_ADMIN.toString()
+		);
+		userRepository.save(admin2);
+		users.add(admin2);
 
 //		SiteUser user1 = SiteUser.builder()
 //			.email("user1@user.com")
