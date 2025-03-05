@@ -165,17 +165,15 @@ public class BaseInitData {
 
 		List<Category> categories = new ArrayList<>();
 
-		Category freeBoard = Category.builder()
-				.name(CategoryName.FREE.getValue())
-				.build();
+		Category freeBoard = new Category(
+				CategoryName.FREE.getValue()
+		);
 		categories.add(freeBoard);
 
-		Category recruitmentBoard = Category.builder()
-				.name(CategoryName.RECRUITMENT.getValue())
-				.build();
+		Category recruitmentBoard = new Category(
+				CategoryName.RECRUITMENT.getValue()
+		);
 		categories.add(recruitmentBoard);
-
-		categoryRepository.saveAll(categories);
 	}
 
 }

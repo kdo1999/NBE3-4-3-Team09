@@ -19,7 +19,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Builder
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
@@ -33,7 +32,6 @@ public class Category extends BaseEntity {
     private String name;
 
     // Category 삭제시 Post도 다 삭제
-    @Builder.Default
     @OneToMany(mappedBy = "category", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Post> posts = new ArrayList<>();
 
@@ -61,6 +59,10 @@ public class Category extends BaseEntity {
 
     // 카테고리 더티 체킹
     public void updateName(String name) {
+        this.name = name;
+    }
+
+    public Category(String name) {
         this.name = name;
     }
 }
