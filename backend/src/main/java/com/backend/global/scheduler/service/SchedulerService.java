@@ -161,7 +161,7 @@ public class SchedulerService {
 	 */
 	private Jobs fetchJobPostings(int pageNumber, int count) {
 
-		URI uri = UriComponentsBuilder.fromHttpUrl(API_URL)
+		URI uri = UriComponentsBuilder.fromUriString(API_URL)
 			.queryParam("access-key", apiKey)
 			.queryParam("published", getPublishedDate())
 			.queryParam("job_mid_cd", "2")
