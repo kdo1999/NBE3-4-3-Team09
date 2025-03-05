@@ -10,10 +10,6 @@ import jakarta.validation.constraints.Email
 import lombok.*
 
 @Entity
-@Getter
-@Builder
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
 class SiteUser(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,17 +45,34 @@ class SiteUser(
         joinColumns = [JoinColumn(name = "user_id")],
         inverseJoinColumns = [JoinColumn(name = "job_skill_id")]
     )
-    var jobSkills: MutableList<JobSkill> = mutableListOf(), // 사용자 직무 스킬
+    private var _jobSkillList: MutableList<JobSkill> = mutableListOf(), // 사용자 직무 스킬
 
     @OneToMany(mappedBy = "author", cascade = [CascadeType.ALL])
-    var posts: MutableList<Post> = mutableListOf(), // 사용자가 작성한 게시글
+    var _postList: MutableList<Post> = mutableListOf(), // 사용자가 작성한 게시글
 
     @OneToMany(mappedBy = "siteUser", cascade = [CascadeType.ALL])
-    var comments: MutableList<Comment> = mutableListOf(), // 사용자가 작성한 댓글
+    var _commentList: MutableList<Comment> = mutableListOf(), // 사용자가 작성한 댓글
 
     @OneToMany(mappedBy = "siteUser", cascade = [CascadeType.ALL])
-    var voters: MutableList<Voter> = mutableListOf()
+    var _voterList: MutableList<Voter> = mutableListOf()
+
 ) : BaseEntity() {
+    constructor() : this(
+        id = null,
+        email = null,
+        password = null,
+        name = null,
+        introduction = null,
+        job = null,
+        userRole = null,
+        kakaoId = null,
+        profileImg = null,
+        _jobSkillList = mutableListOf(),
+        _postList = mutableListOf(),
+        _commentList = mutableListOf(),
+        _voterList = mutableListOf()
+    )
+
     constructor(
         id: Long?,
         email: String?,
@@ -127,55 +140,16 @@ class SiteUser(
         return this
     }
 
-    // 자바의 builder 기능을 쓰기 위한 코드
-//    companion object {
-//        @JvmStatic
-//        fun builder() = SiteUserBuilder()
-//    }
-//
-//    class SiteUserBuilder {
-//        private var id: Long? = null
-//        private var email: String? = null
-//        private var password: String? = null
-//        private var name: String? = null
-//        private var introduction: String? = null
-//        private var job: String? = null
-//        private var userRole: String? = null
-//        private var kakaoId: String? = null
-//        private var profileImg: String? = null
-//        private var jobSkills: MutableList<JobSkill> = mutableListOf()
-//        private var posts: MutableList<Post> = mutableListOf()
-//        private var comments: MutableList<Comment> = mutableListOf()
-//        private var voters: MutableList<Voter> = mutableListOf()
-//
-//        fun id(id: Long?) = apply { this.id = id }
-//        fun email(email: String?) = apply { this.email = email }
-//        fun password(password: String?) = apply { this.password = password }
-//        fun name(name: String?) = apply { this.name = name }
-//        fun introduction(introduction: String?) = apply { this.introduction = introduction }
-//        fun job(job: String?) = apply { this.job = job }
-//        fun userRole(userRole: String?) = apply { this.userRole = userRole }
-//        fun kakaoId(kakaoId: String?) = apply { this.kakaoId = kakaoId }
-//        fun profileImg(profileImg: String?) = apply { this.profileImg = profileImg }
-//        fun jobSkills(jobSkills: MutableList<JobSkill>) = apply { this.jobSkills = jobSkills }
-//        fun posts(posts: MutableList<Post>) = apply { this.posts = posts }
-//        fun comments(comments: MutableList<Comment>) = apply { this.comments = comments }
-//        fun voters(voters: MutableList<Voter>) = apply { this.voters = voters }
-//
-//        fun build() = SiteUser(
-//            id = id,
-//            email = email,
-//            password = password,
-//            name = name,
-//            introduction = introduction,
-//            job = job,
-//            userRole = userRole,
-//            kakaoId = kakaoId,
-//            profileImg = profileImg,
-//            jobSkills = jobSkills,
-//            posts = posts,
-//            comments = comments,
-//            voters = voters
-//        )
-//    }
+    val jobSkillList: List<JobSkill>
+        get() = _jobSkillList.toList()
+
+    val postLIst: List<Post>
+        get() = _postList.toList()
+
+    val commentLIst: List<Comment>
+        get() = _commentList.toList()
+
+    val voterList: List<Voter>
+        get() = _voterList.toList()
+
 }

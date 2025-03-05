@@ -289,7 +289,7 @@ class ApiV1UserControllerTest {
         SiteUser unchangedUser = userRepository.findById(siteUser.getId()).orElseThrow();
         assertThat(unchangedUser.getIntroduction()).isNull();
         assertThat(unchangedUser.getJob()).isNull();
-        assertThat(unchangedUser.getJobSkills()).isEmpty();
+        assertThat(unchangedUser.getJobSkillList()).isEmpty();
     }
 
     @Test
@@ -342,7 +342,7 @@ class ApiV1UserControllerTest {
         SiteUser unchangedUser = userRepository.findById(targetUser.getId()).orElseThrow();
         assertThat(unchangedUser.getIntroduction()).isNull();
         assertThat(unchangedUser.getJob()).isNull();
-        assertThat(unchangedUser.getJobSkills()).isEmpty();
+        assertThat(unchangedUser.getJobSkillList()).isEmpty();
     }
 
 }

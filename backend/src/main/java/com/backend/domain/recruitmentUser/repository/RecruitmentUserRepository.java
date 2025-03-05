@@ -27,7 +27,7 @@ public interface RecruitmentUserRepository extends JpaRepository<RecruitmentUser
 		    SELECT DISTINCT ru FROM RecruitmentUser ru
 		    JOIN FETCH ru.post p
 		    JOIN FETCH ru.siteUser su
-		    JOIN FETCH su.jobSkills
+		    JOIN FETCH su._jobSkillList
 		    WHERE p.postId = :postId AND su.id = :userId
 		""")
 	//TODO 언더바 추후 제거할 것
@@ -49,7 +49,7 @@ public interface RecruitmentUserRepository extends JpaRepository<RecruitmentUser
 		    SELECT ru FROM RecruitmentUser ru
 		    JOIN FETCH ru.post p
 		    JOIN FETCH ru.siteUser su
-		    JOIN FETCH su.jobSkills
+		    JOIN FETCH su._jobSkillList
 		    WHERE p.postId = :postId AND ru.status = :status
 		""")
 	Page<RecruitmentUser> findAllByPost_PostIdAndStatus(
@@ -71,7 +71,7 @@ public interface RecruitmentUserRepository extends JpaRepository<RecruitmentUser
 		    SELECT ru FROM RecruitmentUser ru
 		    JOIN FETCH ru.post p
 		    JOIN FETCH ru.siteUser su
-		    JOIN FETCH su.jobSkills
+		    JOIN FETCH su._jobSkillList
 		    WHERE su.id = :userId AND ru.status = :status
 		""")
 	Page<RecruitmentUser> findAllBySiteUser_IdAndStatus(

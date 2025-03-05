@@ -38,17 +38,17 @@ public class UserGetProfileResponse {
 		this.email = siteUser.getEmail();
 		this.introduction = siteUser.getIntroduction();
 		this.job = siteUser.getJob();
-		this.jobSkills = siteUser.getJobSkills() != null ? siteUser.getJobSkills().stream()
+		this.jobSkills = siteUser.getJobSkillList() != null ? siteUser.getJobSkillList().stream()
 			.map((j) -> JobSkillResponse.builder()
                 .code(j.getCode())
                 .name(j.getName())
                 .build())
 			.collect(Collectors.toList()) : null;
 		this.profileImg = siteUser.getProfileImg();
-		this.posts = siteUser.getPosts().stream()
+		this.posts = siteUser.getPostLIst().stream()
 				.map(UserPostResponse::new)
 				.collect(Collectors.toList());
-		this.comments = siteUser.getComments().stream()
+		this.comments = siteUser.getCommentLIst().stream()
 				.map(UserCommentResponse::new)
 				.collect(Collectors.toList());
 	}
