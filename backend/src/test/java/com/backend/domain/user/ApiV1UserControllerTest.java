@@ -211,7 +211,7 @@ class ApiV1UserControllerTest {
                 new JobSkillRequest("직무2")
         );
 
-        UserModifyProfileRequest request = new UserModifyProfileRequest();
+        UserModifyProfileRequest request = new UserModifyProfileRequest(siteUser);
         request.setIntroduction("자기소개수정");
         request.setJob("직업수정");
         request.setJobSkills(jobSkills);
@@ -264,7 +264,7 @@ class ApiV1UserControllerTest {
                 new JobSkillRequest("직무2")
         );
 
-        UserModifyProfileRequest request = new UserModifyProfileRequest();
+        UserModifyProfileRequest request = new UserModifyProfileRequest(siteUser);
         request.setIntroduction("자기소개수정");
         request.setJob("직업수정");
         request.setJobSkills(jobSkills);
@@ -307,7 +307,7 @@ class ApiV1UserControllerTest {
                 new JobSkillRequest("직무2")
         );
 
-        UserModifyProfileRequest request = new UserModifyProfileRequest();
+        UserModifyProfileRequest request = new UserModifyProfileRequest(loginUser);
         request.setIntroduction("자기소개수정");
         request.setJob("직업수정");
         request.setJobSkills(jobSkills);
