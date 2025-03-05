@@ -5,7 +5,7 @@ import com.backend.global.baseentity.BaseEntity
 import jakarta.persistence.*
 
 @Entity
-class Category protected constructor() : BaseEntity() {
+class Category(): BaseEntity() {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,12 +13,13 @@ class Category protected constructor() : BaseEntity() {
         protected set
 
     @Column(nullable = false, length = 25, unique = true)
-    var name: String = ""
+    lateinit var name: String
         protected set
 
     @OneToMany(mappedBy = "category", cascade = [CascadeType.REMOVE], orphanRemoval = true)
-    var posts: MutableList<Post> = mutableListOf() // 게시글 리스트
-        protected set
+    private var _postList: MutableList<Post> = mutableListOf() // 게시글 리스트
+    val postList: List<Post>
+        get() = _postList.toList()
 
     constructor(name: String) : this() {
         this.name = name
