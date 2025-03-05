@@ -1,11 +1,11 @@
 package com.backend.domain.chat.dto.request
 
 
-import com.backend.domain.chat.entity.MessageTypeKt
+import com.backend.domain.chat.entity.MessageType
 import jakarta.validation.constraints.NotBlank
 
-data class ChatRequestKt(
-    val type: MessageTypeKt,
+data class ChatRequest(
+    val type: MessageType,
 
     @field:NotBlank
     val userId: String,
