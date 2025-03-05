@@ -1,4 +1,4 @@
-package com.backend.domain.chat;// package com.backend.domain.chat;
+// package com.backend.domain.chat;// package com.backend.domain.chat;
 //
 // import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 // import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
@@ -24,7 +24,7 @@ package com.backend.domain.chat;// package com.backend.domain.chat;
 // @Transactional
 // @Sql(scripts = {"/sql/init.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_CLASS)
 // @Sql(scripts = {"/sql/delete.sql"}, executionPhase = Sql.ExecutionPhase.AFTER_TEST_CLASS)
-// class ApiV1ChatControllerTest {
+// class ChatControllerTest {
 //
 //     @Autowired
 //     private MockMvc mockMvc;
