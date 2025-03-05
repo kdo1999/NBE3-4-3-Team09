@@ -6,7 +6,6 @@ import com.backend.domain.category.service.CategoryService;
 import com.backend.global.response.GenericResponse;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.jpa.domain.AbstractPersistable_.id
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
