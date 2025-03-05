@@ -7,6 +7,6 @@ package com.backend.domain.jobposting.entity;
  *
  * @author Kim Dong O
  */
-public enum JobPostingStatus {
+enum class JobPostingStatus {
 	ACTIVE, END
 }

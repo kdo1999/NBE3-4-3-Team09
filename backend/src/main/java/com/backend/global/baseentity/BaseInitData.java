@@ -1,32 +1,27 @@
 package com.backend.global.baseentity;
 
-import com.backend.domain.category.domain.CategoryName;
-import com.backend.domain.category.entity.Category;
-import com.backend.domain.category.repository.CategoryRepository;
-import com.backend.domain.jobposting.entity.ExperienceLevel;
-import com.backend.domain.jobposting.entity.JobPosting;
-import com.backend.domain.jobposting.entity.JobPostingJobSkill;
-import com.backend.domain.jobposting.entity.JobPostingStatus;
-import com.backend.domain.jobposting.entity.RequireEducate;
-import com.backend.domain.jobposting.entity.Salary;
-import com.backend.domain.jobposting.repository.JobPostingRepository;
-import com.backend.domain.jobskill.constant.JobSkillConstant;
-import com.backend.domain.jobskill.entity.JobSkill;
-import com.backend.domain.jobskill.repository.JobSkillJpaRepository;
-import com.backend.domain.user.entity.SiteUser;
-import com.backend.domain.user.entity.UserRole;
-import com.backend.domain.user.repository.UserRepository;
-import com.backend.global.redis.repository.RedisRepository;
-import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import lombok.RequiredArgsConstructor;
+
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.EventListener;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.backend.domain.category.domain.CategoryName;
+import com.backend.domain.category.entity.Category;
+import com.backend.domain.category.repository.CategoryRepository;
+import com.backend.domain.jobposting.repository.JobPostingRepository;
+import com.backend.domain.jobskill.constant.JobSkillConstant;
+import com.backend.domain.jobskill.repository.JobSkillJpaRepository;
+import com.backend.domain.user.entity.SiteUser;
+import com.backend.domain.user.entity.UserRole;
+import com.backend.domain.user.repository.UserRepository;
+import com.backend.global.redis.repository.RedisRepository;
+
+import lombok.RequiredArgsConstructor;
 
 
 @Profile({"build", "dev"})
@@ -114,7 +109,7 @@ public class BaseInitData {
 		});
 	}
 
-	private void createJobPosting() {
+/*	private void createJobPosting() {
 
 		JobSkill jobSkill1 = jobSkillRepository.findById(1L).get();
 		JobSkill jobSkill2 = jobSkillRepository.findById(2L).get();
@@ -156,7 +151,7 @@ public class BaseInitData {
 
             jobPostingRepository.save(jobPosting);
 		}
-	}
+	}*/
 
 	private void createCategory() {
 		if (categoryRepository.findAll().size() > 0) {

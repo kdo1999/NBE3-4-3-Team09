@@ -114,9 +114,8 @@ public class ApiV1VoterControllerTest {
 
 		SiteUser givenSiteUser1 = userRepository.findByEmail("testEmail1@naver.com").get();
 
-		JobPosting jobPosting = JobPosting.builder()
-			.id(1L)
-			.build();
+		JobPosting jobPosting = new JobPosting(1L);
+
 		voterRepository.save(new Voter(jobPosting, givenSiteUser1, VoterType.JOB_POSTING));
 
 		//when
