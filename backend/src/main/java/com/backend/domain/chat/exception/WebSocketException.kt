@@ -2,7 +2,7 @@ package com.backend.domain.chat.exception
 
 import com.backend.global.exception.GlobalErrorCode
 
-class WebSocketExceptionKt(
+class WebSocketException(
     override val message: String
 ) : RuntimeException(message) {
 
