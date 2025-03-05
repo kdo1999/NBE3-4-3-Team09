@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED) // 기본 생성자
-class KComment(
+class Comment(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "comment_id")
