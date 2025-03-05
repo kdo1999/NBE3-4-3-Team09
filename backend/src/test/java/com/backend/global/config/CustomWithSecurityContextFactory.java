@@ -13,13 +13,24 @@ public class CustomWithSecurityContextFactory implements WithSecurityContextFact
 
     @Override
     public SecurityContext createSecurityContext(CustomWithMock annotation) {
-        CustomUserDetails userDetails = new CustomUserDetails(SiteUser.builder()
-                .id(annotation.id())
-                .email(annotation.email())
-                .password(annotation.password())
-                .name(annotation.name())
-                .userRole(annotation.role())
-                .build());
+//        CustomUserDetails userDetails = new CustomUserDetails(SiteUser.builder()
+//                .id(annotation.id())
+//                .email(annotation.email())
+//                .password(annotation.password())
+//                .name(annotation.name())
+//                .userRole(annotation.role())
+//                .build());
+        CustomUserDetails userDetails = new CustomUserDetails(
+                new SiteUser(
+                        annotation.id(),
+                        annotation.name(),
+                        annotation.email(),
+                        "",
+                        "",
+                        "",
+                        annotation.role()
+                )
+        );
 
         SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
         securityContext.setAuthentication(

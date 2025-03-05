@@ -47,4 +47,34 @@ class Voter {
 		this.siteUser = siteUser
 		this.voterType = voterType
 	}
+
+	companion object {
+        @JvmStatic
+        fun builder() = VoterBuilder()
+    }
+
+    class VoterBuilder {
+        private var id: Long? = null
+        private var jobPosting: JobPosting? = null
+        private var post: Post? = null
+        private var siteUser: SiteUser? = null
+        private var voterType: VoterType? = null
+
+        fun id(id: Long?) = apply { this.id = id }
+        fun jobPosting(jobPosting: JobPosting?) = apply { this.jobPosting = jobPosting }
+        fun post(post: Post?) = apply { this.post = post }
+        fun siteUser(siteUser: SiteUser?) = apply { this.siteUser = siteUser }
+        fun voterType(voterType: VoterType?) = apply { this.voterType = voterType }
+
+        fun build(): Voter {
+            requireNotNull(siteUser) { "siteUser must not be null" }
+            requireNotNull(voterType) { "voterType must not be null" }
+            
+            return when {
+                jobPosting != null -> Voter(jobPosting!!, siteUser!!, voterType!!)
+                post != null -> Voter(post!!, siteUser!!, voterType!!)
+                else -> throw IllegalStateException("Either jobPosting or post must be set")
+            }
+        }
+    }
 }

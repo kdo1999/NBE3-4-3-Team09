@@ -73,19 +73,35 @@ class ApiV1UserControllerTest {
     void setUp() {
         userRepository.deleteAll();
         
-        testUser = userRepository.save(SiteUser.builder()
-                .email("test@test.com")
-                .password("password")
-                .name("testUser")
-                .userRole(UserRole.ROLE_USER.toString())
-                .build());
+//        testUser = userRepository.save(SiteUser.builder()
+//                .email("test@test.com")
+//                .password("password")
+//                .name("testUser")
+//                .userRole(UserRole.ROLE_USER.toString())
+//                .build());
+        testUser = userRepository.save(
+                new SiteUser(
+                        "test@test.com",
+                        "testUser",
+                        "password",
+                        UserRole.ROLE_USER.toString()
+                )
+        );
 
-        otherUser = userRepository.save(SiteUser.builder()
-                .email("other@test.com")
-                .password("password")
-                .name("otherUser")
-                .userRole(UserRole.ROLE_USER.toString())
-                .build());
+//        otherUser = userRepository.save(SiteUser.builder()
+//                .email("other@test.com")
+//                .password("password")
+//                .name("otherUser")
+//                .userRole(UserRole.ROLE_USER.toString())
+//                .build());
+        otherUser = userRepository.save(
+                new SiteUser(
+                        "other@test.com",
+                        "otherUser",
+                        "password",
+                        UserRole.ROLE_USER.toString()
+                )
+        );
 
         jobSkill1 = jobSkillRepository.save(JobSkill.builder()
                 .name("직무1")
@@ -103,12 +119,18 @@ class ApiV1UserControllerTest {
     @CustomWithMock
     void test1() throws Exception {
 
-        SiteUser siteUser = SiteUser.builder()
-                .email("test1@test.com")
-                .password(passwordEncoder.encode("password"))
-                .name("test1")
-                .userRole(UserRole.ROLE_ADMIN.toString())
-                .build();
+//        SiteUser siteUser = SiteUser.builder()
+//                .email("test1@test.com")
+//                .password(passwordEncoder.encode("password"))
+//                .name("test1")
+//                .userRole(UserRole.ROLE_ADMIN.toString())
+//                .build();
+        SiteUser siteUser = new SiteUser(
+                "test1@test.com",
+                "test1",
+                passwordEncoder.encode("password"),
+                UserRole.ROLE_ADMIN.toString()
+        );
         userRepository.save(siteUser);
 
         String accessToken = mockMvc.perform(post("/api/v1/adm/login")
@@ -149,20 +171,20 @@ class ApiV1UserControllerTest {
     @Test
     @DisplayName("프로필 조회 실패 - 다른 사용자의 프로필 접근")
     void test3() throws Exception {
-        SiteUser targetUser = SiteUser.builder()
-                .email("target@test.com")
-                .password(passwordEncoder.encode("password"))
-                .name("target")
-                .userRole(UserRole.ROLE_USER.toString())
-                .build();
+        SiteUser targetUser = new SiteUser(
+                "target@test.com",
+                "target",
+                passwordEncoder.encode("password"),
+                UserRole.ROLE_ADMIN.toString()
+        );
         userRepository.save(targetUser);
 
-        SiteUser loginUser = SiteUser.builder()
-                .email("test1@test.com")
-                .password(passwordEncoder.encode("password"))
-                .name("test1")
-                .userRole(UserRole.ROLE_ADMIN.toString())
-                .build();
+        SiteUser loginUser = new SiteUser(
+                "test1@test.com",
+                "test1",
+                passwordEncoder.encode("password"),
+                UserRole.ROLE_ADMIN.toString()
+        );
         userRepository.save(loginUser);
 
         String accessToken = mockMvc.perform(post("/api/v1/adm/login")
@@ -185,12 +207,12 @@ class ApiV1UserControllerTest {
     @DisplayName("프로필 수정 성공")
     @CustomWithMock
     void test4() throws Exception {
-        SiteUser siteUser = SiteUser.builder()
-                .email("test1@test.com")
-                .password(passwordEncoder.encode("password"))
-                .name("test1")
-                .userRole(UserRole.ROLE_ADMIN.toString())
-                .build();
+        SiteUser siteUser = new SiteUser(
+                "test1@test.com",
+                "test1",
+                passwordEncoder.encode("password"),
+                UserRole.ROLE_ADMIN.toString()
+        );
         userRepository.save(siteUser);
 
         List<JobSkillRequest> jobSkills = List.of(
@@ -238,12 +260,12 @@ class ApiV1UserControllerTest {
     @Test
     @DisplayName("프로필 수정 실패 - 비로그인 사용자")
     void test5() throws Exception {
-        SiteUser siteUser = SiteUser.builder()
-                .email("test1@test.com")
-                .password(passwordEncoder.encode("password"))
-                .name("test1")
-                .userRole(UserRole.ROLE_ADMIN.toString())
-                .build();
+        SiteUser siteUser = new SiteUser(
+                "test1@test.com",
+                "test1",
+                passwordEncoder.encode("password"),
+                UserRole.ROLE_ADMIN.toString()
+        );
         userRepository.save(siteUser);
 
         List<JobSkillRequest> jobSkills = List.of(
@@ -267,26 +289,26 @@ class ApiV1UserControllerTest {
         SiteUser unchangedUser = userRepository.findById(siteUser.getId()).orElseThrow();
         assertThat(unchangedUser.getIntroduction()).isNull();
         assertThat(unchangedUser.getJob()).isNull();
-        assertThat(unchangedUser.getJobSkills()).isEmpty();
+        assertThat(unchangedUser.getJobSkillList()).isEmpty();
     }
 
     @Test
     @DisplayName("프로필 수정 실패 - 다른 사용자의 프로필 수정 시도")
     void test6() throws Exception {
-        SiteUser targetUser = SiteUser.builder()
-                .email("target@test.com")
-                .password(passwordEncoder.encode("password"))
-                .name("target")
-                .userRole(UserRole.ROLE_USER.toString())
-                .build();
+        SiteUser targetUser = new SiteUser(
+                "target@test.com",
+                "target",
+                passwordEncoder.encode("password"),
+                UserRole.ROLE_ADMIN.toString()
+        );
         userRepository.save(targetUser);
 
-        SiteUser loginUser = SiteUser.builder()
-                .email("test1@test.com")
-                .password(passwordEncoder.encode("password"))
-                .name("test1")
-                .userRole(UserRole.ROLE_ADMIN.toString())
-                .build();
+        SiteUser loginUser = new SiteUser(
+                "test1@test.com",
+                "test1",
+                passwordEncoder.encode("password"),
+                UserRole.ROLE_ADMIN.toString()
+        );
         userRepository.save(loginUser);
 
         List<JobSkillRequest> jobSkills = List.of(
@@ -320,7 +342,7 @@ class ApiV1UserControllerTest {
         SiteUser unchangedUser = userRepository.findById(targetUser.getId()).orElseThrow();
         assertThat(unchangedUser.getIntroduction()).isNull();
         assertThat(unchangedUser.getJob()).isNull();
-        assertThat(unchangedUser.getJobSkills()).isEmpty();
+        assertThat(unchangedUser.getJobSkillList()).isEmpty();
     }
 
 }

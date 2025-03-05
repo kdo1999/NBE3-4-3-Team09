@@ -38,14 +38,22 @@ public class CustomOAuth2UserServiceTest {
     @Test
     @DisplayName("신규 사용자 저장 테스트")
     void saveNewUserTest() {
-        SiteUser siteUser = SiteUser.builder()
-                .name("testUser")
-                .email("testUser@kakao.com")
-                .kakaoId("12345")
-                .profileImg("test.jpg")
-                .password("")
-                .userRole(UserRole.ROLE_USER.toString())
-                .build();
+//        SiteUser siteUser = SiteUser.builder()
+//                .name("testUser")
+//                .email("testUser@kakao.com")
+//                .kakaoId("12345")
+//                .profileImg("test.jpg")
+//                .password("")
+//                .userRole(UserRole.ROLE_USER.toString())
+//                .build();
+        SiteUser siteUser = new SiteUser(
+                "testUser",
+                "testUser@kakao.com",
+                "12345",
+                "test.jpg",
+                "",
+                UserRole.ROLE_USER.toString()
+        );
                 
         when(userRepository.findByKakaoId("12345")).thenReturn(Optional.empty());
         when(userRepository.save(any(SiteUser.class))).thenReturn(siteUser);
