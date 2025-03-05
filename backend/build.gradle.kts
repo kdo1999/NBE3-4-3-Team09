@@ -74,8 +74,8 @@ dependencies {
 
     // QueryDSL Kotlin
     implementation("com.querydsl:querydsl-jpa:5.1.0:jakarta")
-//    kapt("com.querydsl:querydsl-apt:5.1.0:jakarta")
-    annotationProcessor("com.querydsl:querydsl-apt:5.1.0:jakarta")
+    kapt("com.querydsl:querydsl-apt:5.1.0:jakarta")
+//    annotationProcessor("com.querydsl:querydsl-apt:5.1.0:jakarta")
     annotationProcessor("jakarta.annotation:jakarta.annotation-api")
     annotationProcessor("jakarta.persistence:jakarta.persistence-api")
 
@@ -118,7 +118,7 @@ allOpen {
 }
 
 
-
+/*
 // QueryDSL 빌드 옵션 (옵션)
 val generated = "src/main/generated"
 
@@ -135,7 +135,7 @@ sourceSets.main {
 // Gradle clean 시 QClass 디렉토리 삭제
 tasks.clean {
     delete(generated)
-}
+}*/
 tasks.jar {
     enabled = false
 }
