@@ -1,9 +1,9 @@
 package com.backend.domain.chat.service
 
-import com.backend.domain.chat.converter.ChatConverterKt
-import com.backend.domain.chat.dto.request.ChatRequestKt
-import com.backend.domain.chat.dto.response.ChatResponseKt
-import com.backend.domain.chat.dto.response.ChatResponsesKt
+import com.backend.domain.chat.converter.ChatConverter
+import com.backend.domain.chat.dto.request.ChatRequest
+import com.backend.domain.chat.dto.response.ChatResponse
+import com.backend.domain.chat.dto.response.ChatResponses
 import com.backend.domain.chat.repository.ChatRepository
 import com.backend.domain.user.repository.UserRepository
 import com.backend.global.exception.GlobalErrorCode
@@ -19,7 +19,7 @@ import java.time.Duration
 private val log = KotlinLogging.logger {}
 
 @Service
-class ChatServiceKt(
+class ChatService(
     private val chatRepository: ChatRepository,
     private val userRepository: UserRepository,
     private val redisTemplate: RedisTemplate<String, String>
@@ -34,20 +34,20 @@ class ChatServiceKt(
 
     private val objectMapper = jacksonObjectMapper()
 
-    fun save(chatRequest: ChatRequestKt, postId: String): ChatResponseKt {
+    fun save(chatRequest: ChatRequest, postId: String): ChatResponse {
         val user = userRepository.findByIdOrNull(chatRequest.userId.toLong())
             ?: throw GlobalException(GlobalErrorCode.USER_NOT_FOUND)
 
         val chatResponse = chatRepository.save(
-            ChatConverterKt.toChat(chatRequest, postId, user)
-        ).let { ChatConverterKt.toChatResponse(it) }
+            ChatConverter.toChat(chatRequest, postId, user)
+        ).let { ChatConverter.toChatResponse(it) }
 
         saveChatToRedis(postId, chatResponse)
         extendTTL(postId)
         return chatResponse
     }
 
-    fun getAllByPostId(postId: String): ChatResponsesKt {
+    fun getAllByPostId(postId: String): ChatResponses {
         val redisKey = redisKey(postId)
         val cachedChats = redisTemplate.opsForList().range(redisKey, 0, -1)
             ?.mapNotNull { parseJson(it) } ?: emptyList()
@@ -59,7 +59,7 @@ class ChatServiceKt(
 
             val missingChats = if (oldestCachedId != null) {
                 chatRepository.findChatsBefore(postId, oldestCachedId, 50)
-                    .map { ChatConverterKt.toChatResponse(it) }
+                    .map { ChatConverter.toChatResponse(it) }
             } else {
                 emptyList()
             }
@@ -67,18 +67,18 @@ class ChatServiceKt(
             if (missingChats.isNotEmpty()) {
                 saveChatsToRedis(postId, missingChats)
             }
-            return ChatResponsesKt(missingChats + cachedChats)
+            return ChatResponses(missingChats + cachedChats)
         }
 
         log.info { "Cache Expired → Fetching from MongoDB → postId = $postId" }
         val chats = chatRepository.findRecentChatsByPost(postId, 100)
-            .map { ChatConverterKt.toChatResponse(it) }
+            .map { ChatConverter.toChatResponse(it) }
 
         saveChatsToRedis(postId, chats)
-        return ChatResponsesKt(chats)
+        return ChatResponses(chats)
     }
 
-    private fun saveChatToRedis(postId: String, chatResponse: ChatResponseKt) {
+    private fun saveChatToRedis(postId: String, chatResponse: ChatResponse) {
         val redisKey = redisKey(postId)
         runCatching {
             objectMapper.writeValueAsString(chatResponse)
@@ -91,7 +91,7 @@ class ChatServiceKt(
         }
     }
 
-    private fun saveChatsToRedis(postId: String, chats: List<ChatResponseKt>) {
+    private fun saveChatsToRedis(postId: String, chats: List<ChatResponse>) {
         if (chats.isEmpty()) return
         val redisKey = redisKey(postId)
         chats.forEach { chat ->
@@ -106,8 +106,8 @@ class ChatServiceKt(
         redisTemplate.opsForList().trim(redisKey, -MAX_CACHED_MESSAGES, -1)
     }
 
-    private fun parseJson(json: String): ChatResponseKt? =
-        runCatching { objectMapper.readValue<ChatResponseKt>(json) }
+    private fun parseJson(json: String): ChatResponse? =
+        runCatching { objectMapper.readValue<ChatResponse>(json) }
             .onFailure { log.error(it) { "JSON 변환 오류" } }
             .getOrNull()
 
