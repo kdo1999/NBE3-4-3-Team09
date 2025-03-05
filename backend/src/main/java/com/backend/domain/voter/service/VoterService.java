@@ -48,9 +48,7 @@ public class VoterService {
 		switch (voterType) {
 			case JOB_POSTING -> {
 
-				JobPosting jobPosting = JobPosting.builder()
-					.id(targetId)
-					.build();
+				JobPosting jobPosting = new JobPosting(targetId);
 
 				Voter saveVoter = new Voter(jobPosting, siteUser, voterType);
 

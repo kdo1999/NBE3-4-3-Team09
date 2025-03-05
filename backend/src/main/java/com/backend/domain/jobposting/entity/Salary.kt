@@ -1,12 +1,7 @@
 package com.backend.domain.jobposting.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Embeddable;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.Column
+import jakarta.persistence.Embeddable
 
 /**
  * Salary
@@ -15,15 +10,16 @@ import lombok.NoArgsConstructor;
  * @author Kim Dong O
  */
 @Embeddable
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor(access = AccessLevel.PROTECTED)
-@Builder
-@Getter
-public class Salary {
+class Salary {
 
 	@Column(name = "salary_code", nullable = false)
-	private Integer code; //code
+	var code: Int? = null //code
 
 	@Column(name = "salary_name", length = 20)
-	private String name; //DisplayName
+	lateinit var name: String //DisplayName
+
+	constructor(code: Int, name: String) {
+		this.code = code
+		this.name = name
+	}
 }

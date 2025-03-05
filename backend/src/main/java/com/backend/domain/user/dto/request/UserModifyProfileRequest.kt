@@ -1,45 +1,15 @@
-package com.backend.domain.user.dto.request;
+package com.backend.domain.user.dto.request
 
-import com.backend.domain.jobskill.entity.JobSkill;
-import com.backend.domain.user.entity.SiteUser;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import com.backend.domain.user.entity.SiteUser
 
-import java.util.List;
-
-@Getter
-@NoArgsConstructor
-public class UserModifyProfileRequest {
-
-    private String introduction;
-
-    private String job;
-
-    private List<JobSkillRequest> jobSkills;
-
-    public UserModifyProfileRequest(SiteUser siteUser) {
-        this.introduction = siteUser.getIntroduction();
-        this.job = siteUser.getJob();
-    }
-
-    public String getIntroduction() {
-        return introduction;
-    }
-
-    public String getJob() {
-        return job;
-    }
-
-    public void setIntroduction(String introduction) {
-        this.introduction = introduction;
-    }
-
-    public void setJob(String job) {
-        this.job = job;
-    }
-
-    public void setJobSkills(List<JobSkillRequest> jobSkills) {
-        this.jobSkills = jobSkills;
-    }
-
+data class UserModifyProfileRequest(
+    var introduction: String?,
+    var job: String?,
+    var jobSkills: List<JobSkillRequest>? = null
+) {
+    constructor(siteUser: SiteUser) : this(
+        introduction = siteUser.introduction,
+        job = siteUser.job,
+        jobSkills = null
+    )
 }

@@ -1,6 +1,5 @@
 package com.backend.global.baseentity;
 
-import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,15 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.backend.domain.category.domain.CategoryName;
 import com.backend.domain.category.entity.Category;
 import com.backend.domain.category.repository.CategoryRepository;
-import com.backend.domain.jobposting.entity.ExperienceLevel;
-import com.backend.domain.jobposting.entity.JobPosting;
-import com.backend.domain.jobposting.entity.JobPostingJobSkill;
-import com.backend.domain.jobposting.entity.JobPostingStatus;
-import com.backend.domain.jobposting.entity.RequireEducate;
-import com.backend.domain.jobposting.entity.Salary;
 import com.backend.domain.jobposting.repository.JobPostingRepository;
 import com.backend.domain.jobskill.constant.JobSkillConstant;
-import com.backend.domain.jobskill.entity.JobSkill;
 import com.backend.domain.jobskill.repository.JobSkillJpaRepository;
 import com.backend.domain.user.entity.SiteUser;
 import com.backend.domain.user.entity.UserRole;
@@ -60,29 +52,14 @@ public class BaseInitData {
 
 		List<SiteUser> users = new ArrayList<>();
 
-//		SiteUser admin = SiteUser.builder()
-//			.email("admin@admin.com")
-//			.name("admin")
-//			.password(passwordEncoder.encode("admin"))
-//			.userRole(UserRole.ROLE_ADMIN.toString())
-//			.build();
-		SiteUser admin1 = new SiteUser(
-				"admin1@admin.com",
-				"admin1",
-				passwordEncoder.encode("admin1"),
+		SiteUser admin = new SiteUser(
+				"admin@admin.com",
+				"admin",
+				passwordEncoder.encode("admin"),
 				UserRole.ROLE_ADMIN.toString()
 		);
-		userRepository.save(admin1);
-		users.add(admin1);
-
-		SiteUser admin2 = new SiteUser(
-			"admin2@admin.com",
-			"admin2",
-			passwordEncoder.encode("admin2"),
-			UserRole.ROLE_ADMIN.toString()
-		);
-		userRepository.save(admin2);
-		users.add(admin2);
+		userRepository.save(admin);
+		users.add(admin);
 
 //		SiteUser user1 = SiteUser.builder()
 //			.email("user1@user.com")
@@ -126,7 +103,7 @@ public class BaseInitData {
 		});
 	}
 
-	private void createJobPosting() {
+/*	private void createJobPosting() {
 
 		JobSkill jobSkill1 = jobSkillRepository.findById(1L).get();
 		JobSkill jobSkill2 = jobSkillRepository.findById(2L).get();
@@ -168,7 +145,7 @@ public class BaseInitData {
 
             jobPostingRepository.save(jobPosting);
 		}
-	}
+	}*/
 
 	private void createCategory() {
 		if (categoryRepository.findAll().size() > 0) {
@@ -177,14 +154,14 @@ public class BaseInitData {
 
 		List<Category> categories = new ArrayList<>();
 
-		Category freeBoard = Category.builder()
-				.name(CategoryName.FREE.getValue())
-				.build();
+		Category freeBoard = new Category(
+				CategoryName.FREE.getValue()
+		);
 		categories.add(freeBoard);
 
-		Category recruitmentBoard = Category.builder()
-				.name(CategoryName.RECRUITMENT.getValue())
-				.build();
+		Category recruitmentBoard = new Category(
+				CategoryName.RECRUITMENT.getValue()
+		);
 		categories.add(recruitmentBoard);
 
 		categoryRepository.saveAll(categories);

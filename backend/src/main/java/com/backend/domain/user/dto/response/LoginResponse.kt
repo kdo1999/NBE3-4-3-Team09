@@ -1,14 +1,5 @@
-package com.backend.domain.user.dto.response;
+package com.backend.domain.user.dto.response
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-
-@Getter
-@Setter
-@AllArgsConstructor
-public class LoginResponse {
-
-    private String email;
-
-}
+data class LoginResponse(
+    val email: String
+)

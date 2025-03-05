@@ -1,12 +1,7 @@
 package com.backend.domain.jobposting.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Embeddable;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.Column
+import jakarta.persistence.Embeddable
 
 /**
  * ExperienceLevel
@@ -15,21 +10,25 @@ import lombok.NoArgsConstructor;
  * @author Kim Dong O
  */
 @Embeddable
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor(access = AccessLevel.PROTECTED)
-@Builder
-@Getter
-public class ExperienceLevel {
+class ExperienceLevel {
 
 	@Column(name = "experience_level_code")
-	private Integer code; //code
+	var code: Int? = null //code
 
 	@Column(name = "experience_level_min")
-	private Integer min; //경력 최소 값
+	var min: Int? = null //경력 최소 값
 
 	@Column(name = "experience_level_max")
-	private Integer max; //경력 최대 값
+	var max: Int? = null //경력 최대 값
 
 	@Column(name = "experience_level_name")
-	private String name; //DisplayName
+	lateinit var name: String //DisplayName
+		protected set
+
+	constructor(code: Int, min: Int, max: Int, name: String) {
+		this.code = code
+		this.min = min
+		this.max = max
+		this.name = name
+	}
 }

@@ -100,7 +100,7 @@ public class JobPostingQueryRepository {
 					Expressions.constant(jobSkillResponses),
 					jobPosting.applyCnt, voter.countDistinct(), siteUserVoted))
 			.from(jobPosting)
-			.leftJoin(jobPosting.voterList, voter)
+			.leftJoin(jobPosting._voterList, voter)
 			.groupBy(jobPosting.id, jobPosting.postDate, jobPosting.openDate, jobPosting.closeDate,
 				jobPosting.companyName, jobPosting.companyLink, jobPosting.experienceLevel,
 				jobPosting.requireEducate, jobPosting.jobPostingStatus, jobPosting.salary,
@@ -121,7 +121,7 @@ public class JobPostingQueryRepository {
 					jobPosting.requireEducate, jobPosting.jobPostingStatus, jobPosting.salary,
 					jobPosting.applyCnt))
 			.from(jobPosting)
-			.leftJoin(jobPosting.voterList, voter)
+			.leftJoin(jobPosting._voterList, voter)
 			.where(getSubjectContains(jobPostingSearchCondition.kw()),
 				getExperienceLevelEq(jobPostingSearchCondition.experienceLevel()),
 				getRequireEducateCode(jobPostingSearchCondition.requireEducateCode()),

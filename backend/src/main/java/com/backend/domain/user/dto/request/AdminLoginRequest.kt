@@ -1,21 +1,17 @@
-package com.backend.domain.user.dto.request;
+package com.backend.domain.user.dto.request
 
-import com.backend.domain.user.entity.SiteUser;
-import jakarta.validation.constraints.NotBlank;
-import lombok.Getter;
+import com.backend.domain.user.entity.SiteUser
+import jakarta.validation.constraints.NotBlank
 
-@Getter
-public class AdminLoginRequest {
-
-    @NotBlank
-    private String email;
-
-    @NotBlank
-    private String password;
-
-    public AdminLoginRequest(SiteUser siteUser) {
-        this.email = siteUser.getEmail();
-        this.password = siteUser.getPassword();
-    }
-
+data class AdminLoginRequest(
+    @field:NotBlank
+    val email: String?,
+    
+    @field:NotBlank
+    val password: String?
+) {
+    constructor(siteUser: SiteUser) : this(
+        email = siteUser.email,
+        password = siteUser.password
+    )
 }

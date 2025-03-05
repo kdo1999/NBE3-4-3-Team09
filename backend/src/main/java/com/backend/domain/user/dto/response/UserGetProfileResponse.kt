@@ -1,86 +1,61 @@
-package com.backend.domain.user.dto.response;
+package com.backend.domain.user.dto.response
 
-import com.backend.domain.comment.entity.Comment;
-import com.backend.domain.jobskill.dto.JobSkillResponse;
-import com.backend.domain.post.entity.Post;
-import com.backend.domain.user.entity.SiteUser;
+import com.backend.domain.comment.entity.Comment
+import com.backend.domain.jobskill.dto.JobSkillResponse
+import com.backend.domain.jobskill.entity.JobSkill
+import com.backend.domain.post.entity.Post
+import com.backend.domain.user.entity.SiteUser
+import java.time.ZonedDateTime
 
-import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-
-@Getter
-public class UserGetProfileResponse {
-
-    private final String name;
-
-    private final String email;
-
-    private final String introduction;
-
-    private final String job;
-
-    private final List<JobSkillResponse> jobSkills;
-
-    private final String profileImg;
-
-	private final List<UserPostResponse> posts;
-
-	private final List<UserCommentResponse> comments;
-
-	public UserGetProfileResponse(SiteUser siteUser) {
-		this.name = siteUser.getName();
-		this.email = siteUser.getEmail();
-		this.introduction = siteUser.getIntroduction();
-		this.job = siteUser.getJob();
-		this.jobSkills = siteUser.getJobSkillList() != null ? siteUser.getJobSkillList().stream()
-			.map((j) -> JobSkillResponse.builder()
-                .code(j.getCode())
-                .name(j.getName())
-                .build())
-			.collect(Collectors.toList()) : null;
-		this.profileImg = siteUser.getProfileImg();
-		this.posts = siteUser.getPostLIst().stream()
-				.map(UserPostResponse::new)
-				.collect(Collectors.toList());
-		this.comments = siteUser.getCommentLIst().stream()
-				.map(UserCommentResponse::new)
-				.collect(Collectors.toList());
-	}
-
+data class UserGetProfileResponse(
+    val name: String?,
+    val email: String?,
+    val introduction: String?,
+    val job: String?,
+//    val jobSkills: List<JobSkillResponse>?,
+    val profileImg: String?,
+//    val posts: List<UserPostResponse>,
+//    val comments: List<UserCommentResponse>
+) {
+    constructor(siteUser: SiteUser) : this(
+        name = siteUser.name,
+        email = siteUser.email,
+        introduction = siteUser.introduction,
+        job = siteUser.job,
+//        jobSkills = siteUser.jobSkillList?.map { jobSkill ->
+//            JobSkillResponse.builder()
+//                .code(jobSkill.code)
+//                .name(jobSkill.name)
+//                .build()
+//        },
+        profileImg = siteUser.profileImg,
+//        posts = siteUser.postLIst.map { UserPostResponse(it) },
+//        comments = siteUser.commentLIst.map { UserCommentResponse(it) }
+    )
 }
 
-@Getter
-@AllArgsConstructor
-class UserPostResponse {
-	private Long postId;
-	private String subject;
-	private ZonedDateTime createdAt;
-
-	public UserPostResponse(Post post) {
-		this.postId = post.getPostId();
-		this.subject = post.getSubject();
-		this.createdAt = post.getCreatedAt();
-	}
-}
-
-@Getter
-@AllArgsConstructor
-class UserCommentResponse {
-	private Long commentId;
-	private String content;
-	private Long postId;
-	private ZonedDateTime createdAt;
-
-	public UserCommentResponse(Comment comment) {
-		this.commentId = comment.getId();
-		this.content = comment.getContent();
-		this.postId = comment.getPost().getPostId();
-		this.createdAt = comment.getCreatedAt();
-	}
-}
+//data class UserPostResponse(
+//    val postId: Long,
+//    val subject: String,
+//    val createdAt: ZonedDateTime
+//) {
+//    constructor(post: Post) : this(
+//        postId = post.postId,
+//        subject = post.subject,
+//        createdAt = post.createdAt
+//    )
+//}
+//
+//data class UserCommentResponse(
+//    val commentId: Long,
+//    val content: String,
+//    val postId: Long,
+//    val createdAt: ZonedDateTime
+//) {
+//    constructor(comment: Comment) : this(
+//        commentId = comment.id,
+//        content = comment.content,
+//        postId = comment.post.postId,
+//        createdAt = comment.createdAt
+//    )
+//}
