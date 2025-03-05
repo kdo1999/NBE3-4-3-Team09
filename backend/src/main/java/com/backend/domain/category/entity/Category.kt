@@ -5,17 +5,20 @@ import com.backend.global.baseentity.BaseEntity
 import jakarta.persistence.*
 
 @Entity
-open class Category protected constructor() : BaseEntity() {
+class Category protected constructor() : BaseEntity() {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    open var id: Long? = null
+    var id: Long? = null
+        protected set
 
     @Column(nullable = false, length = 25, unique = true)
-    open var name: String = ""
+    var name: String = ""
+        protected set
 
     @OneToMany(mappedBy = "category", cascade = [CascadeType.REMOVE], orphanRemoval = true)
-    open var posts: MutableList<Post> = mutableListOf() // 게시글 리스트
+    var posts: MutableList<Post> = mutableListOf() // 게시글 리스트
+        protected set
 
     constructor(name: String) : this() {
         this.name = name
@@ -42,7 +45,7 @@ open class Category protected constructor() : BaseEntity() {
     }
 
     // 카테고리 더티 체킹
-    open fun updateName(name: String) {
+    fun updateName(name: String) {
         this.name = name
     }
 }
