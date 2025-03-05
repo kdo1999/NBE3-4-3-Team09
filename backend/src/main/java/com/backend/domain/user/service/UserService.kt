@@ -1,7 +1,6 @@
 package com.backend.domain.user.service
 
 import com.backend.domain.jobskill.repository.JobSkillRepository
-import com.backend.domain.user.dto.request.JobSkillRequest
 import com.backend.domain.user.dto.request.UserModifyProfileRequest
 import com.backend.domain.user.entity.SiteUser
 import com.backend.domain.user.repository.UserRepository
@@ -25,7 +24,7 @@ class UserService(
      * @return [SiteUser]
      */
     fun getUserById(id: Long): SiteUser {
-        return userRepository!!.findById(id).orElseThrow { GlobalException(GlobalErrorCode.USER_NOT_FOUND) }
+        return userRepository.findById(id).orElseThrow { GlobalException(GlobalErrorCode.USER_NOT_FOUND) }
     }
 
     /**

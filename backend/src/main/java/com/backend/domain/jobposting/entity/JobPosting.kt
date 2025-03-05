@@ -116,7 +116,11 @@ class JobPosting {
 		this.companyLink = companyLink
 	}
 
-	fun addJobPostingJobSkill(jobSkill: JobPostingJobSkill) {
+    constructor(id: Long?) {
+        this.id = id
+    }
+
+    fun addJobPostingJobSkill(jobSkill: JobPostingJobSkill) {
 		_jobPostingJobSkillList.add(jobSkill)
 	}
 }
