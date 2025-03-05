@@ -1,6 +1,6 @@
-package com.backend.domain.chat.repository.kotlin
+package com.backend.domain.chat.repository
 
-import com.backend.domain.chat.entity.ChatKt
+import com.backend.domain.chat.entity.Chat
 import org.springframework.data.domain.Sort
 import org.springframework.data.mongodb.core.MongoTemplate
 import org.springframework.data.mongodb.core.query.Criteria
@@ -12,33 +12,33 @@ class ChatRepositoryImpl(
     private val mongoTemplate: MongoTemplate
 ) : CustomChatRepository {
 
-    override fun findChatsByPost(postId: String): List<ChatKt> =
+    override fun findChatsByPost(postId: String): List<Chat> =
         postId.takeIf { it.isNotBlank() }?.let {
             Query().run {
                 addCriteria(Criteria.where("postId").`is`(it))
                 with(Sort.by(Sort.Direction.ASC, "_id"))
-                mongoTemplate.find(this, ChatKt::class.java)
+                mongoTemplate.find(this, Chat::class.java)
             }
         } ?: emptyList()
 
-    override fun findChatsBefore(postId: String, lastMessageId: String, limit: Int): List<ChatKt> =
+    override fun findChatsBefore(postId: String, lastMessageId: String, limit: Int): List<Chat> =
         postId.takeIf { it.isNotBlank() }?.let {
             Query().run {
                 addCriteria(Criteria.where("postId").`is`(it))
                 addCriteria(Criteria.where("_id").lt(lastMessageId)) // lastMessageId 이전의 메시지 가져오기
                 with(Sort.by(Sort.Direction.DESC, "_id")) // 최신순 정렬 후
                 limit(limit) // 최대 조회 개수 제한
-                mongoTemplate.find(this, ChatKt::class.java).reversed() // 다시 오래된 순으로 정렬
+                mongoTemplate.find(this, Chat::class.java).reversed() // 다시 오래된 순으로 정렬
             }
         } ?: emptyList()
 
-    override fun findRecentChatsByPost(postId: String, limit: Int): List<ChatKt> =
+    override fun findRecentChatsByPost(postId: String, limit: Int): List<Chat> =
         postId.takeIf { it.isNotBlank() }?.let {
             Query().run {
                 addCriteria(Criteria.where("postId").`is`(it))
                 with(Sort.by(Sort.Direction.DESC, "_id")) // 최신순 정렬
                 limit(limit) // 가장 최신 limit개만 가져오기
-                mongoTemplate.find(this, ChatKt::class.java).reversed() // 오래된 순으로 정렬
+                mongoTemplate.find(this, Chat::class.java).reversed() // 오래된 순으로 정렬
             }
         } ?: emptyList()
 }

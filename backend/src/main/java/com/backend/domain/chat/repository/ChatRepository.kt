@@ -1,6 +1,6 @@
-package com.backend.domain.chat.repository.kotlin
+package com.backend.domain.chat.repository
 
-import com.backend.domain.chat.entity.ChatKt
+import com.backend.domain.chat.entity.Chat
 import org.springframework.data.mongodb.repository.MongoRepository
 
-interface ChatRepository : MongoRepository<ChatKt, String>, CustomChatRepository
+interface ChatRepository : MongoRepository<Chat, String>, CustomChatRepository
