@@ -1,5 +1,8 @@
 package com.backend.domain.voter.service;
 
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.backend.domain.jobposting.entity.JobPosting;
 import com.backend.domain.jobposting.repository.JobPostingRepository;
 import com.backend.domain.post.entity.Post;
@@ -10,9 +13,8 @@ import com.backend.domain.voter.entity.Voter;
 import com.backend.domain.voter.repository.VoterRepository;
 import com.backend.global.exception.GlobalErrorCode;
 import com.backend.global.exception.GlobalException;
+
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * VoterService
@@ -50,11 +52,7 @@ public class VoterService {
 					.id(targetId)
 					.build();
 
-				Voter saveVoter = Voter.builder()
-					.siteUser(siteUser)
-					.jobPosting(jobPosting)
-					.voterType(voterType)
-					.build();
+				Voter saveVoter = new Voter(jobPosting, siteUser, voterType);
 
 				voterRepository.save(saveVoter);
 			}
@@ -63,11 +61,7 @@ public class VoterService {
 					.postId(targetId)
 					.build();
 
-				Voter saveVoter = Voter.builder()
-					.siteUser(siteUser)
-					.post(post)
-					.voterType(voterType)
-					.build();
+				Voter saveVoter = new Voter(post, siteUser, voterType);
 
 				voterRepository.save(saveVoter);
 			}
@@ -109,8 +103,8 @@ public class VoterService {
 	 * 추천 삭제 메서드 입니다.
 	 *
 	 * @param voterType 추천 타입
-	 * @param targetId 타겟 ID
-	 * @param siteUser 로그인한 회원
+	 * @param targetId  타겟 ID
+	 * @param siteUser  로그인한 회원
 	 * @throws GlobalException 데이터가 존재하지 않을 경우 발생
 	 */
 	@Transactional
