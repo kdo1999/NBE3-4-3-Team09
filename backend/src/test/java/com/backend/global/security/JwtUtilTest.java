@@ -1,6 +1,7 @@
 package com.backend.global.security;
 
 import com.backend.domain.user.entity.SiteUser;
+import com.backend.domain.user.entity.UserRole;
 import com.backend.global.security.custom.CustomUserDetails;
 import com.backend.standard.util.JwtUtil;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -31,11 +32,16 @@ public class JwtUtilTest {
     @DisplayName("엑세스 토큰 생성 및 검증")
     void test1() {
         CustomUserDetails userDetails = new CustomUserDetails(
-            SiteUser.builder()
-                    .email("test@gmail.com")
-                    .id(10L)
-                    .userRole("ROLE_ADMIN")
-                    .build()
+//            SiteUser.builder()
+//                    .email("test@gmail.com")
+//                    .id(10L)
+//                    .userRole("ROLE_ADMIN")
+//                    .build()
+                new SiteUser(
+                        10L,
+                        "test@gmail.com",
+                        UserRole.ROLE_ADMIN.toString()
+                )
         );
 
         String accessToken = jwtUtil.createAccessToken(userDetails, ACCESS_EXPIRATION);
@@ -55,11 +61,16 @@ public class JwtUtilTest {
     @DisplayName("refresh 토큰 생성 및 검증")
     void test2() {
         CustomUserDetails userDetails = new CustomUserDetails(
-                SiteUser.builder()
-                        .email("test@gmail.com")
-                        .id(10L)
-                        .userRole("ROLE_ADMIN")
-                        .build()
+//                SiteUser.builder()
+//                        .email("test@gmail.com")
+//                        .id(10L)
+//                        .userRole("ROLE_ADMIN")
+//                        .build()
+                new SiteUser(
+                        10L,
+                        "test@gmail.com",
+                        UserRole.ROLE_ADMIN.toString()
+                )
         );
 
         String refreshToken = jwtUtil.createRefreshToken(userDetails, REFRESH_EXPIRATION);
@@ -79,10 +90,15 @@ public class JwtUtilTest {
     @DisplayName("엑세스 토큰 만료시간 검증")
     void test3() {
         CustomUserDetails userDetails = new CustomUserDetails(
-                SiteUser.builder()
-                        .email("test@gmail.com")
-                        .userRole("ROLE_ADMIN")
-                        .build()
+//                SiteUser.builder()
+//                        .email("test@gmail.com")
+//                        .userRole("ROLE_ADMIN")
+//                        .build()
+                new SiteUser(
+                        10L,
+                        "test@gamil.com",
+                        UserRole.ROLE_ADMIN.toString()
+                )
         );
 
         String expiredToken = jwtUtil.createAccessToken(userDetails, -1000);

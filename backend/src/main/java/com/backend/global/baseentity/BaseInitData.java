@@ -57,30 +57,48 @@ public class BaseInitData {
 
 		List<SiteUser> users = new ArrayList<>();
 
-		SiteUser admin = SiteUser.builder()
-			.email("admin@admin.com")
-			.name("admin")
-			.password(passwordEncoder.encode("admin"))
-			.userRole(UserRole.ROLE_ADMIN.toString())
-			.build();
+//		SiteUser admin = SiteUser.builder()
+//			.email("admin@admin.com")
+//			.name("admin")
+//			.password(passwordEncoder.encode("admin"))
+//			.userRole(UserRole.ROLE_ADMIN.toString())
+//			.build();
+		SiteUser admin = new SiteUser(
+				"admin@admin.com",
+				"admin",
+				passwordEncoder.encode("admin"),
+				UserRole.ROLE_ADMIN.toString()
+		);
 		userRepository.save(admin);
 		users.add(admin);
 
-		SiteUser user1 = SiteUser.builder()
-			.email("user1@user.com")
-			.name("user1")
-			.password(passwordEncoder.encode("user"))
-			.userRole(UserRole.ROLE_USER.toString())
-			.build();
+//		SiteUser user1 = SiteUser.builder()
+//			.email("user1@user.com")
+//			.name("user1")
+//			.password(passwordEncoder.encode("user"))
+//			.userRole(UserRole.ROLE_USER.toString())
+//			.build();
+		SiteUser user1 = new SiteUser(
+				"user1@user.com",
+				"user1",
+				passwordEncoder.encode("user"),
+				UserRole.ROLE_USER.toString()
+		);
 		userRepository.save(user1);
 		users.add(user1);
 
-		SiteUser user2 = SiteUser.builder()
-			.email("user2@user.com")
-			.name("user2")
-			.password(passwordEncoder.encode("user"))
-			.userRole(UserRole.ROLE_USER.toString())
-			.build();
+//		SiteUser user2 = SiteUser.builder()
+//			.email("user2@user.com")
+//			.name("user2")
+//			.password(passwordEncoder.encode("user"))
+//			.userRole(UserRole.ROLE_USER.toString())
+//			.build();
+		SiteUser user2 = new SiteUser(
+				"user2@user.com",
+				"user2",
+				passwordEncoder.encode("user"),
+				UserRole.ROLE_USER.toString()
+		);
 		userRepository.save(user2);
 		users.add(user2);
 	}

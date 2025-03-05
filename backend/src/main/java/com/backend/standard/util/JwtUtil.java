@@ -98,11 +98,12 @@ public class JwtUtil {
         Long userId = getUserId(token);
 
         CustomUserDetails userDetails = new CustomUserDetails(
-                SiteUser.builder()
-                        .id(userId)
-                        .email(username)
-                        .userRole(role)
-                        .build()
+//                SiteUser.builder()
+//                        .id(userId)
+//                        .email(username)
+//                        .userRole(role)
+//                        .build()
+                new SiteUser(userId, username, role)
         );
 
         return new UsernamePasswordAuthenticationToken(

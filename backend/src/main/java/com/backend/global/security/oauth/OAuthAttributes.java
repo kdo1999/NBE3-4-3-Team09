@@ -47,14 +47,22 @@ public class OAuthAttributes {
     }
 
     public SiteUser toEntity() {
-        return SiteUser.builder()
-                .name(name)
-                .password("")
-                .email(name + "@kakao.com")
-                .profileImg(profileImg)
-                .kakaoId(kakaoId)
-                .userRole(UserRole.ROLE_USER.toString())
-                .build();
+//        return SiteUser.builder()
+//                .name(name)
+//                .password("")
+//                .email(name + "@kakao.com")
+//                .profileImg(profileImg)
+//                .kakaoId(kakaoId)
+//                .userRole(UserRole.ROLE_USER.toString())
+//                .build();
+        return new SiteUser(
+                name,
+                name + "@kakao.com",
+                kakaoId,
+                profileImg,
+                "",
+                UserRole.ROLE_USER.toString()
+        );
     }
 
 } 
