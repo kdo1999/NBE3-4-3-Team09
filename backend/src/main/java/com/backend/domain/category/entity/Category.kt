@@ -1,5 +1,6 @@
 package com.backend.domain.category.entity;
 
+import com.backend.domain.category.entity.QCategory.category
 import com.backend.domain.post.entity.Post;
 import com.backend.global.baseentity.BaseEntity;
 import jakarta.persistence.CascadeType;
@@ -17,52 +18,47 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.jpa.domain.AbstractPersistable_.id
 
 @Entity
-@Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
-public class Category extends BaseEntity {
+open class Category protected constructor() : BaseEntity() {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    open var id: Long? = null
 
     @Column(nullable = false, length = 25, unique = true)
-    private String name;
+    open var name: String = ""
 
-    // Category 삭제시 Post도 다 삭제
-    @OneToMany(mappedBy = "category", cascade = CascadeType.REMOVE, orphanRemoval = true)
-    private List<Post> posts = new ArrayList<>();
+    @OneToMany(mappedBy = "category", cascade = [CascadeType.REMOVE], orphanRemoval = true)
+    open var posts: MutableList<Post> = mutableListOf() // 게시글 리스트
 
-    // category 객체의 값이 동일한지 비교하는 메서드
-    // 테스트 중 에러가 발생해서 추가한 메서드
-    // 예상 결과와 실제 결과를 비교할 때 사용
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Category category = (Category) o;
-        return Objects.equals(id, category.id) && Objects.equals(name, category.name);
+    constructor(name: String) : this() {
+        this.name = name
     }
 
-    // equals() 메서드와 함께 사용되는 hashCode() 메서드
-    // 이 메서드에서 비교하는 필드들을 기반으로 hashCode 값을 계산, 객체 비교의 일관성을 유지
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name);
+    // equals() 재정의: id와 name을 기준으로 비교
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || javaClass != other.javaClass) return false
+
+        other as Category
+
+        if (id != other.id) return false
+        if (name != other.name) return false
+
+        return true
+    }
+
+    // hashcode() 재정의
+    override fun hashCode(): Int {
+        var result = id?.hashCode() ?: 0
+        result = 31 * result + name.hashCode()
+        return result
     }
 
     // 카테고리 더티 체킹
-    public void updateName(String name) {
-        this.name = name;
-    }
-
-    public Category(String name) {
-        this.name = name;
+    open fun updateName(name: String) {
+        this.name = name
     }
 }
