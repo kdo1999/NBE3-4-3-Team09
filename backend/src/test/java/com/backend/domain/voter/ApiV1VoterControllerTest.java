@@ -1,26 +1,12 @@
 package com.backend.domain.voter;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import com.backend.domain.jobposting.entity.JobPosting;
-import com.backend.domain.user.entity.SiteUser;
-import com.backend.domain.user.repository.UserRepository;
-import com.backend.domain.voter.domain.VoterType;
-import com.backend.domain.voter.dto.VoterCreateRequest;
-import com.backend.domain.voter.entity.Voter;
-import com.backend.domain.voter.repository.VoterRepository;
-import com.backend.global.exception.GlobalErrorCode;
-import com.backend.global.security.custom.CustomUserDetails;
-import com.backend.standard.util.JwtUtil;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.HashMap;
 import java.util.Map;
-import lombok.extern.slf4j.Slf4j;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
@@ -37,6 +23,20 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+
+import com.backend.domain.jobposting.entity.JobPosting;
+import com.backend.domain.user.entity.SiteUser;
+import com.backend.domain.user.repository.UserRepository;
+import com.backend.domain.voter.domain.VoterType;
+import com.backend.domain.voter.dto.VoterCreateRequest;
+import com.backend.domain.voter.entity.Voter;
+import com.backend.domain.voter.repository.VoterRepository;
+import com.backend.global.exception.GlobalErrorCode;
+import com.backend.global.security.custom.CustomUserDetails;
+import com.backend.standard.util.JwtUtil;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import lombok.extern.slf4j.Slf4j;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -114,13 +114,10 @@ public class ApiV1VoterControllerTest {
 
 		SiteUser givenSiteUser1 = userRepository.findByEmail("testEmail1@naver.com").get();
 
-		voterRepository.save(Voter.builder()
-			.siteUser(givenSiteUser1)
-			.voterType(VoterType.JOB_POSTING)
-			.jobPosting(JobPosting.builder()
-				.id(1L)
-				.build())
-			.build());
+		JobPosting jobPosting = JobPosting.builder()
+			.id(1L)
+			.build();
+		voterRepository.save(new Voter(jobPosting, givenSiteUser1, VoterType.JOB_POSTING));
 
 		//when
 		ResultActions resultActions = mockMvc.perform(post("/api/v1/voter")
