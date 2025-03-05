@@ -1,6 +1,6 @@
 package com.backend.domain.chat.entity
 
-enum class MessageTypeKt {
+enum class MessageType {
     CHAT,
     JOIN,
     LEAVE
