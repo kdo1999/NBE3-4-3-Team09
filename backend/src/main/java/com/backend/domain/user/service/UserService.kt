@@ -10,7 +10,6 @@ import com.backend.global.exception.GlobalException
 import com.backend.global.security.custom.CustomUserDetails
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import java.util.function.Consumer
 
 @Service
 @Transactional(readOnly = true)
@@ -69,6 +68,9 @@ class UserService(
 
         val user = getUserById(id)
 
+        // TODO
+        // 현재는 jobskill의  name이 private로 설정되어 있어서 접근이 불가능함
+        // 다음 작업에서 처리 예정
 //        if (req.jobSkills != null) {
 //            user.jobSkills.clear()
 //
