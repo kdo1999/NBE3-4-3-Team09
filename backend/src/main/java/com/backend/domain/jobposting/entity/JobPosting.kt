@@ -56,16 +56,18 @@ class JobPosting {
         protected set
 
     @Column(name = "apply_cnt", nullable = false)
-	var applyCnt: Long? = null //지원자 수
+    var applyCnt: Long? = null //지원자 수
         protected set
 
     @Embedded
     @Column(nullable = false)
     lateinit var experienceLevel: ExperienceLevel //직무 경력
+        protected set
 
     @Embedded
     @Column(nullable = false)
     lateinit var requireEducate: RequireEducate //학력
+        protected set
 
     @Column(name = "job_id", nullable = false)
     var jobId: Long? = null
@@ -86,41 +88,41 @@ class JobPosting {
     val voterList: List<Voter>
         get() = _voterList.toList()
 
-	constructor(
-		subject: String,
-		url: String,
-		postDate: ZonedDateTime,
-		openDate: ZonedDateTime,
-		closeDate: ZonedDateTime,
-		companyName: String,
-		jobPostingStatus: JobPostingStatus,
-		salary: Salary,
-		applyCnt: Long?,
-		experienceLevel: ExperienceLevel,
-		requireEducate: RequireEducate,
-		jobId: Long?,
-		companyLink: String?,
-	) {
-		this.subject = subject
-		this.url = url
-		this.postDate = postDate
-		this.openDate = openDate
-		this.closeDate = closeDate
-		this.companyName = companyName
-		this.jobPostingStatus = jobPostingStatus
-		this.salary = salary
-		this.applyCnt = applyCnt
-		this.experienceLevel = experienceLevel
-		this.requireEducate = requireEducate
-		this.jobId = jobId
-		this.companyLink = companyLink
-	}
+    constructor(
+        subject: String,
+        url: String,
+        postDate: ZonedDateTime,
+        openDate: ZonedDateTime,
+        closeDate: ZonedDateTime,
+        companyName: String,
+        jobPostingStatus: JobPostingStatus,
+        salary: Salary,
+        applyCnt: Long?,
+        experienceLevel: ExperienceLevel,
+        requireEducate: RequireEducate,
+        jobId: Long?,
+        companyLink: String?,
+    ) {
+        this.subject = subject
+        this.url = url
+        this.postDate = postDate
+        this.openDate = openDate
+        this.closeDate = closeDate
+        this.companyName = companyName
+        this.jobPostingStatus = jobPostingStatus
+        this.salary = salary
+        this.applyCnt = applyCnt
+        this.experienceLevel = experienceLevel
+        this.requireEducate = requireEducate
+        this.jobId = jobId
+        this.companyLink = companyLink
+    }
 
-    constructor(id: Long?) {
+    constructor(id: Long) {
         this.id = id
     }
 
     fun addJobPostingJobSkill(jobSkill: JobPostingJobSkill) {
-		_jobPostingJobSkillList.add(jobSkill)
-	}
+        _jobPostingJobSkillList.add(jobSkill)
+    }
 }

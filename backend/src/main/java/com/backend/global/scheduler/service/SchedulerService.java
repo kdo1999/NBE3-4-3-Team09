@@ -127,10 +127,8 @@ public class SchedulerService {
 						.build();
 
 					jobPosting.addJobPostingJobSkill(
-						JobPostingJobSkill.builder()
-							.jobPosting(jobPosting)
-							.jobSkill(jobSkill)
-							.build());
+						new JobPostingJobSkill(jobPosting, jobSkill)
+					);
 				}
 			}
 		}

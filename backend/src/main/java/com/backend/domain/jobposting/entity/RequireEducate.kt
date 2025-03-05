@@ -1,12 +1,7 @@
 package com.backend.domain.jobposting.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Embeddable;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.Column
+import jakarta.persistence.Embeddable
 
 /**
  * RequireEducate
@@ -15,15 +10,18 @@ import lombok.NoArgsConstructor;
  * @author Kim Dong O
  */
 @Embeddable
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor(access = AccessLevel.PROTECTED)
-@Builder
-@Getter
 public class RequireEducate {
 
-	@Column(name = "require_educate_code")
-	private Integer code; //code
+    @Column(name = "require_educate_code")
+    var code: Int? = null //code
+        protected set
 
-	@Column(name = "require_educate_name")
-	private String name; //DisplayName
+    @Column(name = "require_educate_name")
+    lateinit var name: String //DisplayName
+        protected set
+
+    constructor(code: Int, name: String) {
+        this.code = code
+        this.name = name
+    }
 }

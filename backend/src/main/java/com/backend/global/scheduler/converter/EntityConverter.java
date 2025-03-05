@@ -28,28 +28,17 @@ public class EntityConverter {
 	}
 
 	public static RequireEducate dtoToRequireEducate(RequireEducateDto dto) {
-		return RequireEducate.builder()
-			.code(Integer.parseInt(dto.getCode()))
-			.name(dto.getName())
-			.build();
+		return new RequireEducate(Integer.parseInt(dto.getCode()), dto.getName());
 	}
 
 	public static ExperienceLevel dtoToExperienceLevel(ExperienceLevelDto dto) {
 
-		return ExperienceLevel.builder()
-			.code(dto.getCode())
-			.min(dto.getMin())
-			.max(dto.getMax())
-			.name(dto.getName())
-			.build();
+		return new ExperienceLevel(dto.getCode(), dto.getMin(), dto.getMax(), dto.getName());
 	}
 
 	public static Salary dtoToSalary(SalaryDto dto) {
 
-		return Salary.builder()
-			.code(Integer.parseInt(dto.getCode()))
-			.name(dto.getName())
-			.build();
+		return new Salary(Integer.parseInt(dto.getCode()), dto.getName());
 	}
 
 	public static JobSkill dtoToJobSkill(JobCodeDto dto) {
