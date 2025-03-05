@@ -1,25 +1,8 @@
 package com.backend.domain.jobposting.entity;
 
-import com.backend.domain.voter.entity.Voter;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Embedded;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
-import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import com.backend.domain.voter.entity.Voter
+import jakarta.persistence.*
+import java.time.ZonedDateTime
 
 /**
  * JobPosting
@@ -29,54 +12,111 @@ import lombok.NoArgsConstructor;
  */
 @Entity
 @Table(name = "job_posting")
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor(access = AccessLevel.PROTECTED)
-@Builder
-@Getter
-public class JobPosting {
+class JobPosting {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "job_posting_id")
-	private Long id;
-	@Column(nullable = false)
-	private String subject; //제목
-	@Column(nullable = false)
-	private String url; //url
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "job_posting_id")
+    var id: Long? = null
+        protected set
 
-	@Column(nullable = false)
-	private ZonedDateTime postDate; //작성 날짜
-	@Column(nullable = false)
-	private ZonedDateTime openDate; //공개 날짜
-	@Column(nullable = false)
-	private ZonedDateTime closeDate; //마감 날짜
+    @Column(nullable = false)
+    lateinit var subject: String //제목
+        protected set
 
-	@Column(nullable = false)
-	private String companyName; //회사 이름
-	private String companyLink; //회사 링크
+    @Column(nullable = false)
+    lateinit var url: String //url
+        protected set
 
-	@Embedded
-	private ExperienceLevel experienceLevel; //직무 경력
+    @Column(nullable = false)
+    lateinit var postDate: ZonedDateTime //작성 날짜
+        protected set
 
-	@Embedded
-	private RequireEducate requireEducate; //학력
+    @Column(nullable = false)
+    lateinit var openDate: ZonedDateTime //공개 날짜
+        protected set
 
-	@Enumerated(EnumType.STRING)
-	private JobPostingStatus jobPostingStatus; //공고 상태
+    @Column(nullable = false)
+    lateinit var closeDate: ZonedDateTime //마감 날짜
+        protected set
 
-	@Embedded
-	private Salary salary; //연봉
+    @Column(nullable = false)
+    lateinit var companyName: String
+        //회사 이름
+        protected set
 
-	@Column(name = "apply_cnt")
-	private Long applyCnt; //지원자 수
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    lateinit var jobPostingStatus: JobPostingStatus //공고 상태
+        protected set
 
-	@Builder.Default
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "jobPosting")
-	private List<JobPostingJobSkill> jobPostingJobSkillList = new ArrayList<>();
+    @Embedded
+    @Column(nullable = false)
+    lateinit var salary: Salary //연봉
+        protected set
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "jobPosting")
-	private List<Voter> voterList;
+    @Column(name = "apply_cnt", nullable = false)
+	var applyCnt: Long? = null //지원자 수
+        protected set
 
-	@Column(name = "job_id", nullable = false)
-	private Long jobId;
+    @Embedded
+    @Column(nullable = false)
+    lateinit var experienceLevel: ExperienceLevel //직무 경력
+
+    @Embedded
+    @Column(nullable = false)
+    lateinit var requireEducate: RequireEducate //학력
+
+    @Column(name = "job_id", nullable = false)
+    var jobId: Long? = null
+        protected set
+
+    var companyLink: String? = null //회사 링크
+        protected set
+
+    @OneToMany(cascade = [CascadeType.ALL], mappedBy = "jobPosting")
+    private var _jobPostingJobSkillList: MutableList<JobPostingJobSkill> = mutableListOf()
+
+    @OneToMany(cascade = [CascadeType.ALL], mappedBy = "jobPosting")
+    private var _voterList: MutableList<Voter> = mutableListOf()
+
+    val jobPostingJobSkillList: List<JobPostingJobSkill>
+        get() = _jobPostingJobSkillList.toList()
+
+    val voterList: List<Voter>
+        get() = _voterList.toList()
+
+	constructor(
+		subject: String,
+		url: String,
+		postDate: ZonedDateTime,
+		openDate: ZonedDateTime,
+		closeDate: ZonedDateTime,
+		companyName: String,
+		jobPostingStatus: JobPostingStatus,
+		salary: Salary,
+		applyCnt: Long?,
+		experienceLevel: ExperienceLevel,
+		requireEducate: RequireEducate,
+		jobId: Long?,
+		companyLink: String?,
+	) {
+		this.subject = subject
+		this.url = url
+		this.postDate = postDate
+		this.openDate = openDate
+		this.closeDate = closeDate
+		this.companyName = companyName
+		this.jobPostingStatus = jobPostingStatus
+		this.salary = salary
+		this.applyCnt = applyCnt
+		this.experienceLevel = experienceLevel
+		this.requireEducate = requireEducate
+		this.jobId = jobId
+		this.companyLink = companyLink
+	}
+
+	fun addJobPostingJobSkill(jobSkill: JobPostingJobSkill) {
+		_jobPostingJobSkillList.add(jobSkill)
+	}
 }
