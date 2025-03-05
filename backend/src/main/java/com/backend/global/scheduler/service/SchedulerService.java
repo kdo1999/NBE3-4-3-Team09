@@ -122,9 +122,7 @@ public class SchedulerService {
 					Long jobSkillId = Long.valueOf(redisRepository.get(key).toString());
 
 					//JobSkill 생성
-					JobSkill jobSkill = JobSkill.builder()
-						.id(jobSkillId)
-						.build();
+					JobSkill jobSkill = new JobSkill(jobSkillId);
 
 					jobPosting.addJobPostingJobSkill(
 						new JobPostingJobSkill(jobPosting, jobSkill)

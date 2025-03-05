@@ -42,10 +42,7 @@ public class EntityConverter {
 	}
 
 	public static JobSkill dtoToJobSkill(JobCodeDto dto) {
-		return JobSkill.builder()
-			.code(Integer.parseInt(dto.getCode()))
-			.name(dto.getName())
-			.build();
+		return new JobSkill(Integer.parseInt(dto.getCode()), dto.getName());
 	}
 
 }

@@ -1,27 +1,12 @@
 package com.backend.domain.user;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.cookie;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.assertj.core.api.Assertions.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import com.backend.domain.jobskill.entity.JobSkill;
-import com.backend.domain.jobskill.repository.JobSkillRepository;
-import com.backend.domain.user.dto.request.JobSkillRequest;
-import com.backend.domain.user.dto.request.LoginRequest;
-import com.backend.domain.user.dto.request.UserModifyProfileRequest;
-import com.backend.domain.user.entity.SiteUser;
-import com.backend.domain.user.entity.UserRole;
-import com.backend.domain.user.repository.UserRepository;
-import com.backend.global.annotation.CustomWithMock;
-import com.backend.global.redis.repository.RedisRepository;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.List;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -37,6 +22,18 @@ import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.backend.domain.jobskill.entity.JobSkill;
+import com.backend.domain.jobskill.repository.JobSkillRepository;
+import com.backend.domain.user.dto.request.JobSkillRequest;
+import com.backend.domain.user.dto.request.LoginRequest;
+import com.backend.domain.user.dto.request.UserModifyProfileRequest;
+import com.backend.domain.user.entity.SiteUser;
+import com.backend.domain.user.entity.UserRole;
+import com.backend.domain.user.repository.UserRepository;
+import com.backend.global.annotation.CustomWithMock;
+import com.backend.global.redis.repository.RedisRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -72,7 +69,7 @@ class ApiV1UserControllerTest {
     @BeforeEach
     void setUp() {
         userRepository.deleteAll();
-        
+
 //        testUser = userRepository.save(SiteUser.builder()
 //                .email("test@test.com")
 //                .password("password")
@@ -103,15 +100,9 @@ class ApiV1UserControllerTest {
                 )
         );
 
-        jobSkill1 = jobSkillRepository.save(JobSkill.builder()
-                .name("직무1")
-                .code(1)
-                .build());
+        jobSkill1 = jobSkillRepository.save(new JobSkill(1, "직무1"));
 
-        jobSkill2 = jobSkillRepository.save(JobSkill.builder()
-                .name("직무2")
-                .code(2)
-                .build());
+        jobSkill2 = jobSkillRepository.save(new JobSkill(2, "직무2"));
     }
 
     @Test
