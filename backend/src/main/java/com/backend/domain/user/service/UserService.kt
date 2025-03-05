@@ -14,8 +14,8 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 @Transactional(readOnly = true)
 class UserService(
-    val userRepository: UserRepository,
-    val jobSkillRepository: JobSkillRepository
+    private val userRepository: UserRepository,
+    private val jobSkillRepository: JobSkillRepository
 ) {
 
     /**
