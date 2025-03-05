@@ -28,7 +28,7 @@ class ApiV1UserController(
         @AuthenticationPrincipal customUserDetails: CustomUserDetails
     ): GenericResponse<UserGetProfileResponse> {
         return GenericResponse.ok(
-            UserGetProfileResponse(userService!!.getUser(userId, customUserDetails))
+            UserGetProfileResponse(userService.getUser(userId, customUserDetails))
         )
     }
 
@@ -46,7 +46,7 @@ class ApiV1UserController(
         @RequestBody req: UserModifyProfileRequest,
         @AuthenticationPrincipal customUserDetails: CustomUserDetails
     ): GenericResponse<Void> {
-        userService!!.modifyUser(userId, customUserDetails, req)
+        userService.modifyUser(userId, customUserDetails, req)
 
         return GenericResponse.ok()
     }

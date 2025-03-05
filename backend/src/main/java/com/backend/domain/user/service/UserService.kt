@@ -25,7 +25,7 @@ class UserService(
      * @return [SiteUser]
      */
     fun getUserById(id: Long): SiteUser {
-        return userRepository!!.findById(id).orElseThrow { GlobalException(GlobalErrorCode.USER_NOT_FOUND) }
+        return userRepository.findById(id).orElseThrow { GlobalException(GlobalErrorCode.USER_NOT_FOUND) }
     }
 
     /**
