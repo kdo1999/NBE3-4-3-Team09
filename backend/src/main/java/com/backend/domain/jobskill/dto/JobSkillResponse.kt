@@ -10,7 +10,7 @@ import com.querydsl.core.annotations.QueryProjection
  * @param code JobSkillCode
  * @author Kim Dong O
  */
-@JvmRecord
+//@JvmRecord
 data class JobSkillResponse @QueryProjection constructor(
 	val name: String,
 	val code: Int

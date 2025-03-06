@@ -30,7 +30,7 @@ import java.time.ZonedDateTime
  * @param isVoter          추천 여부
  * @author Kim Dong O
  */
-@JvmRecord
+//@JvmRecord
 data class JobPostingDetailResponse @QueryProjection constructor(
     val id: Long,
     val subject: String, // 제목
