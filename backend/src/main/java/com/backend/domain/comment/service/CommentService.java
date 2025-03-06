@@ -31,18 +31,14 @@ public class CommentService {
 
     @Transactional
     public CommentCreateResponseDto createComment(CommentRequestDto dto, Long postId,
-        CustomUserDetails user) {
+                                                  CustomUserDetails user) {
 
         // 게시글정보가 db에 있는지에 대한 검증
         Post findPost = postRepository.findById(postId).orElseThrow(
-            () -> new GlobalException(GlobalErrorCode.POST_NOT_FOUND)
+                () -> new GlobalException(GlobalErrorCode.POST_NOT_FOUND)
         );
 
-        Comment comment = Comment.builder()
-            .content(dto.getContent())
-            .post(findPost)
-            .siteUser(user.getSiteUser())
-            .build();
+        Comment comment = new Comment(dto.content, findPost, user.getSiteUser());
 
         Comment saveComment = commentRepository.save(comment);
 
@@ -63,7 +59,7 @@ public class CommentService {
             throw new GlobalException(GlobalErrorCode.COMMENT_NOT_AUTHOR);
         }
 
-        comment.ChangeContent(dto.getContent());
+        comment.changeContent(dto.getContent());
         Comment modifiedComment = commentRepository.save(comment);
 
         return CommentModifyResponseDto.convertEntity(modifiedComment, true);
@@ -88,7 +84,6 @@ public class CommentService {
 
         Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
 
-//        Page<CommentResponseDto> allByPostId = commentRepository.findAllByPostId(postId, pageable);
         Page<Comment> allByPostId = commentRepository.findAll(postId, pageable);
 
         Page<CommentResponseDto> result = allByPostId.map((c) -> {
