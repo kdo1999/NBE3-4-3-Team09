@@ -4,28 +4,35 @@ import com.backend.domain.post.entity.Post
 import com.backend.domain.user.entity.SiteUser
 import com.backend.global.baseentity.BaseEntity
 import jakarta.persistence.*
-import lombok.AccessLevel
-import lombok.NoArgsConstructor
 
 @Entity
-@NoArgsConstructor(access = AccessLevel.PROTECTED) // 기본 생성자
-class Comment(
+class Comment : BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "comment_id")
-    val id: Long? = null,
+    var id: Long? = null
+        protected set
 
     @Column(nullable = false, length = 500)
-    var content: String,
+    lateinit var content: String
+        protected set
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id", nullable = false)
-    val post: Post,
+    lateinit var post: Post
+        protected set
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
-    val siteUser: SiteUser
-) : BaseEntity() {
+    lateinit var siteUser: SiteUser
+        protected set
+
+    constructor(content: String, post: Post, siteUser: SiteUser) : super() {
+        this.content = content
+        this.post = post
+        this.siteUser = siteUser
+    }
+
 
     fun changeContent(newContent: String) {
         this.content = newContent
