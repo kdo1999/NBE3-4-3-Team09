@@ -53,9 +53,7 @@ jobs:
       - name: Start Essential Services Only
         working-directory: ./backend
         run: |
-          # 테스트에 필수적인 서비스만 시작
-          docker-compose -f docker-compose.yml up -d db
-          # 다른 필수 서비스만 추가
+          docker-compose -f docker-compose.yml up -d
       
       - name: Build with Gradle
         working-directory: ./backend
