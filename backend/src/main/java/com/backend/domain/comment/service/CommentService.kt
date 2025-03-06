@@ -36,7 +36,7 @@ class CommentService {
 
         val findPost = postRepository!!.findById(postId).orElseThrow { GlobalException(GlobalErrorCode.POST_NOT_FOUND) }
 
-        val comment = Comment(dto.content, findPost, user.siteUser)
+        val comment = Comment(dto.getContent(), findPost, user.siteUser)
 
         val saveComment = commentRepository!!.save(comment)
 
@@ -66,7 +66,7 @@ class CommentService {
             throw GlobalException(GlobalErrorCode.COMMENT_NOT_AUTHOR)
         }
 
-        comment.changeContent(dto.content)
+        comment.changeContent(dto.getContent())
         val modifiedComment = commentRepository.save(comment)
 
         return CommentModifyResponseDto.convertEntity(modifiedComment, true)
