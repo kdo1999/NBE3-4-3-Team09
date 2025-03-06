@@ -1,7 +1,6 @@
 package com.backend.domain.jobskill.dto;
 
-import com.querydsl.core.annotations.QueryProjection;
-import lombok.Builder;
+import com.querydsl.core.annotations.QueryProjection
 
 /**
  * JobSkillResponse
@@ -11,10 +10,7 @@ import lombok.Builder;
  * @param code JobSkillCode
  * @author Kim Dong O
  */
-@Builder
-public record JobSkillResponse(String name, Integer code) {
-
-	@QueryProjection
-	public JobSkillResponse {
-	}
-}
+data class JobSkillResponse @QueryProjection constructor(
+	val name: String,
+	val code: Int
+)
