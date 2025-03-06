@@ -1,36 +1,31 @@
 package com.backend.domain.jobskill.repository;
 
-import com.backend.domain.jobskill.entity.JobSkill;
-import java.util.List;
-import java.util.Optional;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
+import com.backend.domain.jobskill.entity.JobSkill
+import org.springframework.stereotype.Repository
+import java.util.*
 
 @Repository
-@RequiredArgsConstructor
-public class JobSkillRepositoryImpl implements JobSkillRepository{
-	private final JobSkillJpaRepository jobSkillJpaRepository;
+class JobSkillRepositoryImpl(private val jobSkillJpaRepository: JobSkillJpaRepository)
+	: JobSkillRepository {
 
-	@Override
-	public Optional<JobSkill> findById(Long id) {
-		return jobSkillJpaRepository.findById(id);
+	override fun findById(id: Long): Optional<JobSkill> {
+		return jobSkillJpaRepository.findById(id)
+	}
+
+	override fun findByCode(code: Int): Optional<JobSkill> {
+		return jobSkillJpaRepository.findByCode(code)
+	}
+
+	override fun save(jobSkill: JobSkill): JobSkill {
+		return jobSkillJpaRepository.save(jobSkill)
+	}
+
+	override fun findByName(name: String): Optional<JobSkill> {
+		return jobSkillJpaRepository.findByName(name)
 	}
 
 	@Override
-	public Optional<JobSkill> findByCode(Integer code) {
-		return jobSkillJpaRepository.findByCode(code);
-	}
-
-	@Override
-	public JobSkill save(JobSkill jobSkill) {
-		return jobSkillJpaRepository.save(jobSkill);
-	}
-
-	@Override
-	public Optional<JobSkill> findByName(String name) { return jobSkillJpaRepository.findByName(name); }
-
-	@Override
-	public void saveAll(List<JobSkill> newJobSkill) {
-		jobSkillJpaRepository.saveAll(newJobSkill);
+	override fun saveAll(newJobSkill: List<JobSkill>) {
+		jobSkillJpaRepository.saveAll(newJobSkill)
 	}
 }
