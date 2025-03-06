@@ -79,7 +79,7 @@ public class RecruitmentPostService {
 				recruitmentPostRequest.getJobPostingId());
 
 		if (jobPosting == null) {
-			throw new GlobalException(GlobalErrorCode.JOB_POSTING_NOT_FOUND))
+			throw new GlobalException(GlobalErrorCode.JOB_POSTING_NOT_FOUND);
 		}
 
 		RecruitmentPost post = PostConverter.createPost(
