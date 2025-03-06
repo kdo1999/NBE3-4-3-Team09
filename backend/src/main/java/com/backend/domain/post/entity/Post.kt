@@ -18,6 +18,7 @@ class Post : BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "post_id")
     var postId: Long? = null
+        protected set
 
     @Column(nullable = false)
     lateinit var subject: String
@@ -28,19 +29,23 @@ class Post : BaseEntity {
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
     lateinit var category: Category
+        protected set
+
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     lateinit var author: SiteUser
+        protected set
+
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "post", cascade = [CascadeType.REMOVE])
-    var _postCommentList: MutableList<Comment> = mutableListOf()
+    private var _postCommentList: MutableList<Comment> = mutableListOf()
 
     val postCommentList: List<Comment>
         get() = _postCommentList.toList()
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "post", cascade = [CascadeType.REMOVE])
-    var _postVoterList: MutableList<Voter> = mutableListOf()
+    private var _postVoterList: MutableList<Voter> = mutableListOf()
 
     val postVoterList: List<Voter>
         get() = _postVoterList.toList()
