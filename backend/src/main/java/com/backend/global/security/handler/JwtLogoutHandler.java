@@ -5,18 +5,21 @@ import com.backend.standard.util.JwtUtil;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
-@RequiredArgsConstructor
 public class JwtLogoutHandler implements LogoutHandler {
 
     private final JwtUtil jwtUtil;
     private final RedisRepository redisRepository;
+
+    public JwtLogoutHandler(JwtUtil jwtUtil, RedisRepository redisRepository) {
+        this.jwtUtil = jwtUtil;
+        this.redisRepository = redisRepository;
+    }
 
     @Override
     public void logout(HttpServletRequest req, HttpServletResponse resp, Authentication auth) {

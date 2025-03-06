@@ -19,7 +19,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -27,7 +26,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-@RequiredArgsConstructor
 public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
     private final JwtUtil jwtUtil;
@@ -35,6 +33,15 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
     private final long REFRESH_EXPIRATION;
     private final ObjectMapper objectMapper;
     private final RedisRepository redisRepository;
+
+    public JwtAuthorizationFilter(JwtUtil jwtUtil, long ACCESS_EXPIRATION, long REFRESH_EXPIRATION,
+                                  ObjectMapper objectMapper, RedisRepository redisRepository) {
+        this.jwtUtil = jwtUtil;
+        this.ACCESS_EXPIRATION = ACCESS_EXPIRATION;
+        this.REFRESH_EXPIRATION = REFRESH_EXPIRATION;
+        this.objectMapper = objectMapper;
+        this.redisRepository = redisRepository;
+    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest req, HttpServletResponse resp, FilterChain filterChain) throws ServletException, IOException {

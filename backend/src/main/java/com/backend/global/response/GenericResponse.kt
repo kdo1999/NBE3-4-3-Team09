@@ -10,7 +10,6 @@ import java.time.ZonedDateTime
  *
  * @author Kim Dong O
  */
-@Getter
 class GenericResponse<T> private constructor(
     val timestamp: ZonedDateTime,
     val success: Boolean,
