@@ -1,14 +1,12 @@
-package com.backend.domain.jobposting.dto;
+package com.backend.domain.jobposting.dto
 
-import com.backend.domain.jobposting.entity.ExperienceLevel;
-import com.backend.domain.jobposting.entity.JobPostingStatus;
-import com.backend.domain.jobposting.entity.RequireEducate;
-import com.backend.domain.jobposting.entity.Salary;
-import com.backend.domain.jobskill.dto.JobSkillResponse;
-import com.querydsl.core.annotations.QueryProjection;
-import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import com.backend.domain.jobposting.entity.ExperienceLevel
+import com.backend.domain.jobposting.entity.JobPostingStatus
+import com.backend.domain.jobposting.entity.RequireEducate
+import com.backend.domain.jobposting.entity.Salary
+import com.backend.domain.jobskill.dto.JobSkillResponse
+import com.querydsl.core.annotations.QueryProjection
+import java.time.ZonedDateTime
 
 /**
  * JobPostingDetailResponse
@@ -28,40 +26,29 @@ import java.util.List;
  * @param salary           연봉
  * @param jobSkillList     직무 스킬
  * @param applyCnt         지원자 수
+ * @param voterCount       추천 수
+ * @param isVoter          추천 여부
  * @author Kim Dong O
  */
-public record JobPostingDetailResponse(
-	Long id,
-	String subject, //제목
-	String url, //url
+data class JobPostingDetailResponse @QueryProjection constructor(
+    val id: Long,
+    val subject: String, // 제목
+    val url: String, // url
 
-	ZonedDateTime postDate, //작성 날짜
-	ZonedDateTime openDate, //공개 날짜
-	ZonedDateTime closeDate, //마감 날짜
+    val postDate: ZonedDateTime, // 작성 날짜
+    val openDate: ZonedDateTime, // 공개 날짜
+    val closeDate: ZonedDateTime, // 마감 날짜
 
-	String companyName, //회사 이름
-	String companyLink,//회사 링크
+    val companyName: String, // 회사 이름
+    val companyLink: String, // 회사 링크
 
-	ExperienceLevel experienceLevel, //직무 경력
+    val experienceLevel: ExperienceLevel, // 직무 경력
+    val requireEducate: RequireEducate, // 학력
+    val jobPostingStatus: JobPostingStatus, // 공고 상태
+    val salary: Salary, // 연봉
 
-	RequireEducate requireEducate, //학력
-
-	JobPostingStatus jobPostingStatus, //공고 상태
-
-	Salary salary, //연봉
-
-	List<JobSkillResponse> jobSkillList, //직무 스킬
-
-	Long applyCnt, //지원자 수
-
-	Long voterCount, //관심 수
-
-	boolean isVoter //관심 여부
-) {
-
-
-	@QueryProjection
-	public JobPostingDetailResponse {
-		if (jobSkillList == null) jobSkillList = new ArrayList<>();
-	}
-}
+    val jobSkillList: List<JobSkillResponse> = emptyList(), // 직무 스킬
+    val applyCnt: Long, // 지원자 수
+    val voterCount: Long, // 추천 수
+    val isVoter: Boolean // 추천 여부
+)

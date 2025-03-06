@@ -1,12 +1,11 @@
-package com.backend.domain.jobposting.dto;
+package com.backend.domain.jobposting.dto
 
-import com.backend.domain.jobposting.entity.ExperienceLevel;
-import com.backend.domain.jobposting.entity.JobPostingStatus;
-import com.backend.domain.jobposting.entity.RequireEducate;
-import com.backend.domain.jobposting.entity.Salary;
-import com.querydsl.core.annotations.QueryProjection;
-import java.time.ZonedDateTime;
-import lombok.Builder;
+import com.backend.domain.jobposting.entity.ExperienceLevel
+import com.backend.domain.jobposting.entity.JobPostingStatus
+import com.backend.domain.jobposting.entity.RequireEducate
+import com.backend.domain.jobposting.entity.Salary
+import com.querydsl.core.annotations.QueryProjection
+import java.time.ZonedDateTime
 
 /**
  * JobPostingPageResponse
@@ -23,26 +22,20 @@ import lombok.Builder;
  * @param applyCnt         지원자 수
  * @author Kim Dong O
  */
-@Builder
-public record JobPostingPageResponse(
-	Long id,
-	String subject, //제목
+data class JobPostingPageResponse @QueryProjection constructor(
+    val id: Long,
+    val subject: String, // 제목
 
-	ZonedDateTime openDate, //공개 날짜
-	ZonedDateTime closeDate, //마감 날짜
+    val openDate: ZonedDateTime, // 공개 날짜
+    val closeDate: ZonedDateTime, // 마감 날짜
 
-	ExperienceLevel experienceLevel, //직무 경력
+    val experienceLevel: ExperienceLevel, // 직무 경력
 
-	RequireEducate requireEducate, //학력
+    val requireEducate: RequireEducate, // 학력
 
-	JobPostingStatus jobPostingStatus, //공고 상태
+    val jobPostingStatus: JobPostingStatus, // 공고 상태
 
-	Salary salary, //연봉
+    val salary: Salary, // 연봉
 
-	Long applyCnt //지원자 수
-) {
-
-	@QueryProjection
-	public JobPostingPageResponse {
-	}
-}
+    val applyCnt: Long // 지원자 수
+)
