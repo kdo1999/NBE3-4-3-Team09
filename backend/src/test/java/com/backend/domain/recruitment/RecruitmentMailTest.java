@@ -11,7 +11,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 
-import com.backend.domain.post.entity.RecruitmentPost;
 import com.backend.domain.post.entity.RecruitmentStatus;
 import com.backend.domain.post.repository.post.PostJpaRepository;
 import com.backend.domain.post.repository.recruitment.RecruitmentPostRepository;

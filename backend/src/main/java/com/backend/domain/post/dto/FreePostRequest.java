@@ -18,4 +18,12 @@ public class FreePostRequest {
 	@NotBlank(message = "내용을 입력해 주세요.")
 	private String content;
 
+
+	public String getSubject() {
+		return subject;
+	}
+
+	public String getContent() {
+		return content;
+	}
 }

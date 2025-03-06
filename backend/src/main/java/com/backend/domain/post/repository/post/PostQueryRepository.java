@@ -50,8 +50,8 @@ public class PostQueryRepository {
 			.from(post)
 			.leftJoin(post.category)
 			.leftJoin(post.author)
-			.leftJoin(post.commentList, comment)
-			.leftJoin(post.voterList, voter)
+			.leftJoin(post._postCommentList, comment)
+			.leftJoin(post._postVoterList, voter)
 			.groupBy(post.postId, post.subject, post.category.name,
 				post.author.name, post.author.profileImg, post.createdAt)
 			.where(
@@ -82,8 +82,8 @@ public class PostQueryRepository {
 			.from(post)
 			.leftJoin(post.category)
 			.leftJoin(post.author)
-			.leftJoin(post.commentList, comment)
-			.leftJoin(post.voterList, voter)
+			.leftJoin(post._postCommentList, comment)
+			.leftJoin(post._postVoterList, voter)
 			.leftJoin(recruitmentUser)
 			.on(recruitmentUser.siteUser.id.eq(userId).and(recruitmentUser.status.eq(status)))
 			.groupBy(post.postId, post.subject, post.category.name,
@@ -113,7 +113,7 @@ public class PostQueryRepository {
 			.from(post)
 			.leftJoin(post.category)
 			.leftJoin(post.author)
-			.leftJoin(post.voterList, voter)
+			.leftJoin(post._postVoterList, voter)
 			.leftJoin(recruitmentUser)
 			.on(recruitmentUser.post.postId.eq(postId))
 			.groupBy(post.postId, post.subject, post.content, post.category.id, post.author.id,
@@ -138,8 +138,8 @@ public class PostQueryRepository {
 
 		// 정렬 필드를 매핑
 		Map<String, ComparableExpressionBase<?>> fieldMap = Map.of(
-			"commentCount", post.commentList.size(),
-			"voter", post.voterList.size(),
+			"commentCount", post._postCommentList.size(),
+			"voter", post._postVoterList.size(),
 			"createdAt", post.createdAt
 		);
 
