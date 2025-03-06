@@ -10,7 +10,6 @@ import com.backend.domain.post.dto.PostCreateResponse;
 import com.backend.domain.post.dto.RecruitmentPostRequest;
 import com.backend.domain.post.dto.RecruitmentPostResponse;
 import com.backend.domain.post.entity.RecruitmentPost;
-import com.backend.domain.post.repository.post.PostRepository;
 import com.backend.domain.post.repository.recruitment.RecruitmentPostRepository;
 import com.backend.domain.recruitmentUser.entity.RecruitmentUser;
 import com.backend.domain.recruitmentUser.entity.RecruitmentUserStatus;
