@@ -118,7 +118,7 @@ class ChatService(
     }
 
     /**
-     * 여러 개의 채팅 메시지를 Redis에 저장 (누락된 메시지를 올바른 순서로 추가)
+     * 여러 개의 채팅 메시지를 Redis에 저장
      *
      * @param postId 게시글 ID
      * @param chats 저장할 채팅 리스트
