@@ -64,8 +64,8 @@ class CategoryControllerTest {
 
     @BeforeAll
     void setUp() throws Exception {
-        SiteUser adminUser = userRepository.findByEmail("admin@naver.com").get();
-        SiteUser user = userRepository.findByEmail("testEmail1@naver.com").get();
+        SiteUser adminUser = userRepository.findByEmail("admin@naver.com");
+        SiteUser user = userRepository.findByEmail("testEmail1@naver.com");
 
         CustomUserDetails adminCustomUserDetails = new CustomUserDetails(adminUser);
         CustomUserDetails userCustomUserDetails = new CustomUserDetails(user);

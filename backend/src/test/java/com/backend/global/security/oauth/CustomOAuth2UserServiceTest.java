@@ -55,7 +55,7 @@ public class CustomOAuth2UserServiceTest {
                 UserRole.ROLE_USER.toString()
         );
                 
-        when(userRepository.findByKakaoId("12345")).thenReturn(Optional.empty());
+        when(userRepository.findByKakaoId("12345")).thenReturn(null);
         when(userRepository.save(any(SiteUser.class))).thenReturn(siteUser);
 
         Map<String, Object> attributes = new HashMap<>();

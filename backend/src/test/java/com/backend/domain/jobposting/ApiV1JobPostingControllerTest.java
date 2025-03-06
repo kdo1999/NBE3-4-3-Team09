@@ -71,11 +71,11 @@ public class ApiV1JobPostingControllerTest {
 
 	@BeforeAll
 	void setUp() {
-		givenSiteUser1 = userRepository.findByEmail("testEmail1@naver.com").get();
+		givenSiteUser1 = userRepository.findByEmail("testEmail1@naver.com");
 		CustomUserDetails givenCustomUserDetails1 = new CustomUserDetails(givenSiteUser1);
 		accessToken1 = jwtUtil.createAccessToken(givenCustomUserDetails1, accessExpiration);
 
-		givenSiteUser2 = userRepository.findByEmail("testEmail3@naver.com").get();
+		givenSiteUser2 = userRepository.findByEmail("testEmail3@naver.com");
 		CustomUserDetails givenCustomUserDetails2 = new CustomUserDetails(givenSiteUser2);
 		accessToken2 = jwtUtil.createAccessToken(givenCustomUserDetails2, accessExpiration);
 	}

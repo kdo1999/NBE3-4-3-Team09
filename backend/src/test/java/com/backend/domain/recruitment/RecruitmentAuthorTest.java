@@ -53,9 +53,9 @@ public class RecruitmentAuthorTest {
 
     @BeforeAll
     void setUp() {
-        SiteUser user1 = userRepository.findByEmail("testEmail1@naver.com").get();
-        SiteUser user2 = userRepository.findByEmail("testEmail2@naver.com").get();
-        SiteUser user3 = userRepository.findByEmail("testEmail2@naver.com").get();
+        SiteUser user1 = userRepository.findByEmail("testEmail1@naver.com");
+        SiteUser user2 = userRepository.findByEmail("testEmail2@naver.com");
+        SiteUser user3 = userRepository.findByEmail("testEmail2@naver.com");
 
         CustomUserDetails userDetails1 = new CustomUserDetails(user1);
         CustomUserDetails userDetails2 = new CustomUserDetails(user2);

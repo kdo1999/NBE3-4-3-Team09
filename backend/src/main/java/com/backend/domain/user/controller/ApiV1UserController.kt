@@ -27,9 +27,8 @@ class ApiV1UserController(
         @PathVariable(name = "user_id") userId: Long,
         @AuthenticationPrincipal customUserDetails: CustomUserDetails
     ): GenericResponse<UserGetProfileResponse> {
-        return GenericResponse.ok(
-            UserGetProfileResponse(userService.getUser(userId, customUserDetails))
-        )
+        val userGetProfileResponse = userService.getUser(userId, customUserDetails)?.let{UserGetProfileResponse(it)}
+        return GenericResponse.ok(userGetProfileResponse)
     }
 
     /**
