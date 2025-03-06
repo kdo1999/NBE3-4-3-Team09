@@ -12,31 +12,26 @@ import jakarta.persistence.*
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "post_type")
 @Table(name = "post")
-class Post (
-    subject: String,
-    content: String,
-    category: Category,
-    author: SiteUser
-) : BaseEntity() {
+class Post : BaseEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "post_id")
     var postId: Long? = null
-        protected set
 
     @Column(nullable = false)
-    var subject: String = subject
+    lateinit var subject: String
 
     @Column(nullable = false)
-    var content: String = content
+    lateinit var content: String
 
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
-    val category: Category = category
+    lateinit var category: Category
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    val author: SiteUser = author
+    lateinit var author: SiteUser
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "post", cascade = [CascadeType.REMOVE])
     var _postCommentList: MutableList<Comment> = mutableListOf()
@@ -56,15 +51,23 @@ class Post (
         this.content = content
     }
 
-    constructor(request: FreePostRequest, siteUser: SiteUser, category: Category) :
-            this(
-                subject = request.subject,
-                content = request.content,
-                category = category,
-                author = siteUser
-            )
-    constructor(postId: Long?) : this("", "", Category(), SiteUser()) {
-        this.postId = postId
+    constructor(request: FreePostRequest, siteUser: SiteUser, category: Category) {
+
+        this.subject = request.subject
+        this.content = request.content
+        this.category = category
+        this.author = siteUser
+
+    }
+    constructor(targetId: Long)  {
+        this.postId = targetId
+    }
+
+    constructor(subject: String, content: String, category: Category, author: SiteUser) : super() {
+        this.subject = subject
+        this.content = content
+        this.category = category
+        this.author = author
     }
 
 }

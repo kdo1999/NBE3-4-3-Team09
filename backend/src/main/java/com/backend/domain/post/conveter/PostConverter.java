@@ -13,7 +13,7 @@ import com.backend.domain.user.entity.SiteUser;
 
 public class PostConverter {
 
-	//게시글 저장할 때
+	// 게시글 저장할 때
 	public static Post createPost(FreePostRequest freePostRequest, SiteUser siteUser, Category category) {
 		return new Post(freePostRequest, siteUser, category);
 	}
