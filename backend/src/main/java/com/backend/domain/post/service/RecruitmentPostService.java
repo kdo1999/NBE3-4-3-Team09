@@ -33,7 +33,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 public class RecruitmentPostService {
 
-	private final PostRepository postRepository;
 	private final CategoryRepository categoryRepository;
 	private final JobPostingRepository jobPostingRepository;
 	private final RecruitmentUserRepository recruitmentUserRepository;
@@ -89,12 +88,10 @@ public class RecruitmentPostService {
 		RecruitmentPost savePost = recruitmentPostRepository.save(post);
 
 		//TODO 추후 연관관계 매핑 후 수정할 것
-		RecruitmentUser recruitmentUser = RecruitmentUser.builder()
-			.post(savePost)
-			.siteUser(siteUser)
-			.status(RecruitmentUserStatus.ACCEPTED)
-			.build();
-
+		RecruitmentUser recruitmentUser = new RecruitmentUser(
+				post,
+				siteUser,
+				RecruitmentUserStatus.ACCEPTED);
 		recruitmentUserRepository.save(recruitmentUser);
 
 		return PostConverter.toPostCreateResponse(savePost.getPostId(),

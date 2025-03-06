@@ -16,13 +16,11 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
-@Builder
 @Table(name = "recruitment_user")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
@@ -44,6 +42,12 @@ public class RecruitmentUser extends BaseEntity {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private RecruitmentUserStatus status;
+
+    public RecruitmentUser(RecruitmentPost post, SiteUser siteUser, RecruitmentUserStatus status) {
+        this.post = post;
+        this.siteUser = siteUser;
+        this.status = status;
+    }
 
     // 모집 게시판 작성자 모집 수락 메서드
     public void accept() {

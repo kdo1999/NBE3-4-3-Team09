@@ -73,12 +73,11 @@ public class RecruitmentMailTest {
 
         // 3. 모집 게시글에 대해 RecruitmentUser 엔티티를 생성하여 신청자로 등록
         //    모집 게시판에서는 모집 신청 시 accept() 호출로 상태를 ACCEPTED로 변경하고, currentUserCount를 증가
-        RecruitmentUser recruitmentUser = RecruitmentUser.builder()
-                .post(post)
-                .siteUser(applicant)
-                // 아래 accept() 호출로 ACCEPTED로 변경됩니다.
-                .status(RecruitmentUserStatus.APPLIED)
-                .build();
+        RecruitmentUser recruitmentUser = new RecruitmentUser(
+                post,
+                applicant,
+                RecruitmentUserStatus.APPLIED
+        );
         recruitmentUser.accept();
         recruitmentUserRepository.save(recruitmentUser);
 
@@ -128,11 +127,11 @@ public class RecruitmentMailTest {
                 .orElseThrow(() -> new RuntimeException("신청자 SiteUser를 찾을 수 없습니다."));
 
         // 3. 모집 게시글에 대해 RecruitmentUser 엔티티를 생성하고 신청자로 등록
-        RecruitmentUser recruitmentUser = RecruitmentUser.builder()
-                .post(post)
-                .siteUser(applicant)
-                .status(RecruitmentUserStatus.APPLIED) // 'APPLIED' 상태로 생성
-                .build();
+        RecruitmentUser recruitmentUser = new RecruitmentUser(
+                post,
+                applicant,
+                RecruitmentUserStatus.APPLIED
+        );
 
         // recruitmentUser.accept()를 호출하여 상태를 ACCEPTED로 변경하고, currentUserCount 증가
         recruitmentUser.accept();
