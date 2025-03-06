@@ -40,10 +40,10 @@ class JobPostingQueryRepository(
         )
             .from(jobPosting)
             .where(
-                getSubjectContains(jobPostingSearchCondition.kw()),
-                getExperienceLevelEq(jobPostingSearchCondition.experienceLevel()),
-                getRequireEducateCode(jobPostingSearchCondition.requireEducateCode()),
-                getSalaryCodeBetween(jobPostingSearchCondition.salaryCode())
+                getSubjectContains(jobPostingSearchCondition.kw),
+                getExperienceLevelEq(jobPostingSearchCondition.experienceLevel),
+                getRequireEducateCode(jobPostingSearchCondition.requireEducateCode),
+                getSalaryCodeBetween(jobPostingSearchCondition.salaryCode)
             )
             .offset(pageable.offset)
             .limit(pageable.pageSize.toLong())
@@ -52,10 +52,10 @@ class JobPostingQueryRepository(
         val countQuery = queryFactory.select(jobPosting.count())
             .from(jobPosting)
             .where(
-                getSubjectContains(jobPostingSearchCondition.kw()),
-                getExperienceLevelEq(jobPostingSearchCondition.experienceLevel()),
-                getRequireEducateCode(jobPostingSearchCondition.requireEducateCode()),
-                getSalaryCodeBetween(jobPostingSearchCondition.salaryCode())
+                getSubjectContains(jobPostingSearchCondition.kw),
+                getExperienceLevelEq(jobPostingSearchCondition.experienceLevel),
+                getRequireEducateCode(jobPostingSearchCondition.requireEducateCode),
+                getSalaryCodeBetween(jobPostingSearchCondition.salaryCode)
             )
 
         return PageableExecutionUtils.getPage(content, pageable) { countQuery.fetchOne()!! }
@@ -121,10 +121,10 @@ class JobPostingQueryRepository(
             .from(jobPosting)
             .leftJoin(jobPosting._voterList, voter)
             .where(
-                getSubjectContains(jobPostingSearchCondition.kw()),
-                getExperienceLevelEq(jobPostingSearchCondition.experienceLevel()),
-                getRequireEducateCode(jobPostingSearchCondition.requireEducateCode()),
-                getSalaryCodeBetween(jobPostingSearchCondition.salaryCode()),
+                getSubjectContains(jobPostingSearchCondition.kw),
+                getExperienceLevelEq(jobPostingSearchCondition.experienceLevel),
+                getRequireEducateCode(jobPostingSearchCondition.requireEducateCode),
+                getSalaryCodeBetween(jobPostingSearchCondition.salaryCode),
                 getVoterSiteUserEq(siteUserId)
             )
             .offset(pageable.offset)
@@ -134,10 +134,10 @@ class JobPostingQueryRepository(
         val countQuery = queryFactory.select(jobPosting.count())
             .from(jobPosting)
             .where(
-                getSubjectContains(jobPostingSearchCondition.kw()),
-                getExperienceLevelEq(jobPostingSearchCondition.experienceLevel()),
-                getRequireEducateCode(jobPostingSearchCondition.requireEducateCode()),
-                getSalaryCodeBetween(jobPostingSearchCondition.salaryCode()),
+                getSubjectContains(jobPostingSearchCondition.kw),
+                getExperienceLevelEq(jobPostingSearchCondition.experienceLevel),
+                getRequireEducateCode(jobPostingSearchCondition.requireEducateCode),
+                getSalaryCodeBetween(jobPostingSearchCondition.salaryCode),
                 getVoterSiteUserEq(siteUserId)
             )
 
@@ -145,7 +145,7 @@ class JobPostingQueryRepository(
     }
 
     private fun getOrderBy(jobPostingSearchCondition: JobPostingSearchCondition): OrderSpecifier<*> {
-        val queryOrder = if (Order.ASC.toString().equals(jobPostingSearchCondition.order(), ignoreCase = true))
+        val queryOrder = if (Order.ASC.toString().equals(jobPostingSearchCondition.order, ignoreCase = true))
             Order.ASC
         else
             Order.DESC
@@ -155,10 +155,10 @@ class JobPostingQueryRepository(
             "openDate" to jobPosting.openDate
         )
 
-        val sortField = if (StringUtils.hasText(jobPostingSearchCondition.sort()) &&
-            fieldMap.containsKey(jobPostingSearchCondition.sort())
+        val sortField = if (StringUtils.hasText(jobPostingSearchCondition.sort) &&
+            fieldMap.containsKey(jobPostingSearchCondition.sort)
         ) {
-            fieldMap[jobPostingSearchCondition.sort()]
+            fieldMap[jobPostingSearchCondition.sort]
         } else {
             jobPosting.openDate
         }
