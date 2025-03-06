@@ -44,9 +44,15 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     }
 
     protected SiteUser saveOrUpdate(OAuthAttributes attributes) {
-        SiteUser user = userRepository.findByKakaoId(attributes.getKakaoId())
-                .map(entity -> entity.update(attributes.getName(), attributes.getProfileImg()))
-                .orElse(attributes.toEntity());
+//        SiteUser user = userRepository.findByKakaoId(attributes.getKakaoId())
+//                .map(entity -> entity.update(attributes.getName(), attributes.getProfileImg()))
+//                .orElse(attributes.toEntity());
+        SiteUser user = userRepository.findByKakaoId(attributes.getKakaoId());
+        if (user != null) {
+            user = user.update(attributes.getName(), attributes.getProfileImg());
+        } else {
+            user = attributes.toEntity();
+        }
                 
         return userRepository.save(user);
     }

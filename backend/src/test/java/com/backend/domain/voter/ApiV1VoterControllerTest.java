@@ -70,11 +70,11 @@ public class ApiV1VoterControllerTest {
 
 	@BeforeAll
 	void setUp() {
-		SiteUser givenSiteUser1 = userRepository.findByEmail("testEmail1@naver.com").get();
+		SiteUser givenSiteUser1 = userRepository.findByEmail("testEmail1@naver.com");
 		CustomUserDetails givenCustomUserDetails1 = new CustomUserDetails(givenSiteUser1);
 		accessToken1 = jwtUtil.createAccessToken(givenCustomUserDetails1, accessExpiration);
 
-		SiteUser givenSiteUser2 = userRepository.findByEmail("testEmail2@naver.com").get();
+		SiteUser givenSiteUser2 = userRepository.findByEmail("testEmail2@naver.com");
 		CustomUserDetails givenCustomUserDetails2 = new CustomUserDetails(givenSiteUser2);
 		accessToken2 = jwtUtil.createAccessToken(givenCustomUserDetails2, accessExpiration);
 	}
@@ -112,7 +112,7 @@ public class ApiV1VoterControllerTest {
 			.targetId(1L)
 			.build();
 
-		SiteUser givenSiteUser1 = userRepository.findByEmail("testEmail1@naver.com").get();
+		SiteUser givenSiteUser1 = userRepository.findByEmail("testEmail1@naver.com");
 
 		JobPosting jobPosting = new JobPosting(1L);
 
