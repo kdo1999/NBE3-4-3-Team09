@@ -1,12 +1,5 @@
 package com.backend.domain.recruitmentUser.controller;
 
-import com.backend.domain.recruitmentUser.dto.request.AuthorRequest;
-import com.backend.domain.recruitmentUser.dto.response.RecruitmentUserPageResponse;
-import com.backend.domain.recruitmentUser.service.RecruitmentAuthorService;
-import com.backend.global.response.GenericResponse;
-import com.backend.global.security.custom.CustomUserDetails;
-import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -18,6 +11,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.backend.domain.recruitmentUser.dto.request.AuthorRequest;
+import com.backend.domain.recruitmentUser.dto.response.RecruitmentUserPageResponse;
+import com.backend.domain.recruitmentUser.service.RecruitmentAuthorService;
+import com.backend.global.response.GenericResponse;
+import com.backend.global.security.custom.CustomUserDetails;
+
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
@@ -80,8 +82,8 @@ public class ApiV1RecruitmentAuthorController {
     public GenericResponse<RecruitmentUserPageResponse> getAppliedUsers(
             @AuthenticationPrincipal CustomUserDetails userDetails,
             @PathVariable("postId") Long postId,
-            @RequestParam(defaultValue = "0") int pageNum,
-            @RequestParam(defaultValue = "10") int pageSize) {
+            @RequestParam(name = "pageNum", defaultValue = "0") int pageNum,
+            @RequestParam(name = "pageSize", defaultValue = "10") int pageSize) {
         Pageable pageable = PageRequest.of(pageNum, pageSize,
                 Sort.by(Sort.Direction.ASC, "createdAt"));
 
@@ -106,8 +108,8 @@ public class ApiV1RecruitmentAuthorController {
     public GenericResponse<RecruitmentUserPageResponse> getAcceptedUsers(
             @AuthenticationPrincipal CustomUserDetails userDetails,
             @PathVariable("postId") Long postId,
-            @RequestParam(defaultValue = "0") int pageNum,
-            @RequestParam(defaultValue = "10") int pageSize) {
+            @RequestParam(name = "pageNum", defaultValue = "0") int pageNum,
+            @RequestParam(name = "pageSize", defaultValue = "10") int pageSize) {
         Pageable pageable = PageRequest.of(pageNum, pageSize,
                 Sort.by(Sort.Direction.ASC, "createdAt"));
 

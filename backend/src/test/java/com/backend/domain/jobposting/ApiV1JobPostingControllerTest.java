@@ -193,7 +193,7 @@ public class ApiV1JobPostingControllerTest {
 
 		//when
 		ResultActions resultActions = mockMvc.perform(
-			get("/api/v1/job-posting/{id}", givenJobPosting.id())
+			get("/api/v1/job-posting/{id}", givenJobPosting.getId())
 				.contentType(MediaType.APPLICATION_JSON)
 				.header("Authorization", "Bearer " + accessToken1));
 
@@ -202,51 +202,51 @@ public class ApiV1JobPostingControllerTest {
 			.andExpect(status().isOk())
 			.andExpect(jsonPath("$.code").value(HttpStatus.OK.value()))
 			//공고 ID 검증
-			.andExpect(jsonPath("$.data.id").value(givenJobPosting.id()))
+			.andExpect(jsonPath("$.data.id").value(givenJobPosting.getId()))
 			//공고 제목 검증
-			.andExpect(jsonPath("$.data.subject").value(givenJobPosting.subject()))
+			.andExpect(jsonPath("$.data.subject").value(givenJobPosting.getSubject()))
 			//공고 URL 검증
-			.andExpect(jsonPath("$.data.url").value(givenJobPosting.url()))
+			.andExpect(jsonPath("$.data.url").value(givenJobPosting.getUrl()))
 			//공고 날짜 값 검증
 			.andExpect(jsonPath("$.data.postDate")
-				.value(givenJobPosting.postDate().format(FORMATTER)))
+				.value(givenJobPosting.getPostDate().format(FORMATTER)))
 			.andExpect(jsonPath("$.data.openDate")
-				.value(givenJobPosting.openDate().format(FORMATTER)))
+				.value(givenJobPosting.getOpenDate().format(FORMATTER)))
 			.andExpect(jsonPath("$.data.closeDate")
-				.value(givenJobPosting.closeDate().format(FORMATTER)))
+				.value(givenJobPosting.getCloseDate().format(FORMATTER)))
 			//회사 검증
-			.andExpect(jsonPath("$.data.companyName").value(givenJobPosting.companyName()))
-			.andExpect(jsonPath("$.data.companyLink").value(givenJobPosting.companyLink()))
+			.andExpect(jsonPath("$.data.companyName").value(givenJobPosting.getCompanyName()))
+			.andExpect(jsonPath("$.data.companyLink").value(givenJobPosting.getCompanyLink()))
 			//경력 검증
 			.andExpect(jsonPath("$.data.experienceLevel.code")
-				.value(givenJobPosting.experienceLevel().getCode()))
+				.value(givenJobPosting.getExperienceLevel().getCode()))
 			.andExpect(jsonPath("$.data.experienceLevel.min")
-				.value(givenJobPosting.experienceLevel().getMin()))
+				.value(givenJobPosting.getExperienceLevel().getMin()))
 			.andExpect(jsonPath("$.data.experienceLevel.max")
-				.value(givenJobPosting.experienceLevel().getMax()))
+				.value(givenJobPosting.getExperienceLevel().getMax()))
 			.andExpect(jsonPath("$.data.experienceLevel.name")
-				.value(givenJobPosting.experienceLevel().getName()))
+				.value(givenJobPosting.getExperienceLevel().getName()))
 			//학력 검증
 			.andExpect(jsonPath("$.data.requireEducate.code")
-				.value(givenJobPosting.requireEducate().getCode()))
+				.value(givenJobPosting.getRequireEducate().getCode()))
 			.andExpect(jsonPath("$.data.requireEducate.name")
-				.value(givenJobPosting.requireEducate().getName()))
+				.value(givenJobPosting.getRequireEducate().getName()))
 			//공고 상태 검증
 			.andExpect(jsonPath("$.data.jobPostingStatus")
-				.value(givenJobPosting.jobPostingStatus().toString()))
+				.value(givenJobPosting.getJobPostingStatus().toString()))
 			//JobSkillList 검증
 			.andExpect(jsonPath("$.data.jobSkillList[0].name")
-				.value(givenJobPosting.jobSkillList().getFirst().name()))
+				.value(givenJobPosting.getJobSkillList().getFirst().getName()))
 			.andExpect(jsonPath("$.data.jobSkillList[0].code")
-				.value(givenJobPosting.jobSkillList().getFirst().code()))
+				.value(givenJobPosting.getJobSkillList().getFirst().getCode()))
 			.andExpect(jsonPath("$.data.jobSkillList[1].name")
-				.value(givenJobPosting.jobSkillList().get(1).name()))
+				.value(givenJobPosting.getJobSkillList().get(1).getName()))
 			.andExpect(jsonPath("$.data.jobSkillList[1].code")
-				.value(givenJobPosting.jobSkillList().get(1).code()))
+				.value(givenJobPosting.getJobSkillList().get(1).getCode()))
 			//지원자 수 검증
-			.andExpect(jsonPath("$.data.applyCnt").value(givenJobPosting.applyCnt()))
+			.andExpect(jsonPath("$.data.applyCnt").value(givenJobPosting.getApplyCnt()))
 			//추천 수 검증
-			.andExpect(jsonPath("$.data.voterCount").value(givenJobPosting.voterCount()))
+			.andExpect(jsonPath("$.data.voterCount").value(givenJobPosting.getVoterCount()))
 			//추천 여부 검증
 			.andExpect(jsonPath("$.data.isVoter").value(givenJobPosting.isVoter()));
 	}
@@ -260,7 +260,7 @@ public class ApiV1JobPostingControllerTest {
 
 		//when
 		ResultActions resultActions = mockMvc.perform(
-			get("/api/v1/job-posting/{id}", givenJobPosting.id())
+			get("/api/v1/job-posting/{id}", givenJobPosting.getId())
 				.contentType(MediaType.APPLICATION_JSON)
 				.header("Authorization", "Bearer " + accessToken2));
 
@@ -269,51 +269,51 @@ public class ApiV1JobPostingControllerTest {
 			.andExpect(status().isOk())
 			.andExpect(jsonPath("$.code").value(HttpStatus.OK.value()))
 			//공고 ID 검증
-			.andExpect(jsonPath("$.data.id").value(givenJobPosting.id()))
+			.andExpect(jsonPath("$.data.id").value(givenJobPosting.getId()))
 			//공고 제목 검증
-			.andExpect(jsonPath("$.data.subject").value(givenJobPosting.subject()))
+			.andExpect(jsonPath("$.data.subject").value(givenJobPosting.getSubject()))
 			//공고 URL 검증
-			.andExpect(jsonPath("$.data.url").value(givenJobPosting.url()))
+			.andExpect(jsonPath("$.data.url").value(givenJobPosting.getUrl()))
 			//공고 날짜 값 검증
 			.andExpect(jsonPath("$.data.postDate")
-				.value(givenJobPosting.postDate().format(FORMATTER)))
+				.value(givenJobPosting.getPostDate().format(FORMATTER)))
 			.andExpect(jsonPath("$.data.openDate")
-				.value(givenJobPosting.openDate().format(FORMATTER)))
+				.value(givenJobPosting.getOpenDate().format(FORMATTER)))
 			.andExpect(jsonPath("$.data.closeDate")
-				.value(givenJobPosting.closeDate().format(FORMATTER)))
+				.value(givenJobPosting.getCloseDate().format(FORMATTER)))
 			//회사 검증
-			.andExpect(jsonPath("$.data.companyName").value(givenJobPosting.companyName()))
-			.andExpect(jsonPath("$.data.companyLink").value(givenJobPosting.companyLink()))
+			.andExpect(jsonPath("$.data.companyName").value(givenJobPosting.getCompanyName()))
+			.andExpect(jsonPath("$.data.companyLink").value(givenJobPosting.getCompanyLink()))
 			//경력 검증
 			.andExpect(jsonPath("$.data.experienceLevel.code")
-				.value(givenJobPosting.experienceLevel().getCode()))
+				.value(givenJobPosting.getExperienceLevel().getCode()))
 			.andExpect(jsonPath("$.data.experienceLevel.min")
-				.value(givenJobPosting.experienceLevel().getMin()))
+				.value(givenJobPosting.getExperienceLevel().getMin()))
 			.andExpect(jsonPath("$.data.experienceLevel.max")
-				.value(givenJobPosting.experienceLevel().getMax()))
+				.value(givenJobPosting.getExperienceLevel().getMax()))
 			.andExpect(jsonPath("$.data.experienceLevel.name")
-				.value(givenJobPosting.experienceLevel().getName()))
+				.value(givenJobPosting.getExperienceLevel().getName()))
 			//학력 검증
 			.andExpect(jsonPath("$.data.requireEducate.code")
-				.value(givenJobPosting.requireEducate().getCode()))
+				.value(givenJobPosting.getRequireEducate().getCode()))
 			.andExpect(jsonPath("$.data.requireEducate.name")
-				.value(givenJobPosting.requireEducate().getName()))
+				.value(givenJobPosting.getRequireEducate().getName()))
 			//공고 상태 검증
 			.andExpect(jsonPath("$.data.jobPostingStatus")
-				.value(givenJobPosting.jobPostingStatus().toString()))
+				.value(givenJobPosting.getJobPostingStatus().toString()))
 			//JobSkillList 검증
 			.andExpect(jsonPath("$.data.jobSkillList[0].name")
-				.value(givenJobPosting.jobSkillList().getFirst().name()))
+				.value(givenJobPosting.getJobSkillList().getFirst().getName()))
 			.andExpect(jsonPath("$.data.jobSkillList[0].code")
-				.value(givenJobPosting.jobSkillList().getFirst().code()))
+				.value(givenJobPosting.getJobSkillList().getFirst().getCode()))
 			.andExpect(jsonPath("$.data.jobSkillList[1].name")
-				.value(givenJobPosting.jobSkillList().get(1).name()))
+				.value(givenJobPosting.getJobSkillList().get(1).getName()))
 			.andExpect(jsonPath("$.data.jobSkillList[1].code")
-				.value(givenJobPosting.jobSkillList().get(1).code()))
+				.value(givenJobPosting.getJobSkillList().get(1).getCode()))
 			//지원자 수 검증
-			.andExpect(jsonPath("$.data.applyCnt").value(givenJobPosting.applyCnt()))
+			.andExpect(jsonPath("$.data.applyCnt").value(givenJobPosting.getApplyCnt()))
 			//추천 수 검증
-			.andExpect(jsonPath("$.data.voterCount").value(givenJobPosting.voterCount()))
+			.andExpect(jsonPath("$.data.voterCount").value(givenJobPosting.getVoterCount()))
 			//추천 여부 검증
 			.andExpect(jsonPath("$.data.isVoter").value(givenJobPosting.isVoter()));
 	}

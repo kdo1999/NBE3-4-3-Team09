@@ -1,8 +1,7 @@
 package com.backend.domain.jobskill.repository;
 
-import com.backend.domain.jobskill.entity.JobSkill;
-import java.util.List;
-import java.util.Optional;
+import com.backend.domain.jobskill.entity.JobSkill
+import java.util.*
 
 /**
  * JobSkillRepository
@@ -10,35 +9,35 @@ import java.util.Optional;
  *
  * @author Kim Dong O
  */
-public interface JobSkillRepository {
+interface JobSkillRepository {
 
 	/**
 	 * @param id JobSkill id
 	 * @return {@link Optional<JobSkill>}
 	 * @implSpec Id 값으로 조회 메서드 입니다.
 	 */
-	Optional<JobSkill> findById(Long id);
+	fun findById(id: Long): Optional<JobSkill>
 
 	/**
 	 * @param code JobSkill code
 	 * @return {@link Optional<JobSkill>}
 	 * @implSpec code 값으로 조회 메서드 입니다.
 	 */
-	Optional<JobSkill> findByCode(Integer code);
+	fun findByCode(code: Int): Optional<JobSkill>
 
 	/**
 	 * @param jobSkill JobSkill 객체
 	 * @return {@link JobSkill}
 	 * @implSpec JobSkill 저장 메서드 입니다.
 	 */
-	JobSkill save(JobSkill jobSkill);
+	fun save(jobSkill: JobSkill): JobSkill
 
 	/**
 	 * @param name JobSkill name
 	 * @return {@link Optional<JobSkill>}
 	 * @implSpec name 값으로 조회 메서드 입니다.
 	 */
-	Optional<JobSkill> findByName(String name);
+	fun findByName(name: String): Optional<JobSkill>
 
-    void saveAll(List<JobSkill> newJobSkill);
+    fun saveAll(newJobSkill: List<JobSkill>)
 }
