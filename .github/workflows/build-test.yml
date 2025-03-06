@@ -1,44 +1,67 @@
 name: Build Test
-
 on:
   pull_request:
     branches:
       - main
+    paths:
+      - 'backend/**'  # 백엔드 코드가 변경된 경우만 실행
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    services:
-      docker:
-        image: docker:19.03.12
-        options: --privileged
+    
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
+        with:
+          fetch-depth: 1
+      
       - name: Set up JDK
         uses: actions/setup-java@v4
         with:
           java-version: '21'
           distribution: 'temurin'
-
+          cache: 'gradle'
+      
+      - name: Docker Compose 설치
+        run: |
+          sudo curl -L "https://github.com/docker/compose/releases/download/v2.24.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+          sudo chmod +x /usr/local/bin/docker-compose
+      
+      - name: Docker 캐시 설정
+        uses: actions/cache@v3
+        with:
+          path: /tmp/docker-cache
+          key: ${{ runner.os }}-docker-${{ hashFiles('backend/docker-compose.yml') }}
+          restore-keys: |
+            ${{ runner.os }}-docker-
+      
+      - name: Gradle 캐시 설정
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+      
       - name: Grant execute permission for gradlew
         working-directory: ./backend
         run: chmod +x ./gradlew
-
-      - name: Set up Docker Compose
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y docker-compose
-
-      - name: Start services with Docker Compose
+      
+      - name: Start Essential Services Only
         working-directory: ./backend
-        run: docker-compose -f docker-compose.yml up -d
-
+        run: |
+          # 테스트에 필수적인 서비스만 시작
+          docker-compose -f docker-compose.yml up -d db
+          # 다른 필수 서비스만 추가
+      
       - name: Build with Gradle
         working-directory: ./backend
-        run: ./gradlew clean build
-
-      - name: Stop services after build
+        run: ./gradlew clean build --parallel --build-cache
+      
+      - name: Stop services
+        if: always()
         working-directory: ./backend
         run: docker-compose down
