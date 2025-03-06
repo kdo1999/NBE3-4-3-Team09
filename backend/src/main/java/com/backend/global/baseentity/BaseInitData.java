@@ -52,12 +52,6 @@ public class BaseInitData {
 
 		List<SiteUser> users = new ArrayList<>();
 
-//		SiteUser admin = SiteUser.builder()
-//			.email("admin@admin.com")
-//			.name("admin")
-//			.password(passwordEncoder.encode("admin"))
-//			.userRole(UserRole.ROLE_ADMIN.toString())
-//			.build();
 		SiteUser admin = new SiteUser(
 				"admin@admin.com",
 				"admin",
@@ -169,6 +163,8 @@ public class BaseInitData {
 				CategoryName.RECRUITMENT.getValue()
 		);
 		categories.add(recruitmentBoard);
+
+		categoryRepository.saveAll(categories);
 	}
 
 }

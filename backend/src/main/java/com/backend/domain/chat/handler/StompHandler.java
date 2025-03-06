@@ -52,12 +52,6 @@ public class StompHandler implements ChannelInterceptor {
 
 			setValue(accessor, "username", user.getName());
 
-			log.info("프로필값: {}", user.getProfileImg());
-
-			if (user.getProfileImg() != null) {
-				setValue(accessor, "profileImgUrl", user.getProfileImg());
-				log.info("{}", "profileImgUrl 세팅");
-			}
 			log.info("커넥션 완료");
 
 		} else if (StompCommand.SUBSCRIBE.equals(command)) { // 채팅룸
