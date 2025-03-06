@@ -7,7 +7,6 @@ import com.backend.domain.jobposting.util.JobPostingSearchCondition
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
-import java.util.*
 
 @Repository
 class JobPostingRepositoryImpl(
@@ -16,16 +15,16 @@ class JobPostingRepositoryImpl(
 ) :JobPostingRepository {
 
 
-	override fun findById(id: Long): Optional<JobPosting> {
-		return jobPostingJpaRepository.findById(id)
+	override fun findById(id: Long): JobPosting? {
+		return jobPostingJpaRepository.findByIdOrNull(id)
 	}
 
-	override fun findDetailById(jobPostingId: Long, siteUserId: Long): Optional<JobPostingDetailResponse> {
+	override fun findDetailById(jobPostingId: Long, siteUserId: Long): JobPostingDetailResponse? {
 		return jobPostingQueryRepository.findDetailById(jobPostingId, siteUserId)
 	}
 
 	override fun save(jobPosting: JobPosting): JobPosting {
-		return jobPostingJpaRepository.save(jobPosting);
+		return jobPostingJpaRepository.save(jobPosting)
 	}
 
 	@Override
