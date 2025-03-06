@@ -23,7 +23,7 @@ class UserService(
      * @param id
      * @return [SiteUser]
      */
-    fun getUserById(id: Long): SiteUser {
+    fun getUserById(id: Long): SiteUser? {
         return userRepository.findById(id).orElseThrow { GlobalException(GlobalErrorCode.USER_NOT_FOUND) }
     }
 
@@ -46,7 +46,7 @@ class UserService(
      * @param customUserDetails
      * @return [SiteUser]
      */
-    fun getUser(id: Long, customUserDetails: CustomUserDetails): SiteUser {
+    fun getUser(id: Long, customUserDetails: CustomUserDetails): SiteUser? {
         isValidUser(id, customUserDetails)
 
         val user = getUserById(id)
@@ -80,6 +80,6 @@ class UserService(
 //            })
 //        }
 
-        user.modifyProfile(req.introduction, req.job)
+        user?.modifyProfile(req.introduction, req.job)
     }
 }

@@ -7,7 +7,6 @@ import com.backend.domain.voter.entity.Voter
 import com.backend.global.baseentity.BaseEntity
 import jakarta.persistence.*
 import jakarta.validation.constraints.Email
-import lombok.*
 
 @Entity
 class SiteUser(

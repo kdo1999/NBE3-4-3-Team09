@@ -28,7 +28,7 @@ class ApiV1UserController(
         @AuthenticationPrincipal customUserDetails: CustomUserDetails
     ): GenericResponse<UserGetProfileResponse> {
         return GenericResponse.ok(
-            UserGetProfileResponse(userService.getUser(userId, customUserDetails))
+            userService.getUser(userId, customUserDetails)?.let { UserGetProfileResponse(it) }
         )
     }
 
