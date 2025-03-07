@@ -1,42 +1,37 @@
 package com.backend.domain.voter.repository;
 
-import com.backend.domain.voter.domain.VoterType;
-import com.backend.domain.voter.entity.Voter;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
+import com.backend.domain.voter.domain.VoterType
+import com.backend.domain.voter.entity.Voter
+import org.springframework.stereotype.Repository
 
 @Repository
-@RequiredArgsConstructor
-public class VoterRepositoryImpl implements VoterRepository {
+class VoterRepositoryImpl(private val voterJpaRepository: VoterJpaRepository): VoterRepository {
 
-	private final VoterJpaRepository voterJpaRepository;
+	override fun save(voter: Voter): Voter = voterJpaRepository.save(voter)
 
-	@Override
-	public Voter save(Voter voter) {
-		return voterJpaRepository.save(voter);
-	}
+	override fun existsByJobPostingId(
+		siteUserId: Long,
+		jobPostingId: Long,
+		voterType: VoterType
+	): Boolean = voterJpaRepository.existsBySiteUserIdAndJobPostingIdAndVoterType(
+		siteUserId,
+		jobPostingId,
+		voterType
+	)
 
-	@Override
-	public boolean existsByJobPostingId(Long siteUserId, Long jobPostingId, VoterType voterType) {
-		return voterJpaRepository.existsBySiteUserIdAndJobPostingIdAndVoterType(siteUserId,
-			jobPostingId,
-			voterType);
-	}
+	override fun existsByPostId(
+		siteUserId: Long,
+		postId: Long,
+		voterType: VoterType
+	): Boolean = voterJpaRepository.existsBySiteUserIdAndPostPostIdAndVoterType(
+		siteUserId,
+		postId,
+		voterType
+	)
 
-	@Override
-	public boolean existsByPostId(Long siteUserId, Long postId, VoterType voterType) {
-		return voterJpaRepository.existsBySiteUserIdAndPostPostIdAndVoterType(siteUserId,
-			postId,
-			voterType);
-	}
+	override fun deleteByJobPostingId(jobPostingId: Long) =
+		voterJpaRepository.deleteByJobPostingId(jobPostingId)
 
-	@Override
-	public void deleteByJobPostingId(Long jobPostingId) {
-		voterJpaRepository.deleteByJobPostingId(jobPostingId);
-	}
-
-	@Override
-	public void deleteByPostId(Long postId) {
-		voterJpaRepository.deleteByPostPostId(postId);
-	}
+	override fun deleteByPostId(postId: Long) =
+		voterJpaRepository.deleteByPostPostId(postId)
 }

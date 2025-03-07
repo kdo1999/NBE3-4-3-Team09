@@ -9,14 +9,14 @@ import com.backend.domain.voter.entity.Voter;
  *
  * @author Kim Dong O
  */
-public interface VoterRepository {
+interface VoterRepository {
 
 	/**
 	 * @param voter Like 객체
 	 * @return {@link Voter}
 	 * @implSpec Voter 저장 메서드 입니다.
 	 */
-	Voter save(Voter voter);
+	fun save(voter: Voter): Voter
 
 	/**
 	 * @param siteUserId   siteUserId
@@ -25,7 +25,7 @@ public interface VoterRepository {
 	 * @return {@link Boolean} 데이터 존재할 시 true, 존재하지 않을 때 false
 	 * @implSpec Voter exists 메서드 입니다.
 	 */
-	boolean existsByJobPostingId(Long siteUserId, Long jobPostingId, VoterType voterType);
+	fun existsByJobPostingId(siteUserId: Long, jobPostingId: Long, voterType: VoterType): Boolean
 
 
 /**
@@ -36,9 +36,9 @@ public interface VoterRepository {
 	 * @implSpec Voter exists 메서드 입니다.
 	 */
 
-	boolean existsByPostId(Long siteUserId, Long postId, VoterType voterType);
+	fun existsByPostId(siteUserId: Long, postId: Long, voterType: VoterType): Boolean
 
-	void deleteByJobPostingId(Long jobPostingId);
+	fun deleteByJobPostingId(jobPostingId: Long)
 
-	void deleteByPostId(Long postId);
+	fun deleteByPostId(postId: Long)
 }

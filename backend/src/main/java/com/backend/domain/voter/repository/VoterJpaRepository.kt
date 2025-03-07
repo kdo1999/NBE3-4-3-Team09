@@ -4,13 +4,21 @@ import com.backend.domain.voter.domain.VoterType;
 import com.backend.domain.voter.entity.Voter;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface VoterJpaRepository extends JpaRepository<Voter, Long> {
+interface VoterJpaRepository: JpaRepository<Voter, Long> {
 
-	boolean existsBySiteUserIdAndJobPostingIdAndVoterType(Long siteUserId, Long jobPostingId, VoterType voterType);
+	fun existsBySiteUserIdAndJobPostingIdAndVoterType(
+		siteUserId: Long,
+		jobPostingId: Long,
+		voterType: VoterType
+	): Boolean
 
-	boolean existsBySiteUserIdAndPostPostIdAndVoterType(Long siteUserId, Long postId, VoterType voterType);
+	fun existsBySiteUserIdAndPostPostIdAndVoterType(
+		siteUserId: Long,
+		postId: Long,
+		voterType: VoterType
+	): Boolean
 
-	void deleteByJobPostingId(Long jobPostingId);
+	fun deleteByJobPostingId(jobPostingId: Long)
 
-	void deleteByPostPostId(Long postId);
+	fun deleteByPostPostId(postId: Long)
 }
