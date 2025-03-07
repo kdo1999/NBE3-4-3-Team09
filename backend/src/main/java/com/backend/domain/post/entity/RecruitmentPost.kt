@@ -2,6 +2,7 @@ package com.backend.domain.post.entity
 
 import com.backend.domain.category.entity.Category
 import com.backend.domain.jobposting.entity.JobPosting
+import com.backend.domain.jobposting.repository.JobPostingRepository
 import com.backend.domain.post.dto.RecruitmentPostRequest
 import com.backend.domain.user.entity.SiteUser
 import jakarta.persistence.*
@@ -23,12 +24,14 @@ open class RecruitmentPost : Post {
 
     constructor(
         request: RecruitmentPostRequest, category: Category, author: SiteUser,
-        jobPosting: JobPosting
+        jobPostingId: Long, jobPostingRepository: JobPostingRepository
     ) : super(request.subject, request.content, category, author) {
         this.recruitmentClosingDate = recruitmentClosingDate
         this.numOfApplicants = numOfApplicants
         this.recruitmentStatus = recruitmentStatus
-        this.jobPosting = jobPosting
+
+        this.jobPosting = jobPostingRepository.findById(jobPostingId)
+            .orElseThrow { throw IllegalArgumentException("존재하지 않는 JobPosting ID: $jobPostingId") }
     }
 
     fun updatePost(subject: String, content: String, numOfApplicants: Int) {

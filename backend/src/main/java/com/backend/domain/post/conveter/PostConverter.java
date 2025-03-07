@@ -2,6 +2,7 @@ package com.backend.domain.post.conveter;
 
 import com.backend.domain.category.entity.Category;
 import com.backend.domain.jobposting.entity.JobPosting;
+import com.backend.domain.jobposting.repository.JobPostingRepository;
 import com.backend.domain.post.dto.FreePostRequest;
 import com.backend.domain.post.dto.PostCreateResponse;
 import com.backend.domain.post.dto.PostResponse;
@@ -20,9 +21,9 @@ public class PostConverter {
 
 	// 모집 게시글 저장할 때
 	public static RecruitmentPost createPost(RecruitmentPostRequest recruitmentPostRequest,
-		Category category, SiteUser author, JobPosting jobPosting) {
+		Category category, SiteUser author, Long jobPostingId, JobPostingRepository jobPostingRepository) {
 
-		return new RecruitmentPost(recruitmentPostRequest, category, author, jobPosting);
+		return new RecruitmentPost(recruitmentPostRequest, category, author, jobPostingId, jobPostingRepository);
 	}
 
 

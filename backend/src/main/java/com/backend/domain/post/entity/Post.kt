@@ -6,6 +6,7 @@ import com.backend.domain.post.dto.FreePostRequest
 import com.backend.domain.user.entity.SiteUser
 import com.backend.domain.voter.entity.Voter
 import com.backend.global.baseentity.BaseEntity
+import com.querydsl.core.types.Projections.constructor
 import jakarta.persistence.*
 
 @Entity
@@ -31,12 +32,10 @@ class Post : BaseEntity {
     lateinit var category: Category
         protected set
 
-
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     lateinit var author: SiteUser
         protected set
-
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "post", cascade = [CascadeType.REMOVE])
     private var _postCommentList: MutableList<Comment> = mutableListOf()
@@ -57,7 +56,6 @@ class Post : BaseEntity {
     }
 
     constructor(request: FreePostRequest, siteUser: SiteUser, category: Category) {
-
         this.subject = request.subject
         this.content = request.content
         this.category = category
