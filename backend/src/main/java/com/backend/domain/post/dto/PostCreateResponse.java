@@ -1,3 +1,4 @@
+/*
 package com.backend.domain.post.dto;
 
 import lombok.Builder;
@@ -6,3 +7,4 @@ import lombok.Builder;
 public record PostCreateResponse(Long postId, Long categoryId) {
 
 }
+*/
