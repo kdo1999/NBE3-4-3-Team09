@@ -61,7 +61,7 @@ class JobPostingQueryRepository(
         return PageableExecutionUtils.getPage(content, pageable) { countQuery.fetchOne()!! }
     }
 
-    fun findDetailById(jobPostingId: Long, siteUserId: Long): Optional<JobPostingDetailResponse> {
+    fun findDetailById(jobPostingId: Long, siteUserId: Long): JobPostingDetailResponse? {
         val siteUserVoted = JPAExpressions
             .selectOne()
             .from(voter)
@@ -102,7 +102,7 @@ class JobPostingQueryRepository(
             .where(jobPosting.id.eq(jobPostingId))
             .fetchOne()
 
-        return Optional.ofNullable(jobPostingDetailResponse)
+        return jobPostingDetailResponse
     }
 
     fun findAllVoter(

@@ -49,7 +49,7 @@ class JobPostingService(private val jobPostingRepository: JobPostingRepository) 
 	fun findDetailById(jobPostingId: Long, siteUserId: Long): JobPostingDetailResponse {
 
 		return jobPostingRepository.findDetailById(jobPostingId, siteUserId)
-			.orElseThrow { GlobalException(GlobalErrorCode.JOB_POSTING_NOT_FOUND) }
+			?: throw GlobalException(GlobalErrorCode.JOB_POSTING_NOT_FOUND)
 	}
 
 	fun findAllVoter(

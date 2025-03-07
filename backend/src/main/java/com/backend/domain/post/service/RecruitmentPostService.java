@@ -74,8 +74,11 @@ public class RecruitmentPostService {
 			.orElseThrow(() -> new GlobalException(GlobalErrorCode.CATEGORY_NOT_FOUND));
 
 		JobPosting jobPosting = jobPostingRepository.findById(
-				recruitmentPostRequest.getJobPostingId())
-			.orElseThrow(() -> new GlobalException(GlobalErrorCode.JOB_POSTING_NOT_FOUND));
+				recruitmentPostRequest.getJobPostingId());
+
+		if (jobPosting == null) {
+			throw new GlobalException(GlobalErrorCode.JOB_POSTING_NOT_FOUND);
+		}
 
 		RecruitmentPost post = PostConverter.createPost(
 			recruitmentPostRequest,
