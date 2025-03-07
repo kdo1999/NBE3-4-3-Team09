@@ -43,7 +43,7 @@ public class ApiV1RecruitmentAuthorController {
             @RequestBody @Valid AuthorRequest request) {
 
         recruitmentAuthorService.recruitmentAccept(userDetails.getSiteUser(), postId,
-                request.userId());
+                request.getUserId());
         return GenericResponse.ok();
     }
 
@@ -64,7 +64,7 @@ public class ApiV1RecruitmentAuthorController {
         recruitmentAuthorService.recruitmentReject(
                 userDetails.getSiteUser(),
                 postId,
-                request.userId()
+                request.getUserId()
         );
         return GenericResponse.ok();
     }
