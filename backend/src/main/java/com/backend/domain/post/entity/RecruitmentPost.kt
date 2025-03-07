@@ -9,7 +9,7 @@ import java.time.ZonedDateTime
 
 @Entity
 @DiscriminatorValue("recruitment")
-open class RecruitmentPost : Post {
+class RecruitmentPost : Post {
     lateinit var recruitmentClosingDate: ZonedDateTime
     var numOfApplicants: Int? = null
 

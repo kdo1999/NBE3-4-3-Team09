@@ -30,7 +30,7 @@ class ApiV1VoterController(private val voterService: VoterService) {
 		val voterCreateResponse = voterService.save(
 			customUserDetails.getSiteUser(),
 			voterCreateRequest.targetId,
-			voterCreateRequest.voterType!!
+			voterCreateRequest.voterType
 		)
 
 		return GenericResponse.ok(HttpStatus.CREATED.value(), voterCreateResponse);
