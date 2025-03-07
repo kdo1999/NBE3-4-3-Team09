@@ -1,3 +1,4 @@
+/*
 package com.backend.domain.post.dto;
 
 import com.querydsl.core.annotations.QueryProjection;
@@ -19,3 +20,4 @@ public record PostPageResponse(
 	public PostPageResponse {
 	}
 }
+*/
