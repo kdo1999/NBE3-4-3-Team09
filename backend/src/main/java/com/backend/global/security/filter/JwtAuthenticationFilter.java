@@ -14,7 +14,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
-import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -22,7 +21,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-@RequiredArgsConstructor
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     private final JwtUtil jwtUtil;
@@ -31,6 +29,17 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     private final ObjectMapper objectMapper;
     private final RedisRepository redisRepository;
     private final AuthenticationManager authenticationManager;
+
+    public JwtAuthenticationFilter(JwtUtil jwtUtil, long accessExpiration, long refreshExpiration,
+                                   ObjectMapper objectMapper, RedisRepository redisRepository,
+                                   AuthenticationManager authenticationManager) {
+        this.jwtUtil = jwtUtil;
+        this.ACCESS_EXPIRATION = accessExpiration;
+        this.REFRESH_EXPIRATION = refreshExpiration;
+        this.objectMapper = objectMapper;
+        this.redisRepository = redisRepository;
+        this.authenticationManager = authenticationManager;
+    }
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest req, HttpServletResponse resp) throws AuthenticationException {
