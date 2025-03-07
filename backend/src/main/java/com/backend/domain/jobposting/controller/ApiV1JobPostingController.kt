@@ -52,7 +52,7 @@ class ApiV1JobPostingController(private val jobPostingService: JobPostingService
 	: GenericResponse<JobPostingDetailResponse>{
 
 		val jobPostingDetailResponse = jobPostingService
-			.findDetailById(jobPostingId, customUserDetails.siteUser.id!!)
+			.findDetailById(jobPostingId, customUserDetails.getSiteUser().id!!)
 
 		return GenericResponse.ok(jobPostingDetailResponse)
 	}
@@ -69,7 +69,7 @@ class ApiV1JobPostingController(private val jobPostingService: JobPostingService
 	): GenericResponse<Page<JobPostingPageResponse>> {
 
 		val findAllVoter = jobPostingService.findAllVoter(
-			jobPostingSearchCondition, customUserDetails.siteUser
+			jobPostingSearchCondition, customUserDetails.getSiteUser()
 		)
 
 		return GenericResponse.ok(findAllVoter)
