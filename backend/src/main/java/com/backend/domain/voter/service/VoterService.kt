@@ -1,7 +1,6 @@
 package com.backend.domain.voter.service;
 
 import com.backend.domain.jobposting.entity.JobPosting
-import com.backend.domain.jobposting.repository.JobPostingRepository
 import com.backend.domain.post.entity.Post
 import com.backend.domain.user.entity.SiteUser
 import com.backend.domain.voter.domain.VoterType
@@ -22,7 +21,6 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 class VoterService(
 	private val voterRepository: VoterRepository,
-	private val jobPostingRepository: JobPostingRepository
 ) {
 
 
@@ -31,9 +29,9 @@ class VoterService(
 	 *
 	 * @param siteUser  로그인 유저
 	 * @param targetId  추천 타겟 ID
-	 * @param voterType {@link VoterType} 추천 타입
-	 * @return {@link VoterCreateResponse}
-	 * @throws GlobalException 이미 추천 저장이 되어 있을 때 또는 지원하지 않는 VoterType 일 때 발생
+	 * @param voterType [VoterType] 추천 타입
+	 * @return [VoterCreateResponse]
+	 * @throws [GlobalException] 이미 추천 저장이 되어 있을 때 또는 지원하지 않는 VoterType 일 때 발생
 	 */
 	@Transactional
 	fun save(siteUser: SiteUser, targetId: Long, voterType: VoterType): VoterCreateResponse {
@@ -68,7 +66,6 @@ class VoterService(
 	 * @param voterType 추천 타입
 	 * @param targetId  타겟 ID
 	 * @param siteUser  로그인한 회원
-	 * @throws GlobalException 데이터가 존재하지 않을 경우 발생
 	 */
 	@Transactional
 	fun delete(voterType: VoterType?, targetId: Long, siteUser: SiteUser) {
@@ -95,7 +92,6 @@ class VoterService(
 	 * @param siteUserId siteUserId
 	 * @param targetId   targetId
 	 * @param voterType  검사할 타입
-	 * @throws GlobalException 데이터가 존재하지 않을 경우 발생
 	 */
 	private fun existsCheck(siteUserId: Long, targetId: Long, voterType: VoterType): Boolean {
 		var result = false;
