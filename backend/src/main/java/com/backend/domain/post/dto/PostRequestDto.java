@@ -1,3 +1,8 @@
+/*
+
+PostRequestDto.kt로 변환
+
+
 package com.backend.domain.post.dto;
 
 import jakarta.validation.constraints.Future;
@@ -28,8 +33,9 @@ public class PostRequestDto {
     // 모집 게시판 전용 필드 추가
     @Future(message = "모집 종료일은 미래 날짜여야 합니다.") //
     private ZonedDateTime RecruitmentClosingDate;
-    @Min(value = 1, message = "모집 인원은 최소 1명 이상이오야 합니다.")
+    @Min(value = 1, message = "모집 인원은 최소 1명 이상이어야 합니다.")
     private Integer numOfApplicants;
 
 }
 
+*/
