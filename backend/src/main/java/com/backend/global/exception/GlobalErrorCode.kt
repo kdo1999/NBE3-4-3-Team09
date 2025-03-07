@@ -1,8 +1,6 @@
 package com.backend.global.exception;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatus
 
 /**
  * GlobalErrorCode
@@ -12,9 +10,11 @@ import org.springframework.http.HttpStatus;
  *
  * @author Kim Dong O
  */
-@Getter
-@RequiredArgsConstructor
-public enum GlobalErrorCode {
+enum class GlobalErrorCode constructor(
+	val httpStatus: HttpStatus,
+	val code: Int,
+	val message: String
+) {
 
 	// 유저 도메인 에러 코드
 	USER_NOT_FOUND(HttpStatus.NOT_FOUND, 4001, "유저가 존재하지 않습니다."),
@@ -76,7 +76,4 @@ public enum GlobalErrorCode {
 	EXPIRED_TOKEN(HttpStatus.UNAUTHORIZED, 7001, "토큰이 만료되었습니다."),
 	TOKEN_NOT_FOUND(HttpStatus.UNAUTHORIZED, 7002, "토큰이 존재하지 않습니다.");
 
-	private final HttpStatus httpStatus;
-	private final int code;
-	private final String message;
 }
