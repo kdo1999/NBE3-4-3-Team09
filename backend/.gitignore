@@ -42,3 +42,6 @@ out/
 
 ### Kotlin ###
 .kotlin
+
+# QueryDSL generated 코드 제외
+backend/src/main/generated/

@@ -6,7 +6,6 @@ import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import java.time.ZonedDateTime;
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -19,7 +18,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @MappedSuperclass
 @SuperBuilder // @SuperBuilder 추가
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 public abstract class BaseEntity {
 
 	/**

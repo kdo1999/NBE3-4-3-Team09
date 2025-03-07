@@ -1,10 +1,11 @@
 package com.backend.domain.recruitment;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import com.backend.domain.post.entity.RecruitmentPost;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
@@ -19,7 +20,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 
-import com.backend.domain.post.entity.RecruitmentPost;
 import com.backend.domain.post.entity.RecruitmentStatus;
 import com.backend.domain.post.repository.post.PostRepository;
 import com.backend.domain.post.repository.recruitment.RecruitmentPostRepository;

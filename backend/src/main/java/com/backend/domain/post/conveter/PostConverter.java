@@ -2,6 +2,7 @@ package com.backend.domain.post.conveter;
 
 import com.backend.domain.category.entity.Category;
 import com.backend.domain.jobposting.entity.JobPosting;
+import com.backend.domain.jobposting.repository.JobPostingRepository;
 import com.backend.domain.post.dto.FreePostRequest;
 import com.backend.domain.post.dto.PostCreateResponse;
 import com.backend.domain.post.dto.PostResponse;
@@ -9,34 +10,20 @@ import com.backend.domain.post.dto.RecruitmentPostRequest;
 import com.backend.domain.post.dto.RecruitmentPostResponse;
 import com.backend.domain.post.entity.Post;
 import com.backend.domain.post.entity.RecruitmentPost;
-import com.backend.domain.post.entity.RecruitmentStatus;
 import com.backend.domain.user.entity.SiteUser;
 
 public class PostConverter {
 
-	//게시글 저장할 때
+	// 게시글 저장할 때
 	public static Post createPost(FreePostRequest freePostRequest, SiteUser siteUser, Category category) {
-		return Post.builder()
-			.author(siteUser)
-			.subject(freePostRequest.getSubject())
-			.content(freePostRequest.getContent())
-			.category(category)
-			.build();
+		return new Post(freePostRequest, siteUser, category);
 	}
 
 	// 모집 게시글 저장할 때
 	public static RecruitmentPost createPost(RecruitmentPostRequest recruitmentPostRequest,
-		Category category, SiteUser author, JobPosting jobPosting) {
+		Category category, SiteUser author, Long jobPostingId, JobPostingRepository jobPostingRepository) {
 
-		return RecruitmentPost.builder()
-			.subject(recruitmentPostRequest.getSubject())
-			.content(recruitmentPostRequest.getContent())
-			.category(category)
-			.author(author)
-			.jobPosting(jobPosting)
-			.numOfApplicants(recruitmentPostRequest.getNumOfApplicants())
-			.recruitmentStatus(RecruitmentStatus.OPEN)
-			.build();
+		return new RecruitmentPost(recruitmentPostRequest, category, author, jobPostingId, jobPostingRepository);
 	}
 
 

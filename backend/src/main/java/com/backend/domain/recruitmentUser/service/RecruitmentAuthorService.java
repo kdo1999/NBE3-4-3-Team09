@@ -1,13 +1,5 @@
 package com.backend.domain.recruitmentUser.service;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.backend.domain.post.entity.RecruitmentPost;
 import com.backend.domain.post.entity.RecruitmentStatus;
 import com.backend.domain.post.repository.recruitment.RecruitmentPostRepository;
@@ -20,8 +12,13 @@ import com.backend.global.exception.GlobalErrorCode;
 import com.backend.global.exception.GlobalException;
 import com.backend.global.mail.service.MailService;
 import com.backend.global.mail.util.TemplateName;
-
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 모집 관리 서비스 (작성자가 모집 지원자를 관리)

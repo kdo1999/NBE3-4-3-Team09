@@ -1,8 +1,5 @@
 package com.backend.domain.voter.service;
 
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.backend.domain.jobposting.entity.JobPosting;
 import com.backend.domain.jobposting.repository.JobPostingRepository;
 import com.backend.domain.post.entity.Post;
@@ -13,8 +10,9 @@ import com.backend.domain.voter.entity.Voter;
 import com.backend.domain.voter.repository.VoterRepository;
 import com.backend.global.exception.GlobalErrorCode;
 import com.backend.global.exception.GlobalException;
-
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * VoterService
@@ -55,9 +53,7 @@ public class VoterService {
 				voterRepository.save(saveVoter);
 			}
 			case POST -> {
-				Post post = Post.builder()
-					.postId(targetId)
-					.build();
+				Post post = new Post(targetId);
 
 				Voter saveVoter = new Voter(post, siteUser, voterType);
 
