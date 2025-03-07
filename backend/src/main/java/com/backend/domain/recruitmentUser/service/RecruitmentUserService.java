@@ -51,12 +51,11 @@ public class RecruitmentUserService {
         checkRecruitmentCondition(siteUser, post);
 
         // 모집 신청 정보 저장
-        RecruitmentUser recruitmentUser = RecruitmentUser.builder()
-                .post(post)
-                .siteUser(siteUser)
-                .status(RecruitmentUserStatus.APPLIED) // 기본 상태: APPLIED
-                .build();
-
+        RecruitmentUser recruitmentUser = new RecruitmentUser(
+                post,
+                siteUser,
+                RecruitmentUserStatus.APPLIED // 기본 상태: APPLIED
+        );
         recruitmentUserRepository.save(recruitmentUser);
     }
 
