@@ -23,13 +23,17 @@ open class RecruitmentPost : Post {
     lateinit var jobPosting: JobPosting
 
     constructor(
-        request: RecruitmentPostRequest, category: Category, author: SiteUser,
-        jobPostingId: Long, jobPostingRepository: JobPostingRepository
-    ) : super(request.subject, request.content, category, author) {
-        this.recruitmentClosingDate = recruitmentClosingDate
-        this.numOfApplicants = numOfApplicants
-        this.recruitmentStatus = recruitmentStatus
-
+        subject: String,
+        content: String,
+        category: Category,
+        author: SiteUser,
+        jobPostingId: Long,
+        jobPostingRepository: JobPostingRepository
+    ) : super(subject, content, category, author) {
+        this.subject = subject
+        this.content = content
+        this.category = category
+        this.author = author
         this.jobPosting = jobPostingRepository.findById(jobPostingId)
             .orElseThrow { throw IllegalArgumentException("존재하지 않는 JobPosting ID: $jobPostingId") }
     }

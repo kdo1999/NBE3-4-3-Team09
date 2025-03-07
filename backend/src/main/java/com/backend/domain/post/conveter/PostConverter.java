@@ -16,14 +16,13 @@ public class PostConverter {
 
 	// 게시글 저장할 때
 	public static Post createPost(FreePostRequest freePostRequest, SiteUser siteUser, Category category) {
-		return new Post(freePostRequest, siteUser, category);
+		return new Post(freePostRequest.getSubject(), freePostRequest.getContent(), category, siteUser);
 	}
 
 	// 모집 게시글 저장할 때
 	public static RecruitmentPost createPost(RecruitmentPostRequest recruitmentPostRequest,
 		Category category, SiteUser author, Long jobPostingId, JobPostingRepository jobPostingRepository) {
-
-		return new RecruitmentPost(recruitmentPostRequest, category, author, jobPostingId, jobPostingRepository);
+		return new RecruitmentPost(recruitmentPostRequest.getSubject(), recruitmentPostRequest.getContent(), category, author, jobPostingId, jobPostingRepository);
 	}
 
 
