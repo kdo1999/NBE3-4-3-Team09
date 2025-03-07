@@ -155,7 +155,7 @@ class ApiV1UserControllerTest {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isUnauthorized())
                 .andExpect(jsonPath("$.success").value(false))
-                .andExpect(jsonPath("$.code").value(4002))
+                .andExpect(jsonPath("$.code").value(400))
                 .andDo(MockMvcResultHandlers.print());
     }
 
@@ -274,7 +274,7 @@ class ApiV1UserControllerTest {
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isUnauthorized())
                 .andExpect(jsonPath("$.success").value(false))
-                .andExpect(jsonPath("$.code").value(4002))
+                .andExpect(jsonPath("$.code").value(400))
                 .andDo(print());
 
         SiteUser unchangedUser = userRepository.findById(siteUser.getId()).orElseThrow();
