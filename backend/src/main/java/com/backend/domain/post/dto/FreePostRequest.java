@@ -1,3 +1,6 @@
+/*
+FreePostRequest.kt로 변환
+
 package com.backend.domain.post.dto;
 
 import jakarta.validation.constraints.NotBlank;
@@ -27,3 +30,4 @@ public class FreePostRequest {
 		return content;
 	}
 }
+*/
