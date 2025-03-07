@@ -12,30 +12,30 @@ class CustomUserDetails(
         val authorities: MutableCollection<GrantedAuthority?> = ArrayList<GrantedAuthority?>()
 
         // SiteUser에서 역할 뽑아 SimpleGranted 변환
-        authorities.add(SimpleGrantedAuthority(siteUser!!.userRole))
+        authorities.add(SimpleGrantedAuthority(siteUser.userRole))
 
         return authorities
     }
 
     fun getSiteUser(): SiteUser {
-        return siteUser!!
+        return siteUser
     }
 
     val id: Long?
-        get() = siteUser!!.id
+        get() = siteUser.id
 
     val introduction: String?
-        get() = siteUser!!.introduction
+        get() = siteUser.introduction
 
     val job: String?
-        get() = siteUser!!.job
+        get() = siteUser.job
 
     override fun getUsername(): String? {
-        return siteUser!!.email
+        return siteUser.email
     }
 
     override fun getPassword(): String? {
-        return siteUser!!.password
+        return siteUser.password
     }
 
     override fun isAccountNonExpired(): Boolean {
