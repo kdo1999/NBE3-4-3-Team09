@@ -4,14 +4,11 @@ import com.backend.global.exception.GlobalErrorCode;
 import com.backend.global.exception.GlobalException;
 import com.backend.global.response.ErrorDetail;
 import com.backend.global.response.GenericResponse;
+import io.github.oshai.kotlinlogging.KotlinLogging
 import jakarta.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.List;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.query.sqm.tree.SqmNode.log
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -22,9 +19,11 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
  *
  * @author Kim Dong O
  */
+private val log = KotlinLogging.logger {}
+
 @RestControllerAdvice
 @Slf4j
-public class GlobalControllerAdvice {
+class GlobalControllerAdvice {
 
 	/**
 	 * GlobalException 처리 핸들러 입니다.
@@ -32,15 +31,15 @@ public class GlobalControllerAdvice {
 	 * @param globalException {@link GlobalException}
 	 * @return {@link ResponseEntity<GenericResponse>}
 	 */
-	@ExceptionHandler(GlobalException.class)
-	public ResponseEntity<GenericResponse<Void>> handlerGlobalException(
-		GlobalException globalException) {
+	@ExceptionHandler(GlobalException::class)
+	fun handlerGlobalException(globalException: GlobalException)
+	: ResponseEntity<GenericResponse<Void>> {
 		log.error("handlerGlobalException: ", globalException);
 
-		GenericResponse<Void> genericResponse = GenericResponse.fail(
+		val genericResponse: GenericResponse<Void> = GenericResponse.fail(
 			globalException.getGlobalErrorCode().getCode(),
-			globalException.getMessage()
-		);
+			globalException.message
+		)
 
 		return ResponseEntity.status(globalException.getStatus().value())
 			.body(genericResponse);
@@ -53,26 +52,27 @@ public class GlobalControllerAdvice {
 	 * @param request HttpServletRequest
 	 * @return {@link ResponseEntity<GenericResponse<List< ErrorDetail>}
 	 */
-	@ExceptionHandler(MethodArgumentNotValidException.class)
-	public ResponseEntity<GenericResponse<List<ErrorDetail>>> handlerMethodArgumentNotValidException(
-		MethodArgumentNotValidException ex,
-		HttpServletRequest request) {
+	@ExceptionHandler(MethodArgumentNotValidException::class)
+	fun handlerMethodArgumentNotValidException(
+		ex: MethodArgumentNotValidException,
+		request: HttpServletRequest
+	): ResponseEntity<GenericResponse<List<ErrorDetail>>> {
 		log.error("handlerMethodArgumentNotValidException: ", ex);
 
-		BindingResult bindingResult = ex.getBindingResult();
-		List<ErrorDetail> errors = new ArrayList<>();
-		GlobalErrorCode globalErrorCode = GlobalErrorCode.NOT_VALID;
+		val bindingResult = ex.bindingResult
+		val errors: MutableList<ErrorDetail> = mutableListOf()
+		val globalErrorCode = GlobalErrorCode.NOT_VALID
 
 		//Field 에러 처리
-		for (FieldError error : bindingResult.getFieldErrors()) {
-			ErrorDetail customError = ErrorDetail.of(error.getField(), error.getDefaultMessage());
+		for (error in bindingResult.getFieldErrors()) {
+			val customError = ErrorDetail.of(error.getField(), error.getDefaultMessage());
 
 			errors.add(customError);
 		}
 
 		//Object 에러 처리
-		for (ObjectError globalError : bindingResult.getGlobalErrors()) {
-			ErrorDetail customError = ErrorDetail.of(
+		for (globalError in bindingResult.getGlobalErrors()) {
+			val customError = ErrorDetail.of(
 				globalError.getObjectName(),
 				globalError.getDefaultMessage()
 			);
@@ -80,7 +80,7 @@ public class GlobalControllerAdvice {
 			errors.add(customError);
 		}
 
-		GenericResponse<List<ErrorDetail>> genericResponse = GenericResponse.fail(
+		val genericResponse: GenericResponse<List<ErrorDetail>> = GenericResponse.fail(
 			globalErrorCode.getCode(),
 			errors,
 			globalErrorCode.getMessage()
