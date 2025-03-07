@@ -1,5 +1,8 @@
 package com.backend.domain.post.service;
 
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.backend.domain.category.domain.CategoryName;
 import com.backend.domain.category.entity.Category;
 import com.backend.domain.category.repository.CategoryRepository;
@@ -18,10 +21,9 @@ import com.backend.domain.recruitmentUser.repository.RecruitmentUserRepository;
 import com.backend.domain.user.entity.SiteUser;
 import com.backend.global.exception.GlobalErrorCode;
 import com.backend.global.exception.GlobalException;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * RecruitmentPostService 모집 게시글을 담당하는 서비스 클래스입니다. 모집 게시글 생성 모집 게시글 수정 모집 게시글 삭제
@@ -84,9 +86,7 @@ public class RecruitmentPostService {
 			recruitmentPostRequest,
 			category,
 			siteUser,
-			jobPosting.getId(),
-			jobPostingRepository
-
+			jobPosting
 		);
 
 		RecruitmentPost savePost = recruitmentPostRepository.save(post);

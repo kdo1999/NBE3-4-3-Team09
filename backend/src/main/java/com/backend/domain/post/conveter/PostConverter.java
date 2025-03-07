@@ -11,6 +11,7 @@ import com.backend.domain.post.dto.RecruitmentPostResponse;
 import com.backend.domain.post.entity.Post;
 import com.backend.domain.post.entity.RecruitmentPost;
 import com.backend.domain.user.entity.SiteUser;
+import com.backend.global.scheduler.apiresponse.Job;
 
 public class PostConverter {
 
@@ -21,9 +22,9 @@ public class PostConverter {
 
 	// 모집 게시글 저장할 때
 	public static RecruitmentPost createPost(RecruitmentPostRequest recruitmentPostRequest,
-		Category category, SiteUser author, Long jobPostingId, JobPostingRepository jobPostingRepository) {
+		Category category, SiteUser author, JobPosting jobPostingId) {
 
-		return new RecruitmentPost(recruitmentPostRequest, category, author, jobPostingId, jobPostingRepository);
+		return new RecruitmentPost(recruitmentPostRequest, category, author, jobPosting);
 	}
 
 
