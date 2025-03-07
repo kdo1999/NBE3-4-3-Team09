@@ -84,10 +84,7 @@ public class ApiV1VoterControllerTest {
 	@Test
 	void save_job_posting_voter_success() throws Exception {
 		//given
-		VoterCreateRequest givenRequest = VoterCreateRequest.builder()
-			.voterType(VoterType.JOB_POSTING)
-			.targetId(4L)
-			.build();
+		VoterCreateRequest givenRequest = new VoterCreateRequest(4L, VoterType.JOB_POSTING);
 
 		//when
 		ResultActions resultActions = mockMvc.perform(post("/api/v1/voter")
@@ -100,17 +97,15 @@ public class ApiV1VoterControllerTest {
 		resultActions
 			.andExpect(jsonPath("$.code").value(201))
 			.andExpect(jsonPath("$.data.targetId").value(4))
-			.andExpect(jsonPath("$.data.voterType").value(givenRequest.voterType().toString()));
+			.andExpect(jsonPath("$.data.voterType")
+				.value(givenRequest.getVoterType().toString()));
 	}
 
 	@DisplayName("채용 공고 추천이 이미 존재할 때 실패 테스트")
 	@Test
 	void save_job_posting_voter_fail() throws Exception {
 		//given
-		VoterCreateRequest givenRequest = VoterCreateRequest.builder()
-			.voterType(VoterType.JOB_POSTING)
-			.targetId(1L)
-			.build();
+		VoterCreateRequest givenRequest = new VoterCreateRequest(1L, VoterType.JOB_POSTING);
 
 		SiteUser givenSiteUser1 = userRepository.findByEmail("testEmail1@naver.com");
 
@@ -135,9 +130,9 @@ public class ApiV1VoterControllerTest {
 	@Test
 	void save_voter_target_id_null_fail() throws Exception {
 		//given
-		VoterCreateRequest givenRequest = VoterCreateRequest.builder()
-			.voterType(VoterType.JOB_POSTING)
-			.build();
+		Map<String, Object> givenRequest = new HashMap<>();
+		givenRequest.put("targetId", null);
+		givenRequest.put("voterType", VoterType.JOB_POSTING);
 
 		//when
 		ResultActions resultActions = mockMvc.perform(post("/api/v1/voter")
@@ -156,9 +151,10 @@ public class ApiV1VoterControllerTest {
 	@Test
 	void save_voter_voter_type_null_fail() throws Exception {
 		//given
-		VoterCreateRequest givenRequest = VoterCreateRequest.builder()
-			.targetId(1L)
-			.build();
+		Map<String, Object> givenRequest = new HashMap<>();
+		givenRequest.put("targetId", 1L);
+		givenRequest.put("voterType", null);
+
 
 		//when
 		ResultActions resultActions = mockMvc.perform(post("/api/v1/voter")
@@ -198,10 +194,7 @@ public class ApiV1VoterControllerTest {
 	@Test
 	void delete_voter_job_posting_success() throws Exception {
 		//given
-		VoterCreateRequest givenRequest = VoterCreateRequest.builder()
-			.voterType(VoterType.JOB_POSTING)
-			.targetId(1L)
-			.build();
+		VoterCreateRequest givenRequest = new VoterCreateRequest(1L, VoterType.JOB_POSTING);
 
 		//when
 		ResultActions resultActions = mockMvc
@@ -218,10 +211,7 @@ public class ApiV1VoterControllerTest {
 	@Test
 	void delete_voter_job_posting_not_support_fail() throws Exception {
 		//given
-		VoterCreateRequest givenRequest = VoterCreateRequest.builder()
-			.voterType(VoterType.JOB_POSTING)
-			.targetId(1L)
-			.build();
+		VoterCreateRequest givenRequest = new VoterCreateRequest(1L, VoterType.JOB_POSTING);
 
 		//when
 		ResultActions resultActions = mockMvc
@@ -242,10 +232,7 @@ public class ApiV1VoterControllerTest {
 	@Test
 	void delete_voter_job_posting_not_found_fail() throws Exception {
 		//given
-		VoterCreateRequest givenRequest = VoterCreateRequest.builder()
-			.voterType(VoterType.JOB_POSTING)
-			.targetId(1L)
-			.build();
+		VoterCreateRequest givenRequest = new VoterCreateRequest(1L, VoterType.JOB_POSTING);
 
 		//when
 		ResultActions resultActions = mockMvc
