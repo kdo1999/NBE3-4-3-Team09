@@ -2,6 +2,7 @@ package com.backend.domain.recruitment;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import com.backend.domain.post.entity.RecruitmentPost;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
