@@ -17,35 +17,33 @@ class RecruitmentUser() : BaseEntity() {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
-    private lateinit var _post: RecruitmentPost
-    val post: RecruitmentPost
-        get() = _post
+    lateinit var post: RecruitmentPost
+        protected set
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "site_user_id")
-    private lateinit var _siteUser: SiteUser
-    val siteUser: SiteUser
-        get() = _siteUser
+    lateinit var siteUser: SiteUser
+        protected set
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private lateinit var _status: RecruitmentUserStatus
-    val status: RecruitmentUserStatus
-        get() = _status
+    lateinit var status: RecruitmentUserStatus
+        protected set
 
-    constructor(post: RecruitmentPost, siteUser: SiteUser, status: RecruitmentUserStatus): this() {
-        this._post = post
-        this._siteUser = siteUser
-        this._status = status
+    constructor(post: RecruitmentPost, siteUser: SiteUser, status: RecruitmentUserStatus):this() {
+        this.post = post
+        this.siteUser = siteUser
+        this.status = status
     }
+
 
     // 모집 게시판 작성자 모집 수락 메서드
     fun accept() {
-        _status = RecruitmentUserStatus.ACCEPTED // 모집 상태 완료로 변경
+        status = RecruitmentUserStatus.ACCEPTED // 모집 상태 완료로 변경
     }
 
     fun reject() {
-        _status = RecruitmentUserStatus.REJECTED
+        status = RecruitmentUserStatus.REJECTED
     }
 }
 
