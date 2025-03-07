@@ -1,7 +1,6 @@
 package com.backend.domain.voter.dto;
 
-import com.backend.domain.voter.domain.VoterType;
-import lombok.Builder;
+import com.backend.domain.voter.domain.VoterType
 
 /**
  * VoterCreateResponse
@@ -9,7 +8,6 @@ import lombok.Builder;
  * @param targetId 추천 타겟 ID
  * @param voterType {@link VoterType} 추천 타입
  */
-@Builder
-public record VoterCreateResponse(Long targetId, VoterType voterType) {
-
-}
+data class VoterCreateResponse(
+    val targetId: Long,
+    val voterType: VoterType)
