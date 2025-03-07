@@ -85,13 +85,13 @@ public class PostQueryRepository {
 			.leftJoin(post._postCommentList, comment)
 			.leftJoin(post._postVoterList, voter)
 			.leftJoin(recruitmentUser)
-			.on(recruitmentUser.siteUser.id.eq(userId).and(recruitmentUser.status.eq(status)))
+			.on(recruitmentUser._siteUser.id.eq(userId).and(recruitmentUser._status.eq(status)))
 			.groupBy(post.postId, post.subject, post.category.name,
 				post.author.name, post.author.profileImg, post.createdAt)
 			.where(
 				post.category.name.eq(CategoryName.RECRUITMENT.getValue())
-					.and(recruitmentUser.siteUser.id.eq(userId))
-					.and(recruitmentUser.status.eq(status)))
+					.and(recruitmentUser._siteUser.id.eq(userId))
+					.and(recruitmentUser._status.eq(status)))
 			.offset(pageable.getOffset())
 			.limit(pageable.getPageSize())
 			.fetch();
@@ -99,7 +99,7 @@ public class PostQueryRepository {
 		JPAQuery<Long> countQuery = queryFactory.select(post.count())
 			.from(post)
 			.leftJoin(recruitmentUser)
-			.on(recruitmentUser.siteUser.id.eq(userId).and(recruitmentUser.status.eq(status)));
+			.on(recruitmentUser._siteUser.id.eq(userId).and(recruitmentUser._status.eq(status)));
 
 		return PageableExecutionUtils.getPage(content, pageable, countQuery::fetchOne);
 	}
@@ -115,7 +115,7 @@ public class PostQueryRepository {
 			.leftJoin(post.author)
 			.leftJoin(post._postVoterList, voter)
 			.leftJoin(recruitmentUser)
-			.on(recruitmentUser.post.postId.eq(postId))
+			.on(recruitmentUser._post.postId.eq(postId))
 			.groupBy(post.postId, post.subject, post.content, post.category.id, post.author.id,
 				post.author.name, post.author.profileImg, voter.siteUser.id, post.createdAt)
 			.where(post.postId.eq(postId))

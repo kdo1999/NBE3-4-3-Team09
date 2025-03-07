@@ -32,7 +32,7 @@ public class RecruitmentPostQueryRepository {
 			.leftJoin(recruitmentPost.author)
 			.leftJoin(recruitmentPost._postVoterList, voter)
 			.leftJoin(recruitmentUser)
-			.on(recruitmentUser.post.postId.eq(postId))
+			.on(recruitmentUser._post.postId.eq(postId))
 			.groupBy(recruitmentPost.postId, recruitmentPost.subject, recruitmentPost.content, recruitmentPost.category.id, recruitmentPost.author.id,
 				recruitmentPost.author.name, recruitmentPost.author.profileImg, voter.siteUser.id, recruitmentPost.createdAt,
 				recruitmentPost.numOfApplicants, recruitmentPost.recruitmentStatus)
