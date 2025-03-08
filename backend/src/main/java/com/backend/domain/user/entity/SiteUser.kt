@@ -108,6 +108,11 @@ class SiteUser : BaseEntity {
         return this
     }
 
+    fun updateJobSkills(skills: List<JobSkill>) {
+        _jobSkillList.clear()
+        _jobSkillList.addAll(skills)
+    }
+
     val jobSkillList: List<JobSkill>
         get() = _jobSkillList.toList()
 
