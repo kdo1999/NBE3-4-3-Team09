@@ -100,6 +100,9 @@ dependencies {
 
     // Kotlin Logging
     implementation("io.github.oshai:kotlin-logging-jvm:5.1.1")
+
+    // 코루틴
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
 }
 
 tasks.test {
