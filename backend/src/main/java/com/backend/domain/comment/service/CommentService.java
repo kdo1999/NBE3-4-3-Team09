@@ -21,6 +21,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Objects;
+
 @Service
 @RequiredArgsConstructor
 public class CommentService {
@@ -42,7 +44,7 @@ public class CommentService {
 
         Comment saveComment = commentRepository.save(comment);
 
-        return CommentCreateResponseDto.convertEntity(saveComment);
+        return CommentCreateResponseDto.Companion.fromEntity(saveComment);
     }
 
     @Transactional
@@ -55,14 +57,14 @@ public class CommentService {
         Comment comment = commentRepository.findByIdWithSiteUser(commentId).orElseThrow(() -> new GlobalException(GlobalErrorCode.COMMENT_NOT_FOUND));
 
         // 로그인한 사용자와 댓글 작성자가 일치하는지 검증
-        if (!user.getSiteUser().getId().equals(comment.getSiteUser().getId())) {
+        if (!Objects.equals(user.getSiteUser().getId(), comment.getSiteUser().getId())) {
             throw new GlobalException(GlobalErrorCode.COMMENT_NOT_AUTHOR);
         }
 
         comment.changeContent(dto.getContent());
         Comment modifiedComment = commentRepository.save(comment);
 
-        return CommentModifyResponseDto.convertEntity(modifiedComment, true);
+        return CommentModifyResponseDto.Companion.fromEntity(modifiedComment, true);
     }
 
     @Transactional
@@ -72,7 +74,7 @@ public class CommentService {
                 () -> new GlobalException(GlobalErrorCode.COMMENT_NOT_FOUND)
         );
 
-        if (!findComment.getSiteUser().getId().equals(user.getId())) {
+        if (!Objects.equals(findComment.getSiteUser().getId(), user.getId())) {
             throw new GlobalException(GlobalErrorCode.COMMENT_NOT_AUTHOR);
         }
 
@@ -86,18 +88,18 @@ public class CommentService {
 
         Page<Comment> allByPostId = commentRepository.findAll(postId, pageable);
 
-        Page<CommentResponseDto> result = allByPostId.map((c) -> {
-            return CommentResponseDto.builder()
-                    .id(c.getId())
-                    .authorName(c.getSiteUser().getName())
-                    .profileImageUrl(c.getSiteUser().getProfileImg())
-                    .content(c.getContent())
-                    .createdAt(c.getCreatedAt())
-                    .modifiedAt(c.getModifiedAt())
-                    .isAuthor(c.getSiteUser().getId().equals(siteUser.getId()))
-                    .build();
-        });
+        return allByPostId.map(c ->
+                new CommentResponseDto(
+                        c.getId(),
+                        c.getContent(),
+                        c.getCreatedAt(),
+                        c.getModifiedAt(),
+                        Objects.requireNonNull(c.getSiteUser().getProfileImg()),
+                        c.getSiteUser().getName(),
+                        Objects.equals(c.getSiteUser().getId(), siteUser.getId())
+                )
 
-        return result;
+        );
     }
+
 }

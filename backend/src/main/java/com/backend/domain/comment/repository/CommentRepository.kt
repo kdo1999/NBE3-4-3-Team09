@@ -17,15 +17,16 @@ interface CommentRepository : JpaRepository<Comment, Long> {
     fun findByPost_PostId(@Param("postId") postId: Long, pageable: Pageable): Page<Comment>
 
     @Query("""
-        SELECT new com.backend.domain.comment.dto.response.CommentResponseDto(
-            c.id, c.content, c.createdAt, c.modifiedAt, c.siteUser.profileImg, c.siteUser.name
-        )
-        FROM Comment c
-        LEFT JOIN c.siteUser
-        LEFT JOIN c.post
-        WHERE c.post.postId = :postId
-    """)
-    fun findAllByPostId(@Param("postId") postId: Long, pageable: Pageable): Page<CommentResponseDto>
+    SELECT new com.backend.domain.comment.dto.response.CommentResponseDto(
+        c.id, c.content, c.createdAt, c.modifiedAt, c.siteUser.profileImg, c.siteUser.name, 
+        CASE WHEN c.siteUser.id = :currentUserId THEN true ELSE false END
+    )
+    FROM Comment c
+    LEFT JOIN c.siteUser
+    LEFT JOIN c.post
+    WHERE c.post.postId = :postId
+""")
+    fun findAllByPostId(@Param("postId") postId: Long, @Param("currentUserId") currentUserId: Long, pageable: Pageable): Page<CommentResponseDto>
 
     @Query("""
         SELECT c
