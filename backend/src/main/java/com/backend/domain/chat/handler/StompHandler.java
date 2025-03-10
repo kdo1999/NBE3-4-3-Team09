@@ -106,7 +106,7 @@ public class StompHandler implements ChannelInterceptor {
 	}
 
 	private void validateUserInPost(Long userId, Long postId) {
-		if (!recruitmentUserRepository.existsRecruitmentUserByPost_PostIdAndSiteUser_Id(postId, userId)) {
+		if (!recruitmentUserRepository.existsAcceptedRecruitmentForPostAndUser(postId, userId)) {
 			throw new WebSocketException(String.format("현재 {} 모집게시판에 모집 인원이 아닙니다.", postId));
 		}
 	}

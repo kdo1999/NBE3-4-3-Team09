@@ -1,5 +1,10 @@
 package com.backend.domain.recruitmentUser.service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.backend.domain.post.dto.PostPageResponse;
 import com.backend.domain.post.entity.RecruitmentPost;
 import com.backend.domain.post.entity.RecruitmentStatus;
@@ -12,11 +17,8 @@ import com.backend.domain.recruitmentUser.repository.RecruitmentUserRepository;
 import com.backend.domain.user.entity.SiteUser;
 import com.backend.global.exception.GlobalErrorCode;
 import com.backend.global.exception.GlobalException;
+
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * RecruitmentUserService 유저 모집 신청 및 모집 관련 조회를 담당하는 서비스 클래스입니다.
@@ -119,9 +121,9 @@ public class RecruitmentUserService {
      * @return true - 이미 지원함 / false - 지원하지 않음
      */
     private boolean isAlreadyApplied(SiteUser siteUser, Long postId) {
-        return recruitmentUserRepository.findByPost_PostIdAndSiteUser_Id(postId, siteUser.getId())
-                .isPresent();
+        return recruitmentUserRepository.findByPostAndUser(postId, siteUser.getId()) != null;
     }
+
 
     /**
      * 모집이 종료된 경우 예외 발생
@@ -165,9 +167,15 @@ public class RecruitmentUserService {
      * @throws GlobalException 모집 신청 내역이 존재하지 않을 경우 예외 발생
      */
     private RecruitmentUser getRecruitmentUser(SiteUser siteUser, Long postId) {
-        return recruitmentUserRepository.findByPost_PostIdAndSiteUser_Id(postId, siteUser.getId())
-                .orElseThrow(() -> new GlobalException(GlobalErrorCode.RECRUITMENT_NOT_FOUND));
+        RecruitmentUser recruitmentUser = recruitmentUserRepository.findByPostAndUser(postId, siteUser.getId());
+
+        if (recruitmentUser == null) {
+            throw new GlobalException(GlobalErrorCode.RECRUITMENT_NOT_FOUND);
+        }
+
+        return recruitmentUser;
     }
+
 
     /**
      * 모집 게시글 조회 주어진 모집 게시글 ID에 해당하는 게시글을 조회하며, 존재하지 않을 경우 예외를 발생시킵니다.
