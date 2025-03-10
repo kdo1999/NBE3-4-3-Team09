@@ -12,10 +12,10 @@ import org.springframework.context.annotation.Configuration;
  * @author Kim Dong O
  */
 @Configuration
-public class QuerydslConfig {
+class QuerydslConfig {
 
 	@Bean
-	public JPAQueryFactory jpaQueryFactory(EntityManager em) {
-		return new JPAQueryFactory(em);
+	fun jpaQueryFactory(em: EntityManager): JPAQueryFactory {
+		return JPAQueryFactory(em)
 	}
 }
