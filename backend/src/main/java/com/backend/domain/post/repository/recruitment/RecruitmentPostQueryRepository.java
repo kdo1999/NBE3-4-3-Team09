@@ -4,12 +4,12 @@ import static com.backend.domain.post.entity.QRecruitmentPost.*;
 import static com.backend.domain.recruitmentUser.entity.QRecruitmentUser.*;
 import static com.backend.domain.voter.entity.QVoter.*;
 
+import com.backend.domain.post.dto.RecruitmentPostResponse;
 import java.util.Optional;
 
 import org.springframework.stereotype.Repository;
 
 import com.backend.domain.post.dto.QRecruitmentPostResponse;
-import com.backend.domain.post.dto.RecruitmentPostResponse;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import lombok.RequiredArgsConstructor;

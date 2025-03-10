@@ -86,7 +86,7 @@ public class FreePostService {
 
 		Post updatedPost = postRepository.save(target);
 
-		return PostConverter.toPostResponse(updatedPost, true);
+		return PostConverter.toPostResponse(updatedPost, true, siteUser.getId());
 	}
 
 	/**

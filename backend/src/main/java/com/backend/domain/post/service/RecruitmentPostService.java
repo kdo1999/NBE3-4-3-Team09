@@ -112,7 +112,7 @@ public class RecruitmentPostService {
 	 */
 	@Transactional
 	public RecruitmentPostResponse update(Long postId, RecruitmentPostRequest recruitmentPostRequest,
-		SiteUser siteUser) {
+		SiteUser siteUser, SiteUser currentUser) {
 
 		RecruitmentPost findPost = getPost(postId);
 
@@ -127,7 +127,7 @@ public class RecruitmentPostService {
 			recruitmentPostRequest.getNumOfApplicants()
 		);
 
-		return PostConverter.toPostResponse(findPost, true, getCurrentAcceptedCount(postId));
+		return PostConverter.toPostResponse(findPost, true, getCurrentAcceptedCount(postId), currentUser);
 	}
 
 	/**

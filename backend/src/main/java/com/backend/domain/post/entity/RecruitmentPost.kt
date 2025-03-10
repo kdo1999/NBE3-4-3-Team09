@@ -5,6 +5,7 @@ import com.backend.domain.jobposting.entity.JobPosting
 import com.backend.domain.jobposting.repository.JobPostingRepository
 import com.backend.domain.post.dto.RecruitmentPostRequest
 import com.backend.domain.user.entity.SiteUser
+import com.backend.domain.voter.entity.Voter
 import jakarta.persistence.*
 import java.time.ZonedDateTime
 
@@ -45,6 +46,10 @@ open class RecruitmentPost : Post {
 
     fun updateRecruitmentStatus(recruitmentStatus: RecruitmentStatus) {
         this.recruitmentStatus = recruitmentStatus
+    }
+
+    fun getVoterList(): List<Voter>{
+        return postVoterList
     }
 
 
