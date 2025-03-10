@@ -1,8 +1,6 @@
 package com.backend.global.mail.util;
 
 import jakarta.mail.internet.MimeMessage;
-import java.util.List;
-import java.util.Map;
 
 /**
  * TemplateMaker 인터페이스 입니다.
@@ -10,7 +8,7 @@ import java.util.Map;
  *
  * @author Kim Dong O
  */
-public interface TemplateMaker {
+interface TemplateMaker {
 
 	/**
 	 * @param newMimeMessage
@@ -20,6 +18,11 @@ public interface TemplateMaker {
 	 * @return {@link MimeMessage}
 	 * @implSpec 파라미터 값이 없는 메일을 전송할 때 사용하며 템플릿, 타이틀을 설정하여 반환합니다.
 	 */
-	MimeMessage create(MimeMessage newMimeMessage, List<String> usernameList, String title,
-		TemplateName templateName, Map<String, String> htmlParameterMap);
+	fun create(
+		newMimeMessage: MimeMessage,
+		usernameList: List<String>,
+		title: String,
+		templateName: TemplateName,
+		htmlParameterMap: Map<String, String>
+	): MimeMessage
 }

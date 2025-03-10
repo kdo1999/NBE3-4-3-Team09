@@ -1,9 +1,8 @@
 package com.backend.global.mail.util;
 
-import jakarta.mail.internet.MimeMessage;
-import lombok.RequiredArgsConstructor;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.stereotype.Component;
+import jakarta.mail.internet.MimeMessage
+import org.springframework.mail.javamail.JavaMailSender
+import org.springframework.stereotype.Component
 
 /**
  * MailSender
@@ -11,17 +10,9 @@ import org.springframework.stereotype.Component;
  * @author Kim Dong O
  */
 @Component
-@RequiredArgsConstructor
-public class MailSenderImpl implements MailSender {
-	private final JavaMailSender javaMailSender;
+class MailSenderImpl(private val javaMailSender: JavaMailSender): MailSender {
 
-	@Override
-	public void send(MimeMessage mimeMessage) {
-		javaMailSender.send(mimeMessage);
-	}
+	override fun send(mimeMessage: MimeMessage) = javaMailSender.send(mimeMessage)
 
-	@Override
-	public MimeMessage createMimeMessage() {
-		return javaMailSender.createMimeMessage();
-	}
+	override fun createMimeMessage(): MimeMessage = javaMailSender.createMimeMessage()
 }

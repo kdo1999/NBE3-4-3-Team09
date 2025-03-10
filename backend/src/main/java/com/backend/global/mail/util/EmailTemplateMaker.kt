@@ -1,14 +1,12 @@
 package com.backend.global.mail.util;
 
-import jakarta.mail.MessagingException;
-import jakarta.mail.internet.MimeMessage;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.mail.javamail.MimeMessageHelper;
-import org.thymeleaf.context.Context;
-import org.thymeleaf.spring6.SpringTemplateEngine;
+import io.github.oshai.kotlinlogging.KotlinLogging
+import jakarta.mail.MessagingException
+import jakarta.mail.internet.MimeMessage
+import org.springframework.mail.javamail.MimeMessageHelper
+import org.thymeleaf.context.Context
+import org.thymeleaf.spring6.SpringTemplateEngine
+import java.util.concurrent.ConcurrentHashMap
 
 /**
  * TemplateMaker 구현체 입니다.
@@ -16,43 +14,43 @@ import org.thymeleaf.spring6.SpringTemplateEngine;
  *
  * @author : Kim Dong O
  */
-@Slf4j
-public class EmailTemplateMaker implements TemplateMaker {
+private val log = KotlinLogging.logger {}
 
-	private final SpringTemplateEngine templateEngine;
-	private Map<String, String> templateNameMap = new ConcurrentHashMap<>();
+class EmailTemplateMaker(
+    private val templateEngine: SpringTemplateEngine,
+	private val templateNameMap: MutableMap<String, String> = ConcurrentHashMap()
+) : TemplateMaker {
 
-	public EmailTemplateMaker(SpringTemplateEngine templateEngine,
-		Map<String, String> templateNameMap) {
-		this.templateEngine = templateEngine;
-		this.templateNameMap = templateNameMap;
-	}
+    override fun create(
+        newMimeMessage: MimeMessage,
+        usernameList: List<String>,
+        title: String,
+        templateName: TemplateName,
+        htmlParameterMap: Map<String, String>
+    ): MimeMessage {
+        try {
+			val helper = MimeMessageHelper(newMimeMessage, true, "UTF-8")
 
-	@Override
-	public MimeMessage create(MimeMessage newMimeMessage, List<String> usernameList, String title,
-		TemplateName templateName, Map<String, String> htmlParameterMap) {
-		try {
-			MimeMessageHelper helper = new MimeMessageHelper(newMimeMessage, true, "UTF-8");
+            val context = Context();
 
-			Context context = new Context();
+            //파라미터 값 설정
+            htmlParameterMap.forEach(context::setVariable);
 
-			//파라미터 값 설정
-			htmlParameterMap.forEach(context::setVariable);
+            val emailArray = usernameList.toTypedArray()
 
-			String[] emailArray = usernameList.toArray(new String[0]);
+            val processedHtmlContent = templateEngine.process(
+				templateNameMap[templateName.toString()],
+				context);
+			log.info { "processedHtmlContent = $processedHtmlContent" }
 
-			String processedHtmlContent = templateEngine.process(
-				templateNameMap.get(templateName.toString()), context);
-			log.info("processedHtmlContent = {}", processedHtmlContent);
+            helper.setTo(emailArray);
+            helper.setSubject(title);
+            helper.setText(processedHtmlContent, true);
 
-			helper.setTo(emailArray);
-			helper.setSubject(title);
-			helper.setText(processedHtmlContent, true);
+        } catch (e: MessagingException) {
+            log.error{ "EmailTemplateMaker: $e.message" }
+        }
 
-		} catch (MessagingException e) {
-			throw new RuntimeException(e);
-		}
-
-		return newMimeMessage;
-	}
+        return newMimeMessage;
+    }
 }
