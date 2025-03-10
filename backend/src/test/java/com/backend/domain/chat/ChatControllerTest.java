@@ -1,86 +1,99 @@
-// package com.backend.domain.chat;// package com.backend.domain.chat;
-//
-// import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-// import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
-// import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-//
-// import org.junit.jupiter.api.DisplayName;
-// import org.junit.jupiter.api.Test;
-// import org.springframework.beans.factory.annotation.Autowired;
-// import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-// import org.springframework.boot.test.context.SpringBootTest;
-// import org.springframework.http.MediaType;
-// import org.springframework.test.context.ActiveProfiles;
-// import org.springframework.test.context.jdbc.Sql;
-// import org.springframework.test.web.servlet.MockMvc;
-// import org.springframework.transaction.annotation.Transactional;
-//
-// import com.backend.domain.chat.repository.ChatRepository;
-// import com.fasterxml.jackson.databind.ObjectMapper;
-//
-// @SpringBootTest
-// @AutoConfigureMockMvc
-// @ActiveProfiles("test")
-// @Transactional
-// @Sql(scripts = {"/sql/init.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_CLASS)
-// @Sql(scripts = {"/sql/delete.sql"}, executionPhase = Sql.ExecutionPhase.AFTER_TEST_CLASS)
-// class ChatControllerTest {
-//
-//     @Autowired
-//     private MockMvc mockMvc;
-//
-//     @Autowired
-//     private ChatRepository chatRepository;
-//
-//     @Autowired
-//     private ObjectMapper objectMapper;
-//
-//     private final Long postId = 1L; // init.sql에서 사용된 postId 값
-//
-//     @Test
-//     @DisplayName("채팅 목록 전체 조회 성공")
-//     void testGetChattingList() throws Exception {
-//         mockMvc.perform(get("/api/v1/chat/list/{postId}", postId)
-//                         .contentType(MediaType.APPLICATION_JSON))
-//                 .andExpect(status().isOk())
-//                 .andExpect(jsonPath("$.success").value(true))
-//                 .andExpect(jsonPath("$.code").value(200))
-//                 .andExpect(jsonPath("$.data.chats").isArray())
-//                 .andExpect(jsonPath("$.data.chats.length()").value(4)) // 총 4개 데이터 존재 (init.sql 기준)
-//                 .andDo(print());
-//     }
-//
-//     @Test
-//     @DisplayName("채팅 목록 페이징 조회 성공")
-//     void testGetChattingListWithPaging() throws Exception {
-//         mockMvc.perform(get("/api/v1/chat/page/{postId}", postId)
-//                         .param("size", "10")  // 페이지 크기 2
-//                         .param("page", "0")  // 첫 번째 페이지 요청
-//                         .contentType(MediaType.APPLICATION_JSON))
-//                 .andExpect(status().isOk())
-//                 .andExpect(jsonPath("$.success").value(true))
-//                 .andExpect(jsonPath("$.code").value(200))
-//                 .andExpect(jsonPath("$.data.content").isArray())  // `content` 필드 확인
-//                 .andExpect(jsonPath("$.data.content.length()").value(4)) // 페이징 크기 적용
-//                 .andExpect(jsonPath("$.data.pageNumber").value(0))  // 현재 페이지 번호 확인
-//                 .andExpect(jsonPath("$.data.pageSize").value(10))  // 페이지 크기 확인
-//                 .andExpect(jsonPath("$.data.totalElements").isNumber())  // 총 요소 개수 확인
-//                 .andExpect(jsonPath("$.data.totalPages").isNumber())  // 총 페이지 개수 확인
-//                 .andExpect(jsonPath("$.data.last").isBoolean())  // 마지막 페이지 여부 확인
-//                 .andDo(print());
-//     }
-//
-//
-//
-//     @Test
-//     @DisplayName("채팅 목록 조회 실패 - 존재하지 않는 postId")
-//     void testGetChattingListEmpty() throws Exception {
-//         mockMvc.perform(get("/api/v1/chat/list/{postId}", 999L) // 존재하지 않는 게시글 ID
-//                         .contentType(MediaType.APPLICATION_JSON))
-//                 .andExpect(status().isOk())
-//                 .andExpect(jsonPath("$.success").value(true))
-//                 .andExpect(jsonPath("$.code").value(200))
-//                 .andExpect(jsonPath("$.data.chats.length()").value(0)) // 데이터 없음
-//                 .andDo(print());
-//     }
-// }
+package com.backend.domain.chat;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.Objects;
+
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.web.servlet.MockMvc;
+
+import com.backend.domain.chat.entity.Chat;
+import com.backend.domain.chat.entity.MessageType;
+import com.backend.domain.chat.repository.ChatRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+@SpringBootTest
+@AutoConfigureMockMvc
+@ActiveProfiles("test")
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+class ChatControllerTest {
+
+	@Autowired
+	private MockMvc mockMvc;
+
+	@Autowired
+	private ChatRepository chatRepository;
+
+	@Autowired
+	private MongoTemplate mongoTemplate;
+
+	@Autowired
+	private RedisTemplate<String, String> redisTemplate;
+
+	@Autowired
+	private ObjectMapper objectMapper;
+
+	private final String postId = "1";
+	private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+	@BeforeAll
+	void beforeAll() {
+		mongoTemplate.dropCollection(Chat.class);
+		Objects.requireNonNull(redisTemplate.keys("chatList:*")).forEach(redisTemplate::delete);
+	}
+
+	@BeforeEach
+	void setup() {
+		redisTemplate.delete("chat:list:" + postId);
+
+		chatRepository.saveAll(List.of(
+			new Chat(postId, "1", "User1", "Hello!", MessageType.CHAT, LocalDateTime.now().format(formatter)),
+			new Chat(postId, "2", "User2", "Hi!", MessageType.CHAT, LocalDateTime.now().format(formatter)),
+			new Chat(postId, "3", "User3", "How are you?", MessageType.CHAT, LocalDateTime.now().format(formatter)),
+			new Chat(postId, "4", "User4", "I'm good!", MessageType.CHAT, LocalDateTime.now().format(formatter))
+		));
+	}
+
+
+	@AfterAll
+	void afterAll() {
+		mongoTemplate.dropCollection(Chat.class);
+		Objects.requireNonNull(redisTemplate.keys("chatList:*")).forEach(redisTemplate::delete);
+	}
+
+	@Test
+	@DisplayName("채팅 목록 전체 조회 성공")
+	void testGetChattingList() throws Exception {
+		mockMvc.perform(get("/api/v1/chat/list/{postId}", postId)
+				.contentType(MediaType.APPLICATION_JSON))
+			.andExpect(status().isOk())
+			.andExpect(jsonPath("$.success").value(true))
+			.andExpect(jsonPath("$.code").value(200))
+			.andExpect(jsonPath("$.data.chats").isArray())
+			.andExpect(jsonPath("$.data.chats.length()").value(4))
+			.andExpect(jsonPath("$.data.chats[0].userId").value("1"))
+			.andExpect(jsonPath("$.data.chats[0].username").value("User1"))
+			.andExpect(jsonPath("$.data.chats[0].content").value("Hello!"))
+			.andExpect(jsonPath("$.data.chats[0].type").value("CHAT"))
+			.andDo(print());
+	}
+
+}
