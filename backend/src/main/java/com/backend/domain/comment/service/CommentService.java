@@ -52,7 +52,7 @@ public class CommentService {
         postRepository.findById(postId).orElseThrow(() -> new GlobalException(GlobalErrorCode.POST_NOT_FOUND));
 
         // 댓글정보가 db에 있는지에 대한 검증
-        Comment comment = commentRepository.findById(commentId).orElseThrow(() -> new GlobalException(GlobalErrorCode.COMMENT_NOT_FOUND));
+        Comment comment = commentRepository.findByIdWithSiteUser(commentId).orElseThrow(() -> new GlobalException(GlobalErrorCode.COMMENT_NOT_FOUND));
 
         // 로그인한 사용자와 댓글 작성자가 일치하는지 검증
         if (!user.getSiteUser().getId().equals(comment.getSiteUser().getId())) {
@@ -68,7 +68,7 @@ public class CommentService {
     @Transactional
     public void deleteComment(Long commentId, SiteUser user) {
 
-        Comment findComment = commentRepository.findById(commentId).orElseThrow(
+        Comment findComment = commentRepository.findByIdWithSiteUser(commentId).orElseThrow(
                 () -> new GlobalException(GlobalErrorCode.COMMENT_NOT_FOUND)
         );
 
