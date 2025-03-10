@@ -9,16 +9,16 @@ import lombok.Data;
 public class ExperienceLevelDto {
 
     @JsonProperty("code")
-    private Integer code;
+    public Integer code;
 
     @JsonProperty("min")
-    private Integer min;
+    public Integer min;
 
     @JsonProperty("max")
-    private Integer max;
+    public Integer max;
 
     @JsonProperty("name")
-    private String name;
+    public String name;
 
     public ExperienceLevel toEntity() {
         return EntityConverter.dtoToExperienceLevel(this);
