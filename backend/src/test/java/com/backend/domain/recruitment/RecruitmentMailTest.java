@@ -62,7 +62,7 @@ public class RecruitmentMailTest {
                 .orElseThrow(() -> new RuntimeException("모집 게시글을 찾을 수 없습니다."));
 
         // ✅ 기존 지원자 수 기록
-        int beforeUserCount = recruitmentUserRepository.countAcceptedByPostId(post.getPostId());
+        int beforeUserCount = recruitmentUserRepository.countAcceptedRecruitmentsByPost(post.getPostId());
         int maxApplicants = post.getNumOfApplicants();
 
         // 2. 모집 신청자로 사용할 SiteUser를 조회
@@ -82,7 +82,7 @@ public class RecruitmentMailTest {
         recruitmentUserRepository.save(recruitmentUser);
 
         // ✅ 지원자 수 증가 후 검증 (accept() 호출로 증가했는지)
-        assertEquals(beforeUserCount + 1, recruitmentUserRepository.countAcceptedByPostId(post.getPostId()),
+        assertEquals(beforeUserCount + 1, recruitmentUserRepository.countAcceptedRecruitmentsByPost(post.getPostId()),
                 "✅ 모집 신청 후 currentUserCount가 1 증가해야 합니다.");
 
         // 4. updateRecruitmentStatus 메서드를 호출합니다.
@@ -96,7 +96,7 @@ public class RecruitmentMailTest {
                 "모집 상태가 CLOSED로 업데이트되어야 합니다.");
 
         // ✅ 모집 상태가 CLOSED로 변경되었는지 확인
-        if (recruitmentUserRepository.countAcceptedByPostId(post.getPostId()) >= maxApplicants) {
+        if (recruitmentUserRepository.countAcceptedRecruitmentsByPost(post.getPostId()) >= maxApplicants) {
             assertEquals(RecruitmentStatus.CLOSED, updatedPost.getRecruitmentStatus(),
                     "✅ 모집이 다 찼을 때 상태가 CLOSED로 변경되어야 합니다.");
         } else {
@@ -118,7 +118,7 @@ public class RecruitmentMailTest {
                 .orElseThrow(() -> new RuntimeException("모집 게시글을 찾을 수 없습니다."));
 
         // ✅ 기존 지원자 수 기록
-        int beforeUserCount = recruitmentUserRepository.countAcceptedByPostId(post.getPostId());
+        int beforeUserCount = recruitmentUserRepository.countAcceptedRecruitmentsByPost(post.getPostId());
 
         // 2. 모집 신청자로 사용할 SiteUser를 조회 (이메일로 사용자 찾기)
         SiteUser applicant = userRepository.findAll().stream()
@@ -138,11 +138,11 @@ public class RecruitmentMailTest {
         recruitmentUserRepository.save(recruitmentUser);
 
         // 4. 모집 게시글에서 지원자 수가 증가했는지 검증
-        assertEquals(beforeUserCount + 1, recruitmentUserRepository.countAcceptedByPostId(post.getPostId()));
-        System.out.println(beforeUserCount + recruitmentUserRepository.countAcceptedByPostId(post.getPostId()));
+        assertEquals(beforeUserCount + 1, recruitmentUserRepository.countAcceptedRecruitmentsByPost(post.getPostId()));
+        System.out.println(beforeUserCount + recruitmentUserRepository.countAcceptedRecruitmentsByPost(post.getPostId()));
 
         // Count 로그
-        System.out.println("신청한 사람 수 : " + recruitmentUserRepository.countAcceptedByPostId(post.getPostId()));
+        System.out.println("신청한 사람 수 : " + recruitmentUserRepository.countAcceptedRecruitmentsByPost(post.getPostId()));
     }
 
    /* @Test

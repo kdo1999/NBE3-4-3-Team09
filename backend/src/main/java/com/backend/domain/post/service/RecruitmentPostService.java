@@ -186,6 +186,6 @@ public class RecruitmentPostService {
 	 * @return 조회된 게시글에서 승인된 회원수 호출
 	 */
 	private int getCurrentAcceptedCount(Long postId) {
-		return recruitmentUserRepository.countAcceptedByPostId(postId);
+		return recruitmentUserRepository.countAcceptedRecruitmentsByPost(postId);
 	}
 }
