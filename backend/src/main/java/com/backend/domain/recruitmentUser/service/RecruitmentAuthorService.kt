@@ -148,6 +148,6 @@ class RecruitmentAuthorService(
         val emailList = recruitmentUserRepository.findAcceptedRecruitmentsForClosedPost(post.postId!!)
             .map { it.siteUser.email }
 
-        mailService.sendDeliveryStartEmail(emailList, TemplateName.RECRUITMENT_CHAT, post.postId!!)
+        mailService.sendDeliveryStartEmailAsync(emailList, TemplateName.RECRUITMENT_CHAT, post.postId!!)
     }
 }

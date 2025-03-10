@@ -5,8 +5,9 @@ import com.backend.global.mail.util.MailSender
 import com.backend.global.mail.util.TemplateMaker
 import com.backend.global.mail.util.TemplateName
 import io.github.oshai.kotlinlogging.KotlinLogging
+import jakarta.annotation.PreDestroy
+import kotlinx.coroutines.*
 import org.springframework.beans.factory.annotation.Value
-import org.springframework.scheduling.annotation.Async
 import org.springframework.stereotype.Service
 
 private val log = KotlinLogging.logger {}
@@ -19,8 +20,15 @@ class MailServiceImpl(
     private val mailSender: MailSender
 ) : MailService {
 
-    @Async("threadPoolTaskExecutor")
-    override fun sendDeliveryStartEmail(to:List<String>, templateName: TemplateName, postId: Long) {
+    private val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
+
+    override fun sendDeliveryStartEmailAsync(to: List<String>, templateName: TemplateName, postId: Long) {
+        scope.launch {
+            sendDeliveryStartEmail(to, templateName, postId)
+        }
+    }
+
+    private suspend fun sendDeliveryStartEmail(to: List<String>, templateName: TemplateName, postId: Long) {
         val titleBuilder = StringBuilder()
         val htmlParameterMap = mutableMapOf<String, String>()
 
@@ -39,5 +47,10 @@ class MailServiceImpl(
             templateMaker.create(mailSender.createMimeMessage(), to, title, templateName, htmlParameterMap)
 
         mailSender.send(mimeMessage)
+    }
+
+    @PreDestroy
+    fun destroy() {
+        scope.cancel()
     }
 }
