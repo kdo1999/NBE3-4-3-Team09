@@ -1,3 +1,4 @@
+/*
 package com.backend.domain.post.repository.recruitment;
 
 import com.backend.domain.post.entity.RecruitmentPost;
@@ -16,3 +17,4 @@ WHERE rp.postId = :postId
 """)
 	Optional<RecruitmentPost> findByIdFetch(@Param("postId") Long postId);
 }
+*/

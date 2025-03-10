@@ -1,3 +1,4 @@
+/* 코틀린으로 변환
 package com.backend.domain.post.repository.recruitment;
 
 import com.backend.domain.post.dto.RecruitmentPostResponse;
@@ -44,3 +45,4 @@ public class RecruitmentPostRepositoryImpl implements RecruitmentPostRepository 
 		return recruitmentPostQueryRepository.findPostResponseById(postId, siteUserId);
 	}
 }
+*/

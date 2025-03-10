@@ -1,3 +1,4 @@
+/* 코틀린으로 변환
 package com.backend.domain.post.repository.recruitment;
 
 import static com.backend.domain.post.entity.QRecruitmentPost.*;
@@ -42,3 +43,4 @@ public class RecruitmentPostQueryRepository {
 		return Optional.ofNullable(postResponse);
 	}
 }
+*/
