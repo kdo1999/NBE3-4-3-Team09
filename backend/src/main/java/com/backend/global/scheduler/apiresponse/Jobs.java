@@ -7,7 +7,7 @@ import lombok.Data;
 public class Jobs {
 
     @JsonProperty("jobs")
-    private JobsDetail jobsDetail;
+    public JobsDetail jobsDetail;
 
 
 }

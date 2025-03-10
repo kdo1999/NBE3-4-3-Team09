@@ -7,7 +7,7 @@ import lombok.Data;
 public class CompanyDetailDto {
 
     @JsonProperty("href")
-    private String href;
+    public String href;
     @JsonProperty("name")
-    private String name;
+    public String name;
 }

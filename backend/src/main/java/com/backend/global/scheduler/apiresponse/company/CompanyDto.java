@@ -7,6 +7,6 @@ import lombok.Data;
 public class CompanyDto {
 
     @JsonProperty("detail")
-    private CompanyDetailDto companyDetailDto;
+    public CompanyDetailDto companyDetailDto;
 
 }

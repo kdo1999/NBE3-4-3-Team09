@@ -7,16 +7,16 @@ import lombok.Data;
 public class PositionDto {
 
     @JsonProperty("title")
-    private String title;
+    public String title;
 
     @JsonProperty("job-code")
-    private JobCodeDto jobCode;
+    public JobCodeDto jobCode;
 
     @JsonProperty("experience-level")
-    private ExperienceLevelDto experienceLevel;
+    public ExperienceLevelDto experienceLevel;
 
     @JsonProperty("required-education-level")
-    private RequireEducateDto requireEducate;
+    public RequireEducateDto requireEducate;
 
 
 }
