@@ -1,3 +1,5 @@
+/*
+PostJpaRepository -> 코틀린 인터페이스로 변환
 package com.backend.domain.post.repository.post;
 
 import com.backend.domain.post.entity.Post;
@@ -11,3 +13,4 @@ public interface PostJpaRepository extends JpaRepository<Post, Long> {
 	@Query("select p from Post p left join fetch p.author left join fetch p.jobPosting where p.postId = :postId")
 	Optional<Post> findByIdFetch(@Param("postId") Long postId);
 }
+*/

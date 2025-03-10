@@ -1,7 +1,7 @@
+/* 코틀린으로 변환
 package com.backend.domain.post.repository.post;
 
 import com.backend.domain.post.dto.PostPageResponse;
-import com.backend.domain.post.dto.PostResponse;
 import com.backend.domain.post.entity.Post;
 import com.backend.domain.post.util.PostSearchCondition;
 import com.backend.domain.recruitmentUser.entity.RecruitmentUserStatus;
@@ -60,3 +60,4 @@ public class PostRepositoryImpl implements PostRepository {
 		return postQueryRepository.findPostResponseById(postId, siteUserId);
 	}
 }
+*/
