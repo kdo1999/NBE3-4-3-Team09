@@ -1,22 +1,16 @@
-package com.backend.domain.recruitmentUser.controller;
+package com.backend.domain.recruitmentUser.controller
 
-import com.backend.domain.recruitmentUser.dto.response.RecruitmentUserPostResponse;
-import com.backend.domain.recruitmentUser.service.RecruitmentUserService;
-import com.backend.global.response.GenericResponse;
-import com.backend.global.security.custom.CustomUserDetails;
-import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import com.backend.domain.recruitmentUser.dto.response.RecruitmentUserPostResponse
+import com.backend.domain.recruitmentUser.service.RecruitmentUserService
+import com.backend.global.response.GenericResponse
+import com.backend.global.security.custom.CustomUserDetails
+import lombok.RequiredArgsConstructor
+import org.springframework.data.domain.PageRequest
+import org.springframework.data.domain.Pageable
+import org.springframework.data.domain.Sort
+import org.springframework.http.HttpStatus
+import org.springframework.security.core.annotation.AuthenticationPrincipal
+import org.springframework.web.bind.annotation.*
 
 /**
  * 모집 신청 및 조회를 담당하는 컨트롤러 요청 경로: /api/v1/recruitment-user
@@ -24,9 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/recruitment")
-public class ApiV1RecruitmentUserController {
-
-    private final RecruitmentUserService recruitmentUserService;
+class ApiV1RecruitmentUserController(
+    private val recruitmentUserService: RecruitmentUserService
+) {
 
     /**
      * 모집 신청 사용자가 특정 게시글에 모집을 신청합니다.
@@ -36,16 +30,15 @@ public class ApiV1RecruitmentUserController {
      * @return 성공 응답 (201 Created)
      */
     @PostMapping("/{postId}")
-    public GenericResponse<Void> applyRecruitment(
-            @AuthenticationPrincipal CustomUserDetails userDetails,
-            @PathVariable("postId") Long postId) {
+    fun applyRecruitment(
+        @AuthenticationPrincipal userDetails: CustomUserDetails,
+        @PathVariable("postId") postId: Long): GenericResponse<Void> {
 
         recruitmentUserService.saveRecruitment(
                 userDetails.getSiteUser(),
                 postId
-        );
-
-        return GenericResponse.ok(HttpStatus.CREATED.value());
+        )
+        return GenericResponse.ok(HttpStatus.CREATED.value())
     }
 
     /**
@@ -56,16 +49,16 @@ public class ApiV1RecruitmentUserController {
      * @return 성공 응답 (200 OK)
      */
     @DeleteMapping("/{postId}")
-    public GenericResponse<Void> cancelRecruitment(
-            @AuthenticationPrincipal CustomUserDetails userDetails,
-            @PathVariable("postId") Long postId) {
+    fun cancelRecruitment(
+            @AuthenticationPrincipal userDetails: CustomUserDetails,
+            @PathVariable("postId") postId: Long): GenericResponse<Void> {
 
         recruitmentUserService.cancelRecruitment(
                 userDetails.getSiteUser(),
                 postId
-        );
+        )
 
-        return GenericResponse.ok();
+        return GenericResponse.ok()
     }
 
     /**
@@ -78,21 +71,22 @@ public class ApiV1RecruitmentUserController {
      * @return 모집 승인된 게시글 목록 (Page<PostResponseDto>)
      */
     @GetMapping("/accepted-posts")
-    public GenericResponse<RecruitmentUserPostResponse> getAcceptedPosts(
-            @AuthenticationPrincipal CustomUserDetails userDetails,
-            @RequestParam(defaultValue = "ACCEPTED", name = "status") String status,
-            @RequestParam(defaultValue = "0", name = "pageNum") int pageNum,
-            @RequestParam(defaultValue = "10", name = "pageSize") int pageSize) {
+    fun getAcceptedPosts(
+        @AuthenticationPrincipal userDetails: CustomUserDetails,
+        @RequestParam(defaultValue = "ACCEPTED", name = "status") status: String,
+        @RequestParam(defaultValue = "0", name = "pageNum") pageNum: Int,
+        @RequestParam(defaultValue = "10", name = "pageSize") pageSize: Int
+    ): GenericResponse<RecruitmentUserPostResponse> {
 
-        Pageable pageable = PageRequest.of(pageNum, pageSize,
-                Sort.by(Sort.Direction.ASC, "createdAt"));
+        val pageable: Pageable = PageRequest.of(pageNum, pageSize,
+                Sort.by(Sort.Direction.ASC, "createdAt"))
 
-        RecruitmentUserPostResponse acceptedPosts = recruitmentUserService.getAcceptedPosts(
+        val acceptedPosts = recruitmentUserService.getAcceptedPosts(
                 userDetails.getSiteUser(),
                 status,
                 pageable
-        );
+        )
 
-        return GenericResponse.ok(acceptedPosts);
+        return GenericResponse.ok(acceptedPosts)
     }
 }
