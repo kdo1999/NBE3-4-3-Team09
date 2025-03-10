@@ -119,9 +119,9 @@ interface RecruitmentUserRepository : JpaRepository<RecruitmentUser, Long> {
      * @return 승인된 모집 지원자 수
      */
     @Query("""
-           SELECT COUNT(ru) FROM RecruitmentUser ru
+           SELECT COALESCE(COUNT(ru), 0) FROM RecruitmentUser ru
            WHERE ru.post.postId = :postId 
            AND ru.status = com.backend.domain.recruitmentUser.entity.RecruitmentUserStatus.ACCEPTED
            """)
-    fun countAcceptedRecruitmentsByPost(@Param("postId") postId: Long): Int?
+    fun countAcceptedRecruitmentsByPost(@Param("postId") postId: Long): Int
 }

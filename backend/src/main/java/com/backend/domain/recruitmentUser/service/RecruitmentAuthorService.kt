@@ -138,7 +138,7 @@ class RecruitmentAuthorService(
      */
     @Transactional
     fun updateRecruitmentStatus(post: RecruitmentPost) {
-        if ((post.numOfApplicants ?: 0) <= (recruitmentUserRepository.countAcceptedRecruitmentsByPost(post.postId!!) ?: 0)) {
+        if ((post.numOfApplicants ?: 0) <= (recruitmentUserRepository.countAcceptedRecruitmentsByPost(post.postId!!))) {
             post.updateRecruitmentStatus(RecruitmentStatus.CLOSED)
         }
 
