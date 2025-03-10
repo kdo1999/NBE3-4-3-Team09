@@ -36,7 +36,7 @@ open class RecruitmentPost : Post {
         this.category = category
         this.author = author
         this.jobPosting = jobPostingRepository.findById(jobPostingId)
-            .orElseThrow { throw IllegalArgumentException("존재하지 않는 JobPosting ID: $jobPostingId") }
+            ?: throw IllegalArgumentException("존재하지 않는 JobPosting ID: $jobPostingId")
     }
 
     fun updatePost(subject: String, content: String, numOfApplicants: Int) {

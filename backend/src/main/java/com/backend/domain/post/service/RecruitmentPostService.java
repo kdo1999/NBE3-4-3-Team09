@@ -84,7 +84,8 @@ public class RecruitmentPostService {
 			recruitmentPostRequest,
 			category,
 			siteUser,
-			jobPosting
+			recruitmentPostRequest.getJobPostingId(),
+			jobPostingRepository
 		);
 
 		RecruitmentPost savePost = recruitmentPostRepository.save(post);
