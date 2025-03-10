@@ -4,7 +4,6 @@ import com.backend.domain.recruitmentUser.dto.response.RecruitmentUserPostRespon
 import com.backend.domain.recruitmentUser.service.RecruitmentUserService
 import com.backend.global.response.GenericResponse
 import com.backend.global.security.custom.CustomUserDetails
-import lombok.RequiredArgsConstructor
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.*
  * 모집 신청 및 조회를 담당하는 컨트롤러 요청 경로: /api/v1/recruitment-user
  */
 @RestController
-@RequiredArgsConstructor
 @RequestMapping("/api/v1/recruitment")
 class ApiV1RecruitmentUserController(
     private val recruitmentUserService: RecruitmentUserService
