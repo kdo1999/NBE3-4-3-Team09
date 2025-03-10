@@ -7,10 +7,10 @@ import lombok.Data;
 public class JobCodeDto {
 
     @JsonProperty("code")
-    private String code;
+    public String code;
 
     @JsonProperty("name")
-    private String name;
+    public String name;
 
 
 }

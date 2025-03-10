@@ -17,27 +17,27 @@ import lombok.Data;
 public class Job {
 
     @JsonProperty("url")
-    private String url; //url
+    public String url; //url
 
     @JsonProperty("active")
-    private Integer active;
+    public Integer active;
 
-    private JobPostingStatus jobPostingStatus;
+    public JobPostingStatus jobPostingStatus;
 
     @JsonProperty("company")
-    private CompanyDto companyDto; //회사 이름, 링크
+    public CompanyDto companyDto; //회사 이름, 링크
 
     @JsonProperty("position")
-    private PositionDto positionDto;
+    public PositionDto positionDto;
 
     @JsonProperty("salary")
-    private SalaryDto salaryDto;
+    public SalaryDto salaryDto;
 
     @JsonProperty("id")
-    private String id;
+    public String id;
 
     @JsonProperty("apply-cnt")
-    private String applyCnt;
+    public String applyCnt;
 
     /**
      * JSON 데이터를 Java 객체로 변환할 때 사용되는 설정입니다.
@@ -49,15 +49,15 @@ public class Job {
      */
     @JsonProperty("posting-timestamp")
     @JsonDeserialize(using = UnixTimestampDeserializer.class)
-    private ZonedDateTime postDate; //작성 날짜
+    public ZonedDateTime postDate; //작성 날짜
 
     @JsonProperty("opening-timestamp")
     @JsonDeserialize(using = UnixTimestampDeserializer.class)
-    private ZonedDateTime openDate; //공개 날짜
+    public ZonedDateTime openDate; //공개 날짜
 
     @JsonProperty("expiration-timestamp")
     @JsonDeserialize(using = UnixTimestampDeserializer.class)
-    private ZonedDateTime closeDate; //마감 날짜
+    public ZonedDateTime closeDate; //마감 날짜
 
 
     public void setJobPostingStatus() {

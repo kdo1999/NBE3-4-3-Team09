@@ -8,8 +8,8 @@ import lombok.Data;
 public class JobsDetail {
 
     @JsonProperty("job")
-    private List<Job> jobList;
+    public List<Job> jobList;
 
     @JsonProperty("total")
-    private String total;
+    public String total;
 }
