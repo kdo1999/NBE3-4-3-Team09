@@ -8,5 +8,5 @@ import java.util.*
 
 interface RecruitmentPostJpaRepository : JpaRepository<RecruitmentPost, Long> {
     @Query("SELECT rp\n FROM RecruitmentPost rp LEFT JOIN FETCH rp.author LEFT JOIN FETCH rp.jobPosting\n WHERE rp.postId = :postId")
-    fun findByIdFetch(@Param("postId") postId: Long): Optional<RecruitmentPost>
+    fun findByIdFetch(@Param("postId") postId: Long): RecruitmentPost?
 }

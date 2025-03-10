@@ -11,7 +11,7 @@ import java.time.ZonedDateTime
 
 @Entity
 @DiscriminatorValue("recruitment")
-open class RecruitmentPost : Post {
+class RecruitmentPost : Post {
     lateinit var recruitmentClosingDate: ZonedDateTime
     var numOfApplicants: Int? = null
 
@@ -28,16 +28,9 @@ open class RecruitmentPost : Post {
         content: String,
         category: Category,
         author: SiteUser,
-        jobPostingId: Long,
-        jobPostingRepository: JobPostingRepository
+        jobPosting: JobPosting
     ) : super(subject, content, category, author) {
-        this.subject = subject
-        this.content = content
-        this.category = category
-        this.author = author
-        this.jobPosting = jobPostingRepository.findById(jobPostingId)
-            ?: throw IllegalArgumentException("존재하지 않는 JobPosting ID: $jobPostingId")
-    }
+        this.jobPosting = jobPosting }
 
     fun updatePost(subject: String, content: String, numOfApplicants: Int) {
         super.updatePost(subject, content)
@@ -48,9 +41,6 @@ open class RecruitmentPost : Post {
         this.recruitmentStatus = recruitmentStatus
     }
 
-    fun getVoterList(): List<Voter>{
-        return postVoterList
-    }
 
 
 }

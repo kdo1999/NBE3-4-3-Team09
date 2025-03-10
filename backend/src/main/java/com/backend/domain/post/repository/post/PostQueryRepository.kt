@@ -99,7 +99,7 @@ class PostQueryRepository(private val queryFactory: JPAQueryFactory) {
         return PageableExecutionUtils.getPage(content, pageable) { countQuery.fetchOne()!! }
     }
 
-    fun findPostResponseById(postId: Long, siteUserId: Long): Optional<PostResponse> {
+    fun findPostResponseById(postId: Long, siteUserId: Long): PostResponse? {
         val postResponse = queryFactory.selectDistinct(
             QPostResponse(
                 post.postId, post.subject, post.content, post.category.id,
@@ -121,7 +121,7 @@ class PostQueryRepository(private val queryFactory: JPAQueryFactory) {
             .where(post.postId.eq(postId))
             .fetchOne()
 
-        return Optional.ofNullable(postResponse)
+        return postResponse
     }
 
     /**

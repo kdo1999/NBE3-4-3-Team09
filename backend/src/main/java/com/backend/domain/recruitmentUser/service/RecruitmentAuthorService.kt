@@ -124,7 +124,7 @@ class RecruitmentAuthorService(
      */
     private fun validateAuthorAndGetPost(author: SiteUser, postId: Long): RecruitmentPost {
         val post = recruitmentPostRepository.findByIdFetch(postId)
-            .orElseThrow { GlobalException(GlobalErrorCode.POST_NOT_FOUND) }
+            ?: throw GlobalException(GlobalErrorCode.POST_NOT_FOUND)
 
         if (post.author.id != author.id) {
             throw GlobalException(GlobalErrorCode.POST_NOT_AUTHOR)

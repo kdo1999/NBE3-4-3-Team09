@@ -8,7 +8,7 @@ data class PostPageResponse @QueryProjection constructor(
     var subject: String,
     val categoryName: String,
     val authorName: String,
-    val authorProfileImage: String?,
+    val authorProfileImage: String,
     var commentCount: Long,
     var voterCounter: Long,
     val createdAt: ZonedDateTime

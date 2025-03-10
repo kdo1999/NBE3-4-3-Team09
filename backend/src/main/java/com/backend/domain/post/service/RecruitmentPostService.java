@@ -52,8 +52,9 @@ public class RecruitmentPostService {
 	@Transactional(readOnly = true)
 	public RecruitmentPostResponse findById(Long postId, SiteUser siteUser) {
 
-		return recruitmentPostRepository.findPostResponseById(postId, siteUser.getId())
-			.orElseThrow(() -> new GlobalException(GlobalErrorCode.POST_NOT_FOUND));
+		return recruitmentPostRepository.findPostResponseById(postId, siteUser.getId());
+		// 예외 부분은 kotlin으로 변환하는 부분에서 타입에 맞게 수정 예정
+//			.orElseThrow(() -> new GlobalException(GlobalErrorCode.POST_NOT_FOUND));
 	}
 
 	/**
@@ -84,8 +85,7 @@ public class RecruitmentPostService {
 			recruitmentPostRequest,
 			category,
 			siteUser,
-			recruitmentPostRequest.getJobPostingId(),
-			jobPostingRepository
+			jobPosting
 		);
 
 		RecruitmentPost savePost = recruitmentPostRepository.save(post);
@@ -112,7 +112,7 @@ public class RecruitmentPostService {
 	 */
 	@Transactional
 	public RecruitmentPostResponse update(Long postId, RecruitmentPostRequest recruitmentPostRequest,
-		SiteUser siteUser, SiteUser currentUser) {
+		SiteUser siteUser) {
 
 		RecruitmentPost findPost = getPost(postId);
 
@@ -127,7 +127,7 @@ public class RecruitmentPostService {
 			recruitmentPostRequest.getNumOfApplicants()
 		);
 
-		return PostConverter.toPostResponse(findPost, true, getCurrentAcceptedCount(postId), currentUser);
+		return PostConverter.toPostResponse(findPost, true, getCurrentAcceptedCount(postId), siteUser);
 	}
 
 	/**
@@ -176,8 +176,9 @@ public class RecruitmentPostService {
 	 * @throws GlobalException 게시글이 존재하지 않을 경우 예외 발생
 	 */
 	private RecruitmentPost getPost(Long postId) {
-		return recruitmentPostRepository.findByIdFetch(postId)
-			.orElseThrow(() -> new GlobalException(GlobalErrorCode.POST_NOT_FOUND));
+		return recruitmentPostRepository.findByIdFetch(postId);
+		// 예외 부분은 kotlin으로 변환하는 부분에서 타입에 맞게 수정 예정
+//			.orElseThrow(() -> new GlobalException(GlobalErrorCode.POST_NOT_FOUND));
 	}
 
 	/**

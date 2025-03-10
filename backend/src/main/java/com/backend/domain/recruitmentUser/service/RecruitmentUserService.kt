@@ -99,7 +99,7 @@ class RecruitmentUserService(
 
 
         //TODO 추후 RecruitmentPostRepository로 로직 이동 후 수정
-        val userId: Long = siteUser.id ?: throw IllegalArgumentException("siteUser.id가 null입니다.")
+        val userId: Long = siteUser.id!!
         val posts: Page<PostPageResponse> = postRepository
             .findRecruitmentAll(userId, recruitmentUserStatus, pageable)
 
@@ -180,6 +180,6 @@ class RecruitmentUserService(
      */
     private fun getPost(postId: Long): RecruitmentPost {
         return recruitmentPostRepository.findByIdFetch(postId)
-                .orElseThrow { GlobalException(GlobalErrorCode.POST_NOT_FOUND) }
+            ?: throw GlobalException(GlobalErrorCode.POST_NOT_FOUND)
     }
 }

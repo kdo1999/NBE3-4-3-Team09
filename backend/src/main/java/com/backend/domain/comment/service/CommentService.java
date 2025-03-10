@@ -34,9 +34,9 @@ public class CommentService {
                                                   CustomUserDetails user) {
 
         // 게시글정보가 db에 있는지에 대한 검증
-        Post findPost = postRepository.findById(postId).orElseThrow(
-                () -> new GlobalException(GlobalErrorCode.POST_NOT_FOUND)
-        );
+        Post findPost = postRepository.findById(postId);
+        // 예외 부분은 kotlin으로 변환하는 부분에서 타입에 맞게 수정 예정
+//                .orElseThrow(() -> new GlobalException(GlobalErrorCode.POST_NOT_FOUND)
 
         Comment comment = new Comment(dto.content, findPost, user.getSiteUser());
 
@@ -49,7 +49,9 @@ public class CommentService {
     public CommentModifyResponseDto modifyComment(Long postId, Long commentId, CommentRequestDto dto, CustomUserDetails user) {
 
         // 게시글정보가 db에 있는지에 대한 검증
-        postRepository.findById(postId).orElseThrow(() -> new GlobalException(GlobalErrorCode.POST_NOT_FOUND));
+        // 예외 부분은 kotlin으로 변환하는 부분에서 타입에 맞게 수정 예정
+        postRepository.findById(postId);
+//                .orElseThrow(() -> new GlobalException(GlobalErrorCode.POST_NOT_FOUND));
 
         // 댓글정보가 db에 있는지에 대한 검증
         Comment comment = commentRepository.findById(commentId).orElseThrow(() -> new GlobalException(GlobalErrorCode.COMMENT_NOT_FOUND));

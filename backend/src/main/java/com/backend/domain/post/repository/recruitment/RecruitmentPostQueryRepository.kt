@@ -13,7 +13,7 @@ import java.util.*
 class RecruitmentPostQueryRepository( private val queryFactory: JPAQueryFactory
 ) {
 
-    fun findPostResponseById(postId: Long, siteUserId: Long): Optional<RecruitmentPostResponse> {
+    fun findPostResponseById(postId: Long, siteUserId: Long): RecruitmentPostResponse? {
         val postResponse = queryFactory.selectDistinct(
             QRecruitmentPostResponse(
                 recruitmentPost.postId, recruitmentPost.subject, recruitmentPost.content, recruitmentPost.category.id,
@@ -38,6 +38,6 @@ class RecruitmentPostQueryRepository( private val queryFactory: JPAQueryFactory
             .where(recruitmentPost.postId.eq(postId))
             .fetchOne()
 
-        return Optional.ofNullable(postResponse)
+        return postResponse
     }
 }

@@ -16,11 +16,11 @@ class PostRepositoryImpl(
     private val postQueryRepository: PostQueryRepository
 ) : PostRepository {
 
-    override fun findById(postId: Long): Optional<Post> {
-        return postJpaRepository.findById(postId)
+    override fun findById(postId: Long): Post? {
+        return postJpaRepository.findById(postId).orElse(null)
     }
 
-    override fun findByIdFetch(postId: Long): Optional<Post> {
+    override fun findByIdFetch(postId: Long): Post? {
         return postJpaRepository.findByIdFetch(postId)
     }
 
@@ -40,7 +40,7 @@ class PostRepositoryImpl(
         return postQueryRepository.findRecruitmentAll(pageable, userId, status)
     }
 
-    override fun findPostResponseById(postId: Long, siteUserId: Long): Optional<PostResponse> {
+    override fun findPostResponseById(postId: Long, siteUserId: Long): PostResponse? {
         return postQueryRepository.findPostResponseById(postId, siteUserId)
     }
 }

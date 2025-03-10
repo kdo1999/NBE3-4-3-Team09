@@ -36,8 +36,9 @@ public class FreePostService {
 	@Transactional(readOnly = true)
 	public PostResponse findById(Long postId, SiteUser siteUser) {
 
-		return postRepository.findPostResponseById(postId, siteUser.getId())
-			.orElseThrow(() -> new GlobalException(GlobalErrorCode.POST_NOT_FOUND));
+		return postRepository.findPostResponseById(postId, siteUser.getId());
+		// 예외 부분은 kotlin으로 변환하는 부분에서 타입에 맞게 수정 예정
+//			.orElseThrow(() -> new GlobalException(GlobalErrorCode.POST_NOT_FOUND));
 	}
 
 	/**
@@ -75,8 +76,9 @@ public class FreePostService {
 	@Transactional
 	public PostResponse update(Long postId, FreePostRequest freePostRequest, SiteUser siteUser) {
 
-		Post target = postRepository.findByIdFetch(postId)
-			.orElseThrow(() -> new GlobalException(GlobalErrorCode.POST_NOT_FOUND));
+		Post target = postRepository.findByIdFetch(postId);
+		// 예외 부분은 kotlin으로 변환하는 부분에서 타입에 맞게 수정 예정
+//			.orElseThrow(() -> new GlobalException(GlobalErrorCode.POST_NOT_FOUND));
 
 		if (!target.getAuthor().getId().equals(siteUser.getId())) {
 			throw new GlobalException(GlobalErrorCode.POST_NOT_AUTHOR);
@@ -98,8 +100,9 @@ public class FreePostService {
 	@Transactional
 	public void delete(Long postId, SiteUser siteUser) {
 
-		Post findPost = postRepository.findByIdFetch(postId)
-			.orElseThrow(() -> new GlobalException(GlobalErrorCode.POST_NOT_FOUND));
+		Post findPost = postRepository.findByIdFetch(postId);
+		// 예외 부분은 kotlin으로 변환하는 부분에서 타입에 맞게 수정 예정
+//			.orElseThrow(() -> new GlobalException(GlobalErrorCode.POST_NOT_FOUND));
 
 		if (!findPost.getAuthor().getId().equals(siteUser.getId())) {
 			throw new GlobalException(GlobalErrorCode.POST_NOT_AUTHOR);

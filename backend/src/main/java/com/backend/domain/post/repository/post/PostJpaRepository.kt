@@ -9,5 +9,5 @@ import java.util.*
 interface PostJpaRepository : JpaRepository<Post, Long> {
 
     @Query("select p from Post p left join fetch p.author where p.postId = :postId")
-    fun findByIdFetch(@Param("postId") postId: Long): Optional<Post>
+    fun findByIdFetch(@Param("postId") postId: Long): Post?
 }

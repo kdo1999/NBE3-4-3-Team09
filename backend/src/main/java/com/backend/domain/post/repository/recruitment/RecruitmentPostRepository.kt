@@ -6,9 +6,9 @@ import java.util.*
 
 interface RecruitmentPostRepository {
 
-    fun findById(id: Long) : Optional<RecruitmentPost>
+    fun findById(id: Long) : RecruitmentPost?
 
-    fun findByIdFetch(id: Long) : Optional<RecruitmentPost>
+    fun findByIdFetch(id: Long) : RecruitmentPost?
 
     fun save(recruitmentPost: RecruitmentPost) : RecruitmentPost
 
@@ -16,5 +16,5 @@ interface RecruitmentPostRepository {
 
     fun findAll(): List<RecruitmentPost>
 
-    fun findPostResponseById(postId: Long, siteUserId: Long) : Optional<RecruitmentPostResponse>
+    fun findPostResponseById(postId: Long, siteUserId: Long) : RecruitmentPostResponse?
 }

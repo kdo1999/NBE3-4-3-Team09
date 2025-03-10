@@ -2,6 +2,7 @@ package com.backend.domain.post.repository.recruitment
 
 import com.backend.domain.post.dto.RecruitmentPostResponse
 import com.backend.domain.post.entity.RecruitmentPost
+import org.springframework.data.jpa.domain.AbstractPersistable_.id
 import org.springframework.stereotype.Repository
 import java.util.*
 
@@ -11,11 +12,11 @@ class RecruitmentPostRepositoryImpl(
     private val recruitmentPostQueryRepository: RecruitmentPostQueryRepository
 ) : RecruitmentPostRepository {
 
-    override fun findById(id: Long): Optional<RecruitmentPost> {
-        return recruitmentPostJpaRepository.findById(id)
+    override fun findById(id: Long): RecruitmentPost? {
+        return recruitmentPostJpaRepository.findById(id).orElse(null)
     }
 
-    override fun findByIdFetch(id: Long): Optional<RecruitmentPost> {
+    override fun findByIdFetch(id: Long): RecruitmentPost? {
         return recruitmentPostJpaRepository.findByIdFetch(id)
     }
 
@@ -31,7 +32,7 @@ class RecruitmentPostRepositoryImpl(
         return recruitmentPostJpaRepository.findAll()
     }
 
-    override fun findPostResponseById(postId: Long, siteUserId: Long): Optional<RecruitmentPostResponse> {
+    override fun findPostResponseById(postId: Long, siteUserId: Long): RecruitmentPostResponse? {
         return recruitmentPostQueryRepository.findPostResponseById(postId, siteUserId)
     }
 }

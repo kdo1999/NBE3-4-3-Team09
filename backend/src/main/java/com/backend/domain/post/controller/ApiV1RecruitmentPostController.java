@@ -60,7 +60,7 @@ public class ApiV1RecruitmentPostController {
     ) {
         SiteUser currentUser = userDetails.getSiteUser();
         RecruitmentPostResponse result = recruitmentPostService.update(postId, requestDto,
-                userDetails.getSiteUser(), currentUser);
+                userDetails.getSiteUser());
         return GenericResponse.ok(result);
     }
 

@@ -1,6 +1,7 @@
 package com.backend.domain.post.conveter;
 
 import com.backend.domain.category.entity.Category;
+import com.backend.domain.jobposting.entity.JobPosting;
 import com.backend.domain.jobposting.repository.JobPostingRepository;
 import com.backend.domain.post.dto.FreePostRequest;
 import com.backend.domain.post.dto.PostCreateResponse;
@@ -22,11 +23,9 @@ public class PostConverter {
 
     // 모집 게시글 저장할 때
     public static RecruitmentPost createPost(RecruitmentPostRequest recruitmentPostRequest,
-            Category category, SiteUser author, Long jobPostingId,
-            JobPostingRepository jobPostingRepository) {
+            Category category, SiteUser author, JobPosting jobPosting) {
         return new RecruitmentPost(recruitmentPostRequest.getSubject(),
-                recruitmentPostRequest.getContent(), category, author, jobPostingId,
-                jobPostingRepository);
+                recruitmentPostRequest.getContent(), category, author, jobPosting);
     }
 
     // 자유 게시글 응답 변환
@@ -50,8 +49,8 @@ public class PostConverter {
                 isAuthor,
                 post.getAuthor().getName(),
                 post.getAuthor().getProfileImg(),
-                post.getVoterList().size(), // voterCount 추가 (long 타입)
-                post.getVoterList().contains(currentUser), // isVoter 추가 (boolean 타입)
+                post.getPostVoterList().size(), // voterCount 추가 (long 타입)
+                post.getPostVoterList().contains(currentUser), // isVoter 추가 (boolean 타입)
                 post.getCreatedAt(),
                 post.getJobPosting().getId(), // jobPostingId 추가 (long 타입)
                 post.getNumOfApplicants() != null ? post.getNumOfApplicants() : 0,

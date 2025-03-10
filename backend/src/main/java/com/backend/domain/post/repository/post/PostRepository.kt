@@ -12,10 +12,10 @@ import java.util.Optional
 interface PostRepository {
 
     // 게시글 단건 조회 메서드
-    fun findById(postId: Long): Optional<Post>
+    fun findById(postId: Long): Post?
 
     // 게시글 단건 조회 (fetch join 사용)
-    fun findByIdFetch(postId: Long): Optional<Post>
+    fun findByIdFetch(postId: Long): Post?
 
     // 게시글 저장 메서드
     fun save(post: Post): Post
@@ -28,6 +28,6 @@ interface PostRepository {
     fun findRecruitmentAll(userId: Long, status: RecruitmentUserStatus, pageable: Pageable): Page<PostPageResponse>
 
     // 게시글 상세 조회 메서드
-    fun findPostResponseById(postId: Long, siteUserId: Long):Optional<PostResponse>
+    fun findPostResponseById(postId: Long, siteUserId: Long): PostResponse?
 
 }

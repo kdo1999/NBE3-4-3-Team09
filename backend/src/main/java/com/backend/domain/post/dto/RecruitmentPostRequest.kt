@@ -15,6 +15,6 @@ data class RecruitmentPostRequest(
     @field:Min(value = 1, message = "모집 인원은 최소 1명 이상이어야 합니다.")
     var numOfApplicants: Int,
 
-    var recruitmentClosingDate: ZonedDateTime?
+    var recruitmentClosingDate: ZonedDateTime
 ) : FreePostRequest(subject, content)
 
