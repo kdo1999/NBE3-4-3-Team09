@@ -62,7 +62,7 @@ public class RecruitmentMailTest {
                 .orElseThrow(() -> new RuntimeException("모집 게시글을 찾을 수 없습니다."));
 
         // ✅ 기존 지원자 수 기록
-        int beforeUserCount = recruitmentUserRepository.countAcceptedByPostId(post.getPostId());
+        int beforeUserCount = recruitmentUserRepository.countAcceptedRecruitmentsByPost(post.getPostId());
         int maxApplicants = post.getNumOfApplicants();
 
         // 2. 모집 신청자로 사용할 SiteUser를 조회
@@ -73,17 +73,16 @@ public class RecruitmentMailTest {
 
         // 3. 모집 게시글에 대해 RecruitmentUser 엔티티를 생성하여 신청자로 등록
         //    모집 게시판에서는 모집 신청 시 accept() 호출로 상태를 ACCEPTED로 변경하고, currentUserCount를 증가
-        RecruitmentUser recruitmentUser = RecruitmentUser.builder()
-                .post(post)
-                .siteUser(applicant)
-                // 아래 accept() 호출로 ACCEPTED로 변경됩니다.
-                .status(RecruitmentUserStatus.APPLIED)
-                .build();
+        RecruitmentUser recruitmentUser = new RecruitmentUser(
+                post,
+                applicant,
+                RecruitmentUserStatus.APPLIED
+        );
         recruitmentUser.accept();
         recruitmentUserRepository.save(recruitmentUser);
 
         // ✅ 지원자 수 증가 후 검증 (accept() 호출로 증가했는지)
-        assertEquals(beforeUserCount + 1, recruitmentUserRepository.countAcceptedByPostId(post.getPostId()),
+        assertEquals(beforeUserCount + 1, recruitmentUserRepository.countAcceptedRecruitmentsByPost(post.getPostId()),
                 "✅ 모집 신청 후 currentUserCount가 1 증가해야 합니다.");
 
         // 4. updateRecruitmentStatus 메서드를 호출합니다.
@@ -97,7 +96,7 @@ public class RecruitmentMailTest {
                 "모집 상태가 CLOSED로 업데이트되어야 합니다.");
 
         // ✅ 모집 상태가 CLOSED로 변경되었는지 확인
-        if (recruitmentUserRepository.countAcceptedByPostId(post.getPostId()) >= maxApplicants) {
+        if (recruitmentUserRepository.countAcceptedRecruitmentsByPost(post.getPostId()) >= maxApplicants) {
             assertEquals(RecruitmentStatus.CLOSED, updatedPost.getRecruitmentStatus(),
                     "✅ 모집이 다 찼을 때 상태가 CLOSED로 변경되어야 합니다.");
         } else {
@@ -119,7 +118,7 @@ public class RecruitmentMailTest {
                 .orElseThrow(() -> new RuntimeException("모집 게시글을 찾을 수 없습니다."));
 
         // ✅ 기존 지원자 수 기록
-        int beforeUserCount = recruitmentUserRepository.countAcceptedByPostId(post.getPostId());
+        int beforeUserCount = recruitmentUserRepository.countAcceptedRecruitmentsByPost(post.getPostId());
 
         // 2. 모집 신청자로 사용할 SiteUser를 조회 (이메일로 사용자 찾기)
         SiteUser applicant = userRepository.findAll().stream()
@@ -128,22 +127,22 @@ public class RecruitmentMailTest {
                 .orElseThrow(() -> new RuntimeException("신청자 SiteUser를 찾을 수 없습니다."));
 
         // 3. 모집 게시글에 대해 RecruitmentUser 엔티티를 생성하고 신청자로 등록
-        RecruitmentUser recruitmentUser = RecruitmentUser.builder()
-                .post(post)
-                .siteUser(applicant)
-                .status(RecruitmentUserStatus.APPLIED) // 'APPLIED' 상태로 생성
-                .build();
+        RecruitmentUser recruitmentUser = new RecruitmentUser(
+                post,
+                applicant,
+                RecruitmentUserStatus.APPLIED
+        );
 
         // recruitmentUser.accept()를 호출하여 상태를 ACCEPTED로 변경하고, currentUserCount 증가
         recruitmentUser.accept();
         recruitmentUserRepository.save(recruitmentUser);
 
         // 4. 모집 게시글에서 지원자 수가 증가했는지 검증
-        assertEquals(beforeUserCount + 1, recruitmentUserRepository.countAcceptedByPostId(post.getPostId()));
-        System.out.println(beforeUserCount + recruitmentUserRepository.countAcceptedByPostId(post.getPostId()));
+        assertEquals(beforeUserCount + 1, recruitmentUserRepository.countAcceptedRecruitmentsByPost(post.getPostId()));
+        System.out.println(beforeUserCount + recruitmentUserRepository.countAcceptedRecruitmentsByPost(post.getPostId()));
 
         // Count 로그
-        System.out.println("신청한 사람 수 : " + recruitmentUserRepository.countAcceptedByPostId(post.getPostId()));
+        System.out.println("신청한 사람 수 : " + recruitmentUserRepository.countAcceptedRecruitmentsByPost(post.getPostId()));
     }
 
    /* @Test

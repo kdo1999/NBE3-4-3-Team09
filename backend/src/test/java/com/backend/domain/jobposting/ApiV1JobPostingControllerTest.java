@@ -189,7 +189,7 @@ public class ApiV1JobPostingControllerTest {
 	void findDetailById_success() throws Exception {
 		//given
 		JobPostingDetailResponse givenJobPosting = jobPostingRepository
-			.findDetailById(1L, givenSiteUser1.getId()).get();
+			.findDetailById(1L, givenSiteUser1.getId());
 
 		//when
 		ResultActions resultActions = mockMvc.perform(
@@ -256,7 +256,7 @@ public class ApiV1JobPostingControllerTest {
 	void findDetailById_isVoter_false_success() throws Exception {
 		//given
 		JobPostingDetailResponse givenJobPosting = jobPostingRepository
-			.findDetailById(1L, givenSiteUser2.getId()).get();
+			.findDetailById(1L, givenSiteUser2.getId());
 
 		//when
 		ResultActions resultActions = mockMvc.perform(

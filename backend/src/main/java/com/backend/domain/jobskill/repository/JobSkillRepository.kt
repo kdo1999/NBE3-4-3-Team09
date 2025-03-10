@@ -1,7 +1,6 @@
 package com.backend.domain.jobskill.repository;
 
 import com.backend.domain.jobskill.entity.JobSkill
-import java.util.*
 
 /**
  * JobSkillRepository
@@ -16,14 +15,14 @@ interface JobSkillRepository {
 	 * @return {@link Optional<JobSkill>}
 	 * @implSpec Id 값으로 조회 메서드 입니다.
 	 */
-	fun findById(id: Long): Optional<JobSkill>
+	fun findById(id: Long): JobSkill?
 
 	/**
 	 * @param code JobSkill code
 	 * @return {@link Optional<JobSkill>}
 	 * @implSpec code 값으로 조회 메서드 입니다.
 	 */
-	fun findByCode(code: Int): Optional<JobSkill>
+	fun findByCode(code: Int): JobSkill?
 
 	/**
 	 * @param jobSkill JobSkill 객체
@@ -37,7 +36,7 @@ interface JobSkillRepository {
 	 * @return {@link Optional<JobSkill>}
 	 * @implSpec name 값으로 조회 메서드 입니다.
 	 */
-	fun findByName(name: String): Optional<JobSkill>
+	fun findByName(name: String): JobSkill?
 
     fun saveAll(newJobSkill: List<JobSkill>)
 }

@@ -6,7 +6,6 @@ import com.backend.domain.jobposting.entity.JobPosting
 import com.backend.domain.jobposting.util.JobPostingSearchCondition
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
-import java.util.*
 
 /**
  * JobPostingRepository
@@ -21,7 +20,7 @@ interface JobPostingRepository {
 	 * @return {@link Optional<JobPosting>}
 	 * @implSpec Id 값으로 조회 메서드 입니다.
 	 */
-	fun findById(id: Long): Optional<JobPosting>
+	fun findById(id: Long): JobPosting?
 
 	/**
 	 * @param jobPostingId JobPosting id
@@ -29,7 +28,7 @@ interface JobPostingRepository {
 	 * @return {@link Optional<JobPostingDetailResponse>}
 	 * @implSpec jobPostingId, siteUserId 값으로 조회 메서드 입니다.
 	 */
-	fun findDetailById(jobPostingId: Long, siteUserId: Long): Optional<JobPostingDetailResponse>
+	fun findDetailById(jobPostingId: Long, siteUserId: Long): JobPostingDetailResponse?
 
 
 	/**
