@@ -12,7 +12,7 @@ object CategoryConverter {
     fun toResponseList(categoryList : List<Category>): List<CategoryResponse> =
         categoryList.map { category ->
             CategoryResponse(
-                id = category.id,
+                id = category.id!!,
                 name = category.name,
                 createdAt = category.createdAt,
                 modifiedAt = category.modifiedAt
@@ -22,7 +22,7 @@ object CategoryConverter {
     // 카테고리 매핑 (단일 객체)
     fun toResponse(category: Category): CategoryResponse =
         CategoryResponse(
-            id = category.id,
+            id = category.id!!,
             name = category.name,
             createdAt = category.createdAt,
             modifiedAt = category.modifiedAt
