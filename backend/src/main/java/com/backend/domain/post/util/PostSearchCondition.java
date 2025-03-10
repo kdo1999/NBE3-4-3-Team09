@@ -1,7 +1,10 @@
+/*
+kotlin 파일로 변환
 package com.backend.domain.post.util;
 
 import jakarta.validation.constraints.Min;
 
+*/
 /**
  * 게시글 검색 조건 객체 입니다.
  *
@@ -12,7 +15,8 @@ import jakarta.validation.constraints.Min;
  * @param pageNum    페이지 번호
  * @param pageSize   페이지 사이즈
  * @author Kim Dong O
- */
+ *//*
+
 public record PostSearchCondition(
 	Long categoryId,
 	String kw,
@@ -25,3 +29,4 @@ public record PostSearchCondition(
 ) {
 
 }
+*/

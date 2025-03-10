@@ -99,8 +99,10 @@ class RecruitmentUserService(
 
 
         //TODO 추후 RecruitmentPostRepository로 로직 이동 후 수정
+        val userId: Long = siteUser.id ?: throw IllegalArgumentException("siteUser.id가 null입니다.")
         val posts: Page<PostPageResponse> = postRepository
-            .findRecruitmentAll(siteUser.id, recruitmentUserStatus, pageable)
+            .findRecruitmentAll(userId, recruitmentUserStatus, pageable)
+
 
         return RecruitmentUserPostResponse(recruitmentUserStatus, posts)
     }

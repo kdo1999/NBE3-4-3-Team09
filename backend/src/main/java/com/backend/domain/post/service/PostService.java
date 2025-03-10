@@ -14,28 +14,28 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class PostService {
 
-	private final PostRepository postRepository;
+    private final PostRepository postRepository;
 
-	/**
-	 * 게시글 전체 동적 조회 메서드 입니다.
-	 *
-	 * @param postSearchCondition 검색 조건
-	 * @return {@link Page<PostPageResponse>}
-	 */
-	@Transactional(readOnly = true)
-	public Page<PostPageResponse> findAll(PostSearchCondition postSearchCondition) {
-		int pageNum = postSearchCondition.pageNum() == null ?
-			0 : postSearchCondition.pageNum();
+    /**
+     * 게시글 전체 동적 조회 메서드 입니다.
+     *
+     * @param postSearchCondition 검색 조건
+     * @return {@link Page<PostPageResponse>}
+     */
+    @Transactional(readOnly = true)
+    public Page<PostPageResponse> findAll(PostSearchCondition postSearchCondition) {
+        int pageNum = postSearchCondition.getPageNum() == null ? 0 : postSearchCondition
+                .getPageNum();
 
-		int pageSize = postSearchCondition.pageSize() == null ?
-			10 : postSearchCondition.pageSize();
+        int pageSize = postSearchCondition.getPageSize() == null ?
+                10 : postSearchCondition.getPageSize();
 
-		Pageable pageable = PageRequest.of(pageNum, pageSize);
+        Pageable pageable = PageRequest.of(pageNum, pageSize);
 
-		Page<PostPageResponse> postPageResponsePage =
-			postRepository.findAll(postSearchCondition, pageable);
+        Page<PostPageResponse> postPageResponsePage =
+                postRepository.findAll(postSearchCondition, pageable);
 
-		return postPageResponsePage;
-	}
+        return postPageResponsePage;
+    }
 
 }
