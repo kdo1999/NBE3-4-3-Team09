@@ -1,3 +1,5 @@
+/*
+코틀린으로 변환
 package com.backend.domain.post.conveter;
 
 import com.backend.domain.category.entity.Category;
@@ -63,3 +65,4 @@ public class PostConverter {
     }
 
 }
+*/
