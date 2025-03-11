@@ -30,9 +30,7 @@ class CommentService(
     @Transactional
     fun createComment(dto: CommentRequestDto, postId: Long, user: CustomUserDetails): CommentCreateResponseDto {
         // 게시글정보가 db에 있는지에 대한 검증
-        val findPost = postRepository.findById(postId).orElseThrow {
-            throw GlobalException(GlobalErrorCode.POST_NOT_FOUND)
-        }
+        val findPost = postRepository.findById(postId) ?: throw GlobalException(GlobalErrorCode.POST_NOT_FOUND)
 
         val comment = Comment(dto.content, findPost, user.getSiteUser())
 
@@ -49,9 +47,7 @@ class CommentService(
         user: CustomUserDetails
     ): CommentModifyResponseDto {
         // 게시글정보가 db에 있는지에 대한 검증
-        postRepository.findById(postId).orElseThrow {
-            throw GlobalException(GlobalErrorCode.POST_NOT_FOUND)
-        }
+        postRepository.findById(postId) ?: throw GlobalException(GlobalErrorCode.POST_NOT_FOUND)
 
         // 댓글정보가 db에 있는지에 대한 검증
         val comment = commentRepository.findByIdWithSiteUser(commentId).orElseThrow {
