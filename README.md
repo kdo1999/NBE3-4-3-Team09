@@ -1,7 +1,17 @@
 # 프로그래머스 데브코스 9팀 3차 프로젝트
 
-## Team
+> ## 목차
+>- [팀원 소개](#Team)
+>- [프로젝트 개요](#프로젝트-주제)
+>- [프로젝트 목표](#프로젝트-목적)
+>- [기술 스택](#기술-스택)
+>- [시스템 아키텍처](#시스템-아키텍처)
+>- [기능 요구사항](#기능-요구사항)
+>- [ERD](#ERD)
+>- [역할 분담](#역할-분담)
+>- [트러블 슈팅](#트러블-슈팅)
 
+## Team
 <table>
   <tr>
     <td align="center"><a href="https://github.com/zelly-log"><img src="https://avatars.githubusercontent.com/u/188554914?v=4" width="100px;" alt="이재이"/><br /><sub><b>이재이</b></sub></a></td>
@@ -58,7 +68,7 @@
 
 ---
 
-### 아키텍처
+### 시스템 아키텍처
 
 ![프로그래머스 팀9 3차 프로젝트 아키텍처 drawio](https://github.com/user-attachments/assets/7ef2d567-3776-42ae-9ce1-4b8910b8bd2b)
 
