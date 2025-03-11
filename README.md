@@ -18,7 +18,7 @@
 
 ## 프로젝트 주제
 
-<b> 사람인 API를 이용하여 매일 IT 직군 채용 공고를 받아와 사용자에게 제공하고<br> 사용자들은 이직, 취업 정보를 나누기 위해 채용 공고 별로 모임을 만들 수 있습니다.</b> 
+<b>사람인 API를 활용하여 IT 직군 채용 공고를 수집하고 제공하며, <br>사용자들이 각 공고별로 모임을 생성하고 정보를 나눌 수 있는 서비스입니다.
 
 ---
 
@@ -28,7 +28,7 @@
 - 2차 프로젝트에서 완성하지 못했던 기능 구현
 - 채팅 기능 MongoDB, Redis를 이용한 성능 개선
 - 채용 공고 사람인 API 이용하는 스케줄러 Redis 캐싱을 이용한 성능 개선
-- Oracle Cloud에 Github Actions, Jenkins, Docker를 이용한 배포
+- Oracle Cloud 환경에서 Github Actions, Jenkins, Docker를 이용한 배포 자동화
 
 ---
 
@@ -73,6 +73,38 @@
 ### Erd
 
 ![dev](https://github.com/user-attachments/assets/cca31929-7d36-42ec-86b7-271f81697dcf)
+
+---
+### 역할 분담
+
+김동오
+- 공통 클래스 구현
+- JobPostingScheduler 성능 개선
+- JobPosting 마이그레이션
+- MailService 코루틴으로 리팩토링
+- RecruitmentSchedulerService 기능 구현
+- CI/CD 구축
+
+김현곤
+- Category 마이그레이션
+- Recruitment 마이그레이션
+
+안선경
+- Security 마이그레이션
+- User 마이그레이션
+- 부하 테스트 측정
+
+이재이
+- Post 마이그레이션
+
+장현석
+- Chat 성능 개선
+- Chat 마이그레이션
+- Recruitment 마이그레이션
+- RecruitmentSchedulerService 기능 구현
+
+정오연
+- Comment 마이그레이션
 
 ---
 
