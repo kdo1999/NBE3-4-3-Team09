@@ -2,8 +2,10 @@ package com.backend.domain.post.entity
 
 import com.backend.domain.category.entity.Category
 import com.backend.domain.jobposting.entity.JobPosting
+import com.backend.domain.jobposting.repository.JobPostingRepository
 import com.backend.domain.post.dto.RecruitmentPostRequest
 import com.backend.domain.user.entity.SiteUser
+import com.backend.domain.voter.entity.Voter
 import jakarta.persistence.*
 import java.time.ZonedDateTime
 
@@ -22,16 +24,13 @@ class RecruitmentPost : Post {
     lateinit var jobPosting: JobPosting
 
     constructor(
-        request: RecruitmentPostRequest,
+        subject: String,
+        content: String,
         category: Category,
         author: SiteUser,
         jobPosting: JobPosting
-    ) : super(request.subject, request.content, category, author) {
-        this.recruitmentClosingDate = recruitmentClosingDate
-        this.numOfApplicants = numOfApplicants
-        this.recruitmentStatus = recruitmentStatus
-        this.jobPosting = jobPosting;
-    }
+    ) : super(subject, content, category, author) {
+        this.jobPosting = jobPosting }
 
     fun updatePost(subject: String, content: String, numOfApplicants: Int) {
         super.updatePost(subject, content)
@@ -41,6 +40,7 @@ class RecruitmentPost : Post {
     fun updateRecruitmentStatus(recruitmentStatus: RecruitmentStatus) {
         this.recruitmentStatus = recruitmentStatus
     }
+
 
 
 }

@@ -12,6 +12,7 @@ import com.backend.domain.post.repository.post.PostRepository;
 import com.backend.domain.user.entity.SiteUser;
 import com.backend.global.exception.GlobalErrorCode;
 import com.backend.global.exception.GlobalException;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -36,7 +37,7 @@ public class FreePostService {
 	@Transactional(readOnly = true)
 	public PostResponse findById(Long postId, SiteUser siteUser) {
 
-		return postRepository.findPostResponseById(postId, siteUser.getId())
+		return Optional.ofNullable(postRepository.findPostResponseById(postId, siteUser.getId()))
 			.orElseThrow(() -> new GlobalException(GlobalErrorCode.POST_NOT_FOUND));
 	}
 
@@ -75,7 +76,7 @@ public class FreePostService {
 	@Transactional
 	public PostResponse update(Long postId, FreePostRequest freePostRequest, SiteUser siteUser) {
 
-		Post target = postRepository.findByIdFetch(postId)
+		Post target = Optional.ofNullable(postRepository.findByIdFetch(postId))
 			.orElseThrow(() -> new GlobalException(GlobalErrorCode.POST_NOT_FOUND));
 
 		if (!target.getAuthor().getId().equals(siteUser.getId())) {
@@ -86,7 +87,7 @@ public class FreePostService {
 
 		Post updatedPost = postRepository.save(target);
 
-		return PostConverter.toPostResponse(updatedPost, true);
+		return PostConverter.toPostResponse(updatedPost, true, siteUser.getId());
 	}
 
 	/**
@@ -98,7 +99,7 @@ public class FreePostService {
 	@Transactional
 	public void delete(Long postId, SiteUser siteUser) {
 
-		Post findPost = postRepository.findByIdFetch(postId)
+		Post findPost = Optional.ofNullable(postRepository.findByIdFetch(postId))
 			.orElseThrow(() -> new GlobalException(GlobalErrorCode.POST_NOT_FOUND));
 
 		if (!findPost.getAuthor().getId().equals(siteUser.getId())) {

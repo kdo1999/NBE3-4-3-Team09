@@ -13,6 +13,7 @@ import com.backend.domain.user.repository.UserRepository;
 import com.backend.global.exception.GlobalErrorCode;
 import com.backend.global.exception.GlobalException;
 import com.backend.global.security.custom.CustomUserDetails;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -34,9 +35,8 @@ public class CommentService {
                                                   CustomUserDetails user) {
 
         // 게시글정보가 db에 있는지에 대한 검증
-        Post findPost = postRepository.findById(postId).orElseThrow(
-                () -> new GlobalException(GlobalErrorCode.POST_NOT_FOUND)
-        );
+        Post findPost = Optional.ofNullable(postRepository.findById(postId))
+                .orElseThrow(() -> new GlobalException(GlobalErrorCode.POST_NOT_FOUND));
 
         Comment comment = new Comment(dto.content, findPost, user.getSiteUser());
 
@@ -49,7 +49,8 @@ public class CommentService {
     public CommentModifyResponseDto modifyComment(Long postId, Long commentId, CommentRequestDto dto, CustomUserDetails user) {
 
         // 게시글정보가 db에 있는지에 대한 검증
-        postRepository.findById(postId).orElseThrow(() -> new GlobalException(GlobalErrorCode.POST_NOT_FOUND));
+        Optional.ofNullable(postRepository.findById(postId))
+                .orElseThrow(() -> new GlobalException(GlobalErrorCode.POST_NOT_FOUND));
 
         // 댓글정보가 db에 있는지에 대한 검증
         Comment comment = commentRepository.findById(commentId).orElseThrow(() -> new GlobalException(GlobalErrorCode.COMMENT_NOT_FOUND));

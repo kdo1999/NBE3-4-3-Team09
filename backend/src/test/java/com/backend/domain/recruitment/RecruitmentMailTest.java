@@ -3,6 +3,7 @@ package com.backend.domain.recruitment;
 import static org.junit.jupiter.api.Assertions.*;
 
 import com.backend.domain.post.entity.RecruitmentPost;
+import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -90,7 +91,7 @@ public class RecruitmentMailTest {
         recruitmentAuthorService.updateRecruitmentStatus(post);
 
         // 5. DB에서 해당 Post를 다시 조회하여 모집 상태가 CLOSED로 업데이트되었는지 검증
-        RecruitmentPost updatedPost = recruitmentPostRepository.findById(post.getPostId())
+        RecruitmentPost updatedPost = Optional.ofNullable(recruitmentPostRepository.findById(post.getPostId()))
                 .orElseThrow(() -> new RuntimeException("게시글을 찾을 수 없습니다."));
         assertEquals(RecruitmentStatus.CLOSED, updatedPost.getRecruitmentStatus(),
                 "모집 상태가 CLOSED로 업데이트되어야 합니다.");

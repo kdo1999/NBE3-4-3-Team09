@@ -55,13 +55,6 @@ class Post : BaseEntity {
         this.content = content
     }
 
-    constructor(request: FreePostRequest, siteUser: SiteUser, category: Category) {
-        this.subject = request.subject
-        this.content = request.content
-        this.category = category
-        this.author = siteUser
-
-    }
     constructor(targetId: Long)  {
         this.postId = targetId
     }

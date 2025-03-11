@@ -1,5 +1,6 @@
 package com.backend.domain.post.service;
 
+import java.util.Optional;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -52,7 +53,7 @@ public class RecruitmentPostService {
 	@Transactional(readOnly = true)
 	public RecruitmentPostResponse findById(Long postId, SiteUser siteUser) {
 
-		return recruitmentPostRepository.findPostResponseById(postId, siteUser.getId())
+		return Optional.ofNullable(recruitmentPostRepository.findPostResponseById(postId, siteUser.getId()))
 			.orElseThrow(() -> new GlobalException(GlobalErrorCode.POST_NOT_FOUND));
 	}
 
@@ -126,7 +127,7 @@ public class RecruitmentPostService {
 			recruitmentPostRequest.getNumOfApplicants()
 		);
 
-		return PostConverter.toPostResponse(findPost, true, getCurrentAcceptedCount(postId));
+		return PostConverter.toPostResponse(findPost, true, getCurrentAcceptedCount(postId), siteUser);
 	}
 
 	/**
@@ -175,7 +176,7 @@ public class RecruitmentPostService {
 	 * @throws GlobalException 게시글이 존재하지 않을 경우 예외 발생
 	 */
 	private RecruitmentPost getPost(Long postId) {
-		return recruitmentPostRepository.findByIdFetch(postId)
+		return Optional.ofNullable(recruitmentPostRepository.findByIdFetch(postId))
 			.orElseThrow(() -> new GlobalException(GlobalErrorCode.POST_NOT_FOUND));
 	}
 
