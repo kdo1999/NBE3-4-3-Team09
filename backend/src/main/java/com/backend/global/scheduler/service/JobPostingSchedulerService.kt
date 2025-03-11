@@ -4,19 +4,13 @@ import com.backend.domain.jobposting.entity.JobPosting
 import com.backend.domain.jobposting.entity.JobPostingJobSkill
 import com.backend.domain.jobposting.repository.JobPostingRepository
 import com.backend.domain.jobskill.entity.JobSkill
-import com.backend.domain.jobskill.repository.JobSkillRepository
 import com.backend.global.exception.GlobalErrorCode
 import com.backend.global.exception.GlobalException
 import com.backend.global.redis.repository.RedisRepository
 import com.backend.global.scheduler.apiresponse.Jobs
 import com.fasterxml.jackson.databind.ObjectMapper
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import org.springframework.beans.factory.annotation.Value
-import org.springframework.retry.support.RetryTemplate
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -26,12 +20,10 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 @Service
-class SchedulerService(
-    private val jobSkillRepository: JobSkillRepository,
+class JobPostingSchedulerService(
     private val jobPostingRepository: JobPostingRepository,
     private val objectMapper: ObjectMapper,
     private val restTemplate: RestTemplate,
-    private val retryTemplate: RetryTemplate,
     private val redisRepository: RedisRepository
 ) {
     // URI로 조합할 OPEN API URL
