@@ -20,6 +20,7 @@ import com.backend.global.security.custom.CustomUserDetails;
 import com.backend.standard.util.JwtUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer;
@@ -80,7 +81,7 @@ public class ApiV1CommentControllerTest {
 
     @BeforeAll
 	void setUp() {
-        givenPost = postRepository.findById(1L).get();
+        givenPost = Optional.ofNullable(postRepository.findById(1L)).orElseThrow(() -> new RuntimeException("게시글을 찾을 수 없습니다."));
 
 		givenSiteUser1 = userRepository.findByEmail("testEmail1@naver.com");
 		CustomUserDetails givenCustomUserDetails1 = new CustomUserDetails(givenSiteUser1);

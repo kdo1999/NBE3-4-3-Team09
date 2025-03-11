@@ -6,6 +6,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.backend.domain.post.entity.RecruitmentPost;
+import java.util.Optional;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
@@ -175,7 +176,7 @@ public class RecruitmentUserTest {
                 .andDo(print());
 
         // 승인 요청 후, DB에서 해당 게시글을 다시 조회
-        RecruitmentPost updatedPost = recruitmentPostRepository.findById(postId)
+        RecruitmentPost updatedPost = Optional.ofNullable(recruitmentPostRepository.findById(postId))
                 .orElseThrow(() -> new RuntimeException("게시글을 찾을 수 없습니다."));
 
         assertEquals(RecruitmentStatus.OPEN, updatedPost.getRecruitmentStatus(),
