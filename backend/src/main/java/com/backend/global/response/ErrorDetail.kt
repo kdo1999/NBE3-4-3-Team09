@@ -8,16 +8,22 @@ package com.backend.global.response;
  * @param reason
  * @author Kim Dong O
  */
-public record ErrorDetail(String field, String reason) {
+class ErrorDetail(
+	val field: String,
+	val reason: String?
+) {
 
-	/**
-	 * ErrorDetail 생성 팩토리 메서드
-	 *
-	 * @param field  예외가 발생한 필드 이름
-	 * @param reason 예외가 발생한 이유
-	 * @return {@link ErrorDetail}
-	 */
-	public static ErrorDetail of(String field, String reason) {
-		return new ErrorDetail(field, reason);
+	companion object {
+		/**
+		 * ErrorDetail 생성 팩토리 메서드
+		 *
+		 * @param field  예외가 발생한 필드 이름
+		 * @param reason 예외가 발생한 이유
+		 * @return {@link ErrorDetail}
+		 */
+		fun of(field: String, reason: String?): ErrorDetail
+		{
+			return ErrorDetail (field, reason)
+		}
 	}
 }
