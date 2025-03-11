@@ -2,9 +2,8 @@ package com.backend.domain.post.repository.recruitment
 
 import com.backend.domain.post.dto.RecruitmentPostResponse
 import com.backend.domain.post.entity.RecruitmentPost
-import org.springframework.data.jpa.domain.AbstractPersistable_.id
 import org.springframework.stereotype.Repository
-import java.util.*
+import java.time.ZonedDateTime
 
 @Repository
 class RecruitmentPostRepositoryImpl(
@@ -35,4 +34,13 @@ class RecruitmentPostRepositoryImpl(
     override fun findPostResponseById(postId: Long, siteUserId: Long): RecruitmentPostResponse? {
         return recruitmentPostQueryRepository.findPostResponseById(postId, siteUserId)
     }
+
+    override fun findPostByRecruitmentClosingDateAndRecruitmentStatus(
+        recruitmentClosingDate: ZonedDateTime
+    ): List<RecruitmentPost> = recruitmentPostJpaRepository
+            .findPostByRecruitmentClosingDateAndRecruitmentStatus(recruitmentClosingDate)
+
+    override fun updatePostByRecruitmentClosingDate(
+        recruitmentClosingDate: ZonedDateTime,
+        postIdList: List<Long>) = recruitmentPostJpaRepository.updatePostByRecruitmentClosingDate(recruitmentClosingDate, postIdList)
 }

@@ -2,7 +2,7 @@ package com.backend.domain.post.repository.recruitment
 
 import com.backend.domain.post.dto.RecruitmentPostResponse
 import com.backend.domain.post.entity.RecruitmentPost
-import java.util.*
+import java.time.ZonedDateTime
 
 interface RecruitmentPostRepository {
 
@@ -17,4 +17,13 @@ interface RecruitmentPostRepository {
     fun findAll(): List<RecruitmentPost>
 
     fun findPostResponseById(postId: Long, siteUserId: Long) : RecruitmentPostResponse?
+
+    fun findPostByRecruitmentClosingDateAndRecruitmentStatus(
+        recruitmentClosingDate: ZonedDateTime
+    ): List<RecruitmentPost>
+
+    fun updatePostByRecruitmentClosingDate(
+        recruitmentClosingDate: ZonedDateTime,
+        postIdList: List<Long>
+    )
 }

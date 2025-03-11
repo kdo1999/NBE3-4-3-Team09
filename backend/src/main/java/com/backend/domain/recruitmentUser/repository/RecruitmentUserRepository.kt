@@ -7,7 +7,6 @@ import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.query.Param
-import java.util.Optional
 
 /**
  * 모집 지원자 관련 데이터 처리 리포지토리
@@ -106,6 +105,7 @@ interface RecruitmentUserRepository : JpaRepository<RecruitmentUser, Long> {
     @Query("""
            SELECT ru FROM RecruitmentUser ru
            JOIN FETCH ru.post p
+           JOIN FETCH ru.siteUser su
            WHERE p.postId = :postId
            AND p.recruitmentStatus = com.backend.domain.post.entity.RecruitmentStatus.CLOSED
            AND ru.status = com.backend.domain.recruitmentUser.entity.RecruitmentUserStatus.ACCEPTED
@@ -124,4 +124,5 @@ interface RecruitmentUserRepository : JpaRepository<RecruitmentUser, Long> {
            AND ru.status = com.backend.domain.recruitmentUser.entity.RecruitmentUserStatus.ACCEPTED
            """)
     fun countAcceptedRecruitmentsByPost(@Param("postId") postId: Long): Int
+
 }

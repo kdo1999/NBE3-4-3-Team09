@@ -1,7 +1,17 @@
 # 프로그래머스 데브코스 9팀 3차 프로젝트
 
-## Team
+> ## 목차
+>- [팀원 소개](#team)
+>- [프로젝트 개요](#프로젝트-주제)
+>- [프로젝트 목표](#프로젝트-목적)
+>- [기술 스택](#기술-스택)
+>- [시스템 아키텍처](#시스템-아키텍처)
+>- [기능 요구사항](#기능-요구사항)
+>- [ERD](#erd)
+>- [역할 분담](#역할-분담)
+>- [트러블 슈팅](#트러블-슈팅)
 
+## Team
 <table>
   <tr>
     <td align="center"><a href="https://github.com/zelly-log"><img src="https://avatars.githubusercontent.com/u/188554914?v=4" width="100px;" alt="이재이"/><br /><sub><b>이재이</b></sub></a></td>
@@ -18,17 +28,17 @@
 
 ## 프로젝트 주제
 
-<b> 사람인 API를 이용하여 매일 IT 직군 채용 공고를 받아와 사용자에게 제공하고<br> 사용자들은 이직, 취업 정보를 나누기 위해 채용 공고 별로 모임을 만들 수 있습니다.</b> 
+<b>사람인 API를 활용하여 IT 직군 채용 공고를 수집하고 제공하며, <br>사용자들이 각 공고별로 모임을 생성하고 정보를 나눌 수 있는 서비스입니다.
 
 ---
 
 ## 프로젝트 목적
 
 - 기존 Java 프로젝트 Kotlin으로 마이그레이션
-- 2차 프로젝트에서 완성하지 못했던 기능 구현
+- 2차 프로젝트에서 미완성 기능 구현
 - 채팅 기능 MongoDB, Redis를 이용한 성능 개선
 - 채용 공고 사람인 API 이용하는 스케줄러 Redis 캐싱을 이용한 성능 개선
-- Oracle Cloud에 Github Actions, Jenkins, Docker를 이용한 배포
+- Oracle Cloud 환경에서 Github Actions, Jenkins, Docker를 이용한 배포 자동화
 
 ---
 
@@ -58,7 +68,7 @@
 
 ---
 
-### 아키텍처
+### 시스템 아키텍처
 
 ![프로그래머스 팀9 3차 프로젝트 아키텍처 drawio](https://github.com/user-attachments/assets/7ef2d567-3776-42ae-9ce1-4b8910b8bd2b)
 
@@ -70,9 +80,41 @@
 
 ---
 
-### Erd
+### ERD
 
 ![dev](https://github.com/user-attachments/assets/cca31929-7d36-42ec-86b7-271f81697dcf)
+
+---
+### 역할 분담
+
+김동오
+- 공통 클래스 구현
+- JobPostingScheduler 성능 개선
+- JobPosting 마이그레이션
+- MailService 코루틴으로 리팩토링
+- RecruitmentSchedulerService 기능 구현
+- CI/CD 구축
+
+김현곤
+- Category 마이그레이션
+- Recruitment 마이그레이션
+
+안선경
+- Security 마이그레이션
+- User 마이그레이션
+- 부하 테스트 측정
+
+이재이
+- Post 마이그레이션
+
+장현석
+- Chat 성능 개선
+- Chat 마이그레이션
+- Recruitment 마이그레이션
+- RecruitmentSchedulerService 기능 구현
+
+정오연
+- Comment 마이그레이션
 
 ---
 
@@ -890,61 +932,6 @@
 
 **증상:**
 
-## 2. 원인 분석
-
-- **기존 플로우**
-    - 게시글 ID별 채팅방 기능 구현 (모집 완료된 게시글 기준)
-    - 채팅 메시지를 Stomp(WebSocket) 기반으로 전송하여 MySQL에 저장
-    - 채팅 내역을 MySQL에서 직접 조회해서 전체 메세지를 조회 필요
-- **주요 원인**
-    - MySQL이 실시간 메시지 저장 및 조회에 최적화되지 않음
-    - STOMP를 통해 서버 간 WebSocket 세션을 유지해야 하는 부담 증가
-    - 채팅 메시지 조회 시 MySQL에서 직접 조회하여 속도 저하
-
-## 3. 해결 방법
-
-- **기존 Stomp + MySQL 구조에서 Redis Pub/Sub + MongoDB로 변경**
-    - **메시지 저장 방식 변경**: MySQL 대신 MongoDB에 저장
-        - **MongoDB 인덱싱 활용**: 채팅 내역 조회 시 빠른 검색을 위한 인덱스 추가(postId + id)
-    - **Redis Pub/Sub 도입**: STOMP에서 직접 메시지를 처리하는 방식에서 Redis를 통해 메시지를 Publish & Subscribe 하여 서버 간 세션 공유 문제 해결
-    - **조회 성능 개선**: 최근 채팅 메시지는 Redis에서 캐싱하여 빠르게 조회
-        - 만약 캐싱에서 과거 메세지들이 유실됐을 경우 캐시에서 가장 과거의 메세지를 기반으로 이전의 유실된 메세지를 mongo DB에서 조회후 캐싱에 추가후 조회
-        - 채팅방별 활성도에 다라 캐싱 TTL 시간 동적으로 설정
-
-## 4. 결과 및 추가 조치
-
-**총 개선 후 성능 63% 향상**
-
-- **기존 코드 호출 결과 (82ms)**
-- **Redis 캐시 도입 후 결과 (30ms)**
-    
-    ![image.png](attachment:c6c650cf-8fa3-4fd2-8f96-8c009becb46b:image.png)
-    
-    ![image.png](attachment:d730344d-a13d-4b0d-947e-0c11263600ec:image.png)
-    
-
-## 5. 회고 및 예방 조치
-
-- **실시간 처리가 필요한 경우 RDBMS보다 NoSQL을 적극 고려**
-    - 채팅처럼 대량의 메시지를 빠르게 처리해야 하는 경우 MongoDB가 적합
-    - MySQL을 사용할 경우 인덱스 튜닝 및 분산 처리 고려 필요
-    - 추후 샤딩을 통해서 확장 가능
-    - Capped Collection을 활용해서 과거 메세지 삭제 적용
-- **자주 조회가 일어나는 데이터는 Redis 캐싱을 적극 활용**
-    - 메모리를 사용하기 때문에 데이터 크기와 정합성을 충분히 고려한 후 적용
-    - 현재의 상황에서는 채팅 메시지 중 최근 200개 메시지만 캐싱하는 방식이 적절하다고 판단
-- **쿼리 발생 패턴 및 서버 부하 체크**
-    - 메소드 위치 및 호출 로직 변경에 따라 불필요한 DB 쿼리 발생 여부 모니터링
-    - Redis 및 MongoDB에 대한 성능 테스트를 주기적으로 실시하여 최적화 진행 예정
-
-# 🛠 트러블슈팅 기록
-
-## 1. 문제 요약
-
-**발생 일시:** 2025-02-28
-
-**증상:**
-
 - 다수의 사용자가 동시 접속할 경우 WebSocket 메시지 처리 지연 발생
 - 채팅 메시지 조회 시 속도 저하 및 서버 부하 증가
 
@@ -975,12 +962,12 @@
 **총 개선 후 성능 63% 향상**
 
 - **기존 코드 호출 결과 (82ms)**
-    
-    ![image.png](attachment:c6c650cf-8fa3-4fd2-8f96-8c009becb46b:image.png)
-    
+  
+  <img width="1200" alt="스크린샷 2025-03-04 오전 9 54 30" src="https://github.com/user-attachments/assets/db189ecf-4773-4efb-912d-419de912e337" />
+  
 - **Redis 캐시 도입 후 결과 (30ms)**
-    
-    ![image.png](attachment:d730344d-a13d-4b0d-947e-0c11263600ec:image.png)
+  
+  <img width="1200" alt="스크린샷 2025-03-04 오전 10 15 40" src="https://github.com/user-attachments/assets/2ddbc539-9c39-449a-b360-0152a358c795" />
     
 
 ## 5. 회고 및 예방 조치
