@@ -1,3 +1,4 @@
+/* 코틀린으로 변환
 package com.backend.domain.post.controller;
 
 import com.backend.domain.post.dto.FreePostRequest;
@@ -69,3 +70,4 @@ public class ApiV1FreePostController {
 		return GenericResponse.ok();
 	}
 }
+*/

@@ -1,3 +1,4 @@
+/* kotlin으로 변환
 package com.backend.domain.post.controller;
 
 import com.backend.domain.post.dto.PostCreateResponse;
@@ -75,3 +76,4 @@ public class ApiV1RecruitmentPostController {
     }
 
 }
+*/
