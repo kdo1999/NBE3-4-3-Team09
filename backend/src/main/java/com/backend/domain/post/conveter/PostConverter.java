@@ -2,7 +2,6 @@ package com.backend.domain.post.conveter;
 
 import com.backend.domain.category.entity.Category;
 import com.backend.domain.jobposting.entity.JobPosting;
-import com.backend.domain.jobposting.repository.JobPostingRepository;
 import com.backend.domain.post.dto.FreePostRequest;
 import com.backend.domain.post.dto.PostCreateResponse;
 import com.backend.domain.post.dto.PostResponse;
