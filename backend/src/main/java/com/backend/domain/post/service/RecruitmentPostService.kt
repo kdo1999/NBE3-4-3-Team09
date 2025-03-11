@@ -55,7 +55,7 @@ class RecruitmentPostService(
     @Transactional
     fun save(recruitmentPostRequest: RecruitmentPostRequest, siteUser: SiteUser): PostCreateResponse {
         val category = categoryRepository.findByName(CategoryName.RECRUITMENT.value)
-            .orElseThrow{GlobalException(GlobalErrorCode.CATEGORY_NOT_FOUND)}
+            ?: throw GlobalException(GlobalErrorCode.CATEGORY_NOT_FOUND)
 
         val jobPosting = jobPostingRepository.findById(recruitmentPostRequest.jobPostingId)
             ?: throw GlobalException(GlobalErrorCode.JOB_POSTING_NOT_FOUND)
