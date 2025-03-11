@@ -86,7 +86,7 @@ class CommentService(
 
         return allByPostId.map { c ->
             CommentResponseDto(
-                c.id,
+                c.id!!,
                 c.content,
                 c.createdAt,
                 c.modifiedAt,
