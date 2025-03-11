@@ -16,5 +16,5 @@ interface MailService {
      * @param postId       게시글 ID
      * @implSpec 비동기로 다수의 회원에게 이메일을 전송 합니다.
      */
-    fun sendDeliveryStartEmailAsync(to: List<String>, templateName: TemplateName, postId: Long)
+    fun sendRecruitmentEmailAsync(to: List<String>, templateName: TemplateName, postId: Long)
 }

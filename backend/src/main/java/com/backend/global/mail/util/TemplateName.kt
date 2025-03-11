@@ -6,5 +6,5 @@ package com.backend.global.mail.util;
  * @author Kim Dong O
  */
 enum class TemplateName {
-	RECRUITMENT_CHAT
+	RECRUITMENT_CHAT, RECRUITMENT_END
 }
