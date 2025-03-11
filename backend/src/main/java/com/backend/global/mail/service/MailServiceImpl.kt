@@ -22,7 +22,7 @@ class MailServiceImpl(
 
     private val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
 
-    override fun sendDeliveryStartEmailAsync(to: List<String>, templateName: TemplateName, postId: Long) {
+    override fun sendRecruitmentEmailAsync(to: List<String>, templateName: TemplateName, postId: Long) {
         scope.launch {
             sendDeliveryStartEmail(to, templateName, postId)
         }
@@ -34,6 +34,7 @@ class MailServiceImpl(
 
         when (templateName) {
             TemplateName.RECRUITMENT_CHAT -> titleBuilder.append("[TEAM9] 모집 완료 안내 메일 입니다.")
+            TemplateName.RECRUITMENT_END -> titleBuilder.append("[TEAM9] 모집 종료 안내 메일 입니다.")
         }
 
         val title = titleBuilder.toString()
