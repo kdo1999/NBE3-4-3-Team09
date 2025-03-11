@@ -9,5 +9,5 @@ data class CommentResponseDto(
     val modifiedAt: ZonedDateTime,
     val profileImageUrl: String,
     val authorName: String,
-    var isAuthor: Boolean = false  // 기본값 false 설정
+    var isAuthor: Boolean
 )
