@@ -56,7 +56,7 @@ jwt:
     refresh-expiration: 1209600000 # 2주
 
 api:
-  key: YpYSmykXUtWhZkDrVkHdPOnT0VusIHP5LNwOb1WN87NfKD0y8BC
+  key: YpYSmykXUtWhZkDrVkHdPOnT0VusIHP5LNwOb1WN87NfKD0y8BCdsafa
   count: 3
 
 #메일 설정
