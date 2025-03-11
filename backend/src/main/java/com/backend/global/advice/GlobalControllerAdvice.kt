@@ -44,7 +44,7 @@ class GlobalControllerAdvice {
         )
 
         return ResponseEntity.status(globalException.getStatus().value())
-            .body(genericResponse);
+            .body(genericResponse)
     }
 
     /**
@@ -59,7 +59,7 @@ class GlobalControllerAdvice {
         ex: MethodArgumentNotValidException,
         request: HttpServletRequest
     ): ResponseEntity<GenericResponse<List<ErrorDetail>>> {
-        log.error("handlerMethodArgumentNotValidException: ", ex);
+        log.error("handlerMethodArgumentNotValidException: ", ex)
 
         val bindingResult = ex.bindingResult
         val errors: MutableList<ErrorDetail> = mutableListOf()
@@ -67,9 +67,9 @@ class GlobalControllerAdvice {
 
         //Field 에러 처리
         for (error in bindingResult.getFieldErrors()) {
-            val customError = ErrorDetail.of(error.getField(), error.getDefaultMessage());
+            val customError = ErrorDetail.of(error.field, error.defaultMessage)
 
-            errors.add(customError);
+            errors.add(customError)
         }
 
         //Object 에러 처리
@@ -77,7 +77,7 @@ class GlobalControllerAdvice {
             val customError = ErrorDetail.of(
                 globalError.objectName,
                 globalError.defaultMessage
-            );
+            )
 
             errors.add(customError);
         }
@@ -86,10 +86,10 @@ class GlobalControllerAdvice {
             globalErrorCode.code,
             errors,
             globalErrorCode.message
-        );
+        )
 
         return ResponseEntity.status(globalErrorCode.httpStatus.value())
-            .body(genericResponse);
+            .body(genericResponse)
     }
 
     /**
