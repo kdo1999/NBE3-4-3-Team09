@@ -2,11 +2,9 @@ package com.backend.domain.post.entity
 
 import com.backend.domain.category.entity.Category
 import com.backend.domain.comment.entity.Comment
-import com.backend.domain.post.dto.FreePostRequest
 import com.backend.domain.user.entity.SiteUser
 import com.backend.domain.voter.entity.Voter
 import com.backend.global.baseentity.BaseEntity
-import com.querydsl.core.types.Projections.constructor
 import jakarta.persistence.*
 
 @Entity
@@ -23,9 +21,11 @@ class Post : BaseEntity {
 
     @Column(nullable = false)
     lateinit var subject: String
+        protected set
 
     @Column(nullable = false)
     lateinit var content: String
+        protected set
 
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
@@ -50,12 +50,12 @@ class Post : BaseEntity {
         get() = _postVoterList.toList()
 
     // 게시글 수정 메서드
-    fun updatePost(subject: String, content: String){
+    fun updatePost(subject: String, content: String) {
         this.subject = subject
         this.content = content
     }
 
-    constructor(targetId: Long)  {
+    constructor(targetId: Long) {
         this.postId = targetId
     }
 

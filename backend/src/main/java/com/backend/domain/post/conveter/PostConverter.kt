@@ -2,8 +2,6 @@ package com.backend.domain.post.conveter
 
 import com.backend.domain.category.entity.Category
 import com.backend.domain.jobposting.entity.JobPosting
-import com.backend.domain.jobposting.entity.QJobPosting.jobPosting
-import com.backend.domain.jobposting.repository.JobPostingRepository
 import com.backend.domain.post.dto.*
 import com.backend.domain.post.entity.Post
 import com.backend.domain.post.entity.RecruitmentPost
@@ -33,7 +31,8 @@ object PostConverter {
             content = recruitmentPostRequest.content,
             category = category,
             author = author,
-            jobPosting = jobPosting
+            jobPosting = jobPosting,
+            recruitmentClosingDate = recruitmentPostRequest.recruitmentClosingDate
         )
     }
 
@@ -49,7 +48,8 @@ object PostConverter {
             authorImg = post.author.profileImg?:"",
             voterCount = post.postVoterList.size.toLong(),
             isVoter = post.postVoterList.any { it.siteUser.id == currentUserId },
-            createdAt = post.createdAt        )
+            createdAt = post.createdAt
+        )
     }
     // 모집 게시글 응답 변환
     fun toPostResponse(post: RecruitmentPost, isAuthor: Boolean, currentAcceptedCount: Int,
@@ -66,9 +66,10 @@ object PostConverter {
             isVoter = post.postVoterList.any { it.siteUser == currentUser },
             createdAt = post.createdAt,
             jobPostingId = post.jobPosting.id!!,
-            numOfApplicants = post.numOfApplicants ?: 0,
+            numOfApplicants = post.numOfApplicants!!,
             recruitmentStatus = post.recruitmentStatus,
-            currentAcceptedCount = currentAcceptedCount
+            currentAcceptedCount = currentAcceptedCount,
+            recruitmentClosingDate = post.recruitmentClosingDate
         )
     }
 

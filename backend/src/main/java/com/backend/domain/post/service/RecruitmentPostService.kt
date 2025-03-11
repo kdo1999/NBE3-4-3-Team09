@@ -64,7 +64,6 @@ class RecruitmentPostService(
 
         val savedPost = recruitmentPostRepository.save(post)
 
-        // TODO: 추후 연관관계 매핑 후 수정할 것
         val recruitmentUser = RecruitmentUser(
             post = post,
             siteUser = siteUser,
@@ -97,7 +96,8 @@ class RecruitmentPostService(
         findPost.updatePost(
             recruitmentPostRequest.subject,
             recruitmentPostRequest.content,
-            recruitmentPostRequest.numOfApplicants
+            recruitmentPostRequest.numOfApplicants,
+            recruitmentPostRequest.recruitmentClosingDate
         )
 
         return PostConverter.toPostResponse(findPost, true, getCurrentAcceptedCount(postId), siteUser)
