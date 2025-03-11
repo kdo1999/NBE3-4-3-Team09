@@ -7,7 +7,6 @@ import com.backend.domain.recruitmentUser.entity.QRecruitmentUser.recruitmentUse
 import com.backend.domain.voter.entity.QVoter.voter
 import com.querydsl.jpa.impl.JPAQueryFactory
 import org.springframework.stereotype.Repository
-import java.util.*
 
 @Repository
 class RecruitmentPostQueryRepository( private val queryFactory: JPAQueryFactory
@@ -18,9 +17,10 @@ class RecruitmentPostQueryRepository( private val queryFactory: JPAQueryFactory
             QRecruitmentPostResponse(
                 recruitmentPost.postId, recruitmentPost.subject, recruitmentPost.content, recruitmentPost.category.id,
                 recruitmentPost.author.id.eq(siteUserId), recruitmentPost.author.name,
-                recruitmentPost.author.profileImg,
-                voter.countDistinct(), voter.siteUser.id.eq(siteUserId), recruitmentPost.createdAt,
-                recruitmentPost.jobPosting.id, recruitmentPost.numOfApplicants, recruitmentPost.recruitmentStatus,
+                recruitmentPost.author.profileImg, voter.countDistinct(),
+                voter.siteUser.id.eq(siteUserId), recruitmentPost.createdAt,
+                recruitmentPost.recruitmentClosingDate, recruitmentPost.jobPosting.id,
+                recruitmentPost.numOfApplicants, recruitmentPost.recruitmentStatus,
                 recruitmentUser.countDistinct().intValue()
             )
         )
@@ -33,7 +33,8 @@ class RecruitmentPostQueryRepository( private val queryFactory: JPAQueryFactory
             .groupBy(
                 recruitmentPost.postId, recruitmentPost.subject, recruitmentPost.content, recruitmentPost.category.id,
                 recruitmentPost.author.id, recruitmentPost.author.name, recruitmentPost.author.profileImg,
-                voter.siteUser.id, recruitmentPost.createdAt, recruitmentPost.numOfApplicants, recruitmentPost.recruitmentStatus
+                voter.siteUser.id, recruitmentPost.createdAt, recruitmentPost.numOfApplicants,
+                recruitmentPost.recruitmentStatus, recruitmentPost.recruitmentClosingDate
             )
             .where(recruitmentPost.postId.eq(postId))
             .fetchOne()

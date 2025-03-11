@@ -55,7 +55,7 @@ class RecruitmentPostService(
     @Transactional
     fun save(recruitmentPostRequest: RecruitmentPostRequest, siteUser: SiteUser): PostCreateResponse {
         val category = categoryRepository.findByName(CategoryName.RECRUITMENT.value)
-            .orElseThrow{GlobalException(GlobalErrorCode.CATEGORY_NOT_FOUND)}
+            ?: throw GlobalException(GlobalErrorCode.CATEGORY_NOT_FOUND)
 
         val jobPosting = jobPostingRepository.findById(recruitmentPostRequest.jobPostingId)
             ?: throw GlobalException(GlobalErrorCode.JOB_POSTING_NOT_FOUND)
@@ -64,7 +64,6 @@ class RecruitmentPostService(
 
         val savedPost = recruitmentPostRepository.save(post)
 
-        // TODO: 추후 연관관계 매핑 후 수정할 것
         val recruitmentUser = RecruitmentUser(
             post = post,
             siteUser = siteUser,
@@ -97,7 +96,8 @@ class RecruitmentPostService(
         findPost.updatePost(
             recruitmentPostRequest.subject,
             recruitmentPostRequest.content,
-            recruitmentPostRequest.numOfApplicants
+            recruitmentPostRequest.numOfApplicants,
+            recruitmentPostRequest.recruitmentClosingDate
         )
 
         return PostConverter.toPostResponse(findPost, true, getCurrentAcceptedCount(postId), siteUser)

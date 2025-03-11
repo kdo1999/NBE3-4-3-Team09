@@ -17,6 +17,7 @@ data class RecruitmentPostResponse @QueryProjection constructor(
     var voterCount: Long,
     var isVoter: Boolean,
     val createdAt: ZonedDateTime,
+    val recruitmentClosingDate: ZonedDateTime,
 
     @field:JsonInclude(value = Include.NON_NULL)
     var jobPostingId: Long,

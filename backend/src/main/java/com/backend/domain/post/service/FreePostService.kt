@@ -46,9 +46,8 @@ class FreePostService(
     fun save(freePostRequest: FreePostRequest, siteUser: SiteUser): PostCreateResponse {
         log.info { "free=$freePostRequest" }
 
-        val findCategory = categoryRepository.findByName(CategoryName.FREE.value).orElseThrow{
-            throw GlobalException(GlobalErrorCode.CATEGORY_NOT_FOUND)
-        }
+        val findCategory = categoryRepository.findByName(CategoryName.FREE.value)
+            ?: throw GlobalException(GlobalErrorCode.CATEGORY_NOT_FOUND)
 
         val savePost = PostConverter.createPost(freePostRequest, siteUser, findCategory)
         val savedPost = postRepository.save(savePost)
