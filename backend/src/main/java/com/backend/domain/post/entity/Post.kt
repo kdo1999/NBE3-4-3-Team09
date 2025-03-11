@@ -27,12 +27,12 @@ class Post : BaseEntity {
     lateinit var content: String
         protected set
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id", nullable = false)
     lateinit var category: Category
         protected set
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     lateinit var author: SiteUser
         protected set

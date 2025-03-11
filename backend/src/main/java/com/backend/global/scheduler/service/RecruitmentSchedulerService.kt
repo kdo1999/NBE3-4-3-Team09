@@ -1,36 +1,54 @@
 package com.backend.global.scheduler.service
 
 import com.backend.domain.post.repository.recruitment.RecruitmentPostRepository
+import com.backend.domain.recruitmentUser.repository.RecruitmentUserRepository
 import com.backend.global.mail.service.MailService
 import com.backend.global.mail.util.TemplateName
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
+import io.github.oshai.kotlinlogging.KotlinLogging
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.time.ZonedDateTime
+
+private val log = KotlinLogging.logger {}
 
 @Service
 class RecruitmentSchedulerService(
     private val mailService: MailService,
     private val recruitmentPostRepository: RecruitmentPostRepository,
+    private val recruitmentUserRepository: RecruitmentUserRepository,
 ) {
-    private val coroutineScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
 
     @Scheduled(cron = "0 0 0 * * ?", zone = "Asia/Seoul")
     @Transactional
     fun runProcess() {
-        //모집 게시판 벌크 수정
+        updateRecruitmentStatus()
     }
     
     private fun updateRecruitmentStatus() {
+        // 오늘 이전이며 모집 중인 게시글 조회
+        val recruitmentClosingDate = ZonedDateTime.now()
 
+        val recruitmentPostList =
+            recruitmentPostRepository.findPostByRecruitmentClosingDateAndRecruitmentStatus(recruitmentClosingDate)
 
-        //메일 발송
-        val toList = listOf("kdo_1999@naver.com")
-        val postId = 1L
+        val recruitPostIdList = recruitmentPostList.map { it.postId!! }.toList()
 
-        //메일 서비스 안에서 비동기 처리
-        mailService.sendRecruitmentEmailAsync(toList, TemplateName.RECRUITMENT_END, postId)
+        //모집 게시글 상태 변경
+        recruitmentPostRepository.updatePostByRecruitmentClosingDate(recruitmentClosingDate, recruitPostIdList)
+
+        // 모집 중인 게시글로 RecruitmentUser를 빼온다.
+        recruitmentPostList.forEach {
+            val findRecruitmentUserList =
+                recruitmentUserRepository.findAcceptedRecruitmentsForClosedPost(it.postId!!)
+
+            val findRecruitmentUserEmailList = findRecruitmentUserList.map { it.siteUser.email }.toList()
+
+            mailService.sendRecruitmentEmailAsync(
+                findRecruitmentUserEmailList,
+                TemplateName.RECRUITMENT_END,
+                it.postId!!
+            )
+        }
     }
 }

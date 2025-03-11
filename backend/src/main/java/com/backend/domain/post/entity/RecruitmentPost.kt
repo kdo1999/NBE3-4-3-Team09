@@ -22,7 +22,7 @@ class RecruitmentPost: Post {
     lateinit var recruitmentStatus: RecruitmentStatus
         protected set
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "job_id", nullable = false)
     lateinit var jobPosting: JobPosting
         protected set
