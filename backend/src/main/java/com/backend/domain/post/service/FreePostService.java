@@ -1,3 +1,5 @@
+/*
+kotlin으로 변환
 package com.backend.domain.post.service;
 
 import com.backend.domain.category.domain.CategoryName;
@@ -26,14 +28,16 @@ public class FreePostService {
 	private final PostRepository postRepository;
 	private final CategoryRepository categoryRepository;
 
-	/**
+	*/
+/**
 	 * 게시글 조회하는 메서드 입니다.
 	 *
 	 * @param postId   조회할 게시글 아이디
 	 * @param siteUser 로그인한 사용자
 	 * @return {@link PostResponse}
 	 * @throws GlobalException 게시글이 존재하지 않을 때 예외 발생
-	 */
+	 *//*
+
 	@Transactional(readOnly = true)
 	public PostResponse findById(Long postId, SiteUser siteUser) {
 
@@ -41,14 +45,16 @@ public class FreePostService {
 			.orElseThrow(() -> new GlobalException(GlobalErrorCode.POST_NOT_FOUND));
 	}
 
-	/**
+	*/
+/**
 	 * 게시글 저장 메서드 입니다.
 	 *
 	 * @param freePostRequest 자유 게시글 관련 정보가 담긴 DTO
 	 * @param siteUser        작성할 사용자
 	 * @return {@link PostCreateResponse}
 	 * @throws GlobalException 카테고리가 존재하지 않을 때 발생
-	 */
+	 *//*
+
 	@Transactional
 	public PostCreateResponse save(FreePostRequest freePostRequest, SiteUser siteUser) {
 		log.info("free={}", freePostRequest);
@@ -64,7 +70,8 @@ public class FreePostService {
 		return PostConverter.toPostCreateResponse(savedPost.getPostId(), findCategory.getId());
 	}
 
-	/**
+	*/
+/**
 	 * 게시글 수정 메서드 입니다.
 	 *
 	 * @param postId          수정할 게시글 ID
@@ -72,7 +79,8 @@ public class FreePostService {
 	 * @param siteUser        로그인한 사용자
 	 * @return {@link PostResponse}
 	 * @throws GlobalException
-	 */
+	 *//*
+
 	@Transactional
 	public PostResponse update(Long postId, FreePostRequest freePostRequest, SiteUser siteUser) {
 
@@ -90,12 +98,14 @@ public class FreePostService {
 		return PostConverter.toPostResponse(updatedPost, true, siteUser.getId());
 	}
 
-	/**
+	*/
+/**
 	 * 게시글 삭제 메서드 입니다.
 	 *
 	 * @param postId   삭제할 게시글 ID
 	 * @param siteUser 로그인한 사용자
-	 */
+	 *//*
+
 	@Transactional
 	public void delete(Long postId, SiteUser siteUser) {
 
@@ -110,3 +120,4 @@ public class FreePostService {
 	}
 
 }
+*/

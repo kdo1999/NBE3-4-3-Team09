@@ -1,3 +1,5 @@
+/*
+코틀린으로 변환
 package com.backend.domain.post.service;
 
 import com.backend.domain.post.dto.PostPageResponse;
@@ -16,12 +18,14 @@ public class PostService {
 
     private final PostRepository postRepository;
 
-    /**
+    */
+/**
      * 게시글 전체 동적 조회 메서드 입니다.
      *
      * @param postSearchCondition 검색 조건
      * @return {@link Page<PostPageResponse>}
-     */
+     *//*
+
     @Transactional(readOnly = true)
     public Page<PostPageResponse> findAll(PostSearchCondition postSearchCondition) {
         int pageNum = postSearchCondition.getPageNum() == null ? 0 : postSearchCondition
@@ -39,3 +43,4 @@ public class PostService {
     }
 
 }
+*/
